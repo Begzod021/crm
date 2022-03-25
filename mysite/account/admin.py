@@ -18,3 +18,7 @@ class AdminSection(admin.ModelAdmin):
 @admin.register(Employe)
 class AdminProfile(admin.ModelAdmin):
     list_display = ['id', 'user']
+
+@admin.register(Email)
+class AdminEmail(admin.ModelAdmin):
+    list_display = ['id', 'email']

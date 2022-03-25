@@ -13,7 +13,7 @@ class Task(models.Model):
 
 
     employe = models.ManyToManyField(Employe, blank=True)
-    creator = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='creators')
+    creator = models.ForeignKey(Employe, on_delete=models.PROTECT, related_name='creators')
     checker = models.ManyToManyField(Employe, related_name='checkers')
     active = models.BooleanField(default=False)
     deadline = models.DateTimeField(blank=True)
