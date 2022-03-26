@@ -61,6 +61,7 @@ class Postion(models.Model):
 
 class Email(models.Model):
     email = models.EmailField(max_length=250, blank=True, null=True)
+    author = models.ForeignKey(User, models.CASCADE, related_name='authors', blank=True, null=True)
     slug = models.SlugField()
 
 

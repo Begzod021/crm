@@ -6,6 +6,7 @@ class Task(models.Model):
 
     choice = (
         ('',''),
+        ('in progress','in progress'),
         ('completed','completed'),
         ('not completed','not completed'),
     )
@@ -17,7 +18,7 @@ class Task(models.Model):
     checker = models.ManyToManyField(Employe, related_name='checkers')
     active = models.BooleanField(default=False)
     deadline = models.DateTimeField(blank=True)
-    starteddate = models.DateTimeField(blank=True)
+    starteddate = models.DateTimeField(auto_now_add=True,blank=True)
     upload = models.DateTimeField(blank=True)
     section = models.ManyToManyField(Section)
     status = models.CharField(max_length=100, choices=choice, default=False, blank=True)
