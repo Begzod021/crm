@@ -86,7 +86,7 @@ class Employe(models.Model):
 
     
     position = models.ForeignKey(Postion, on_delete=models.PROTECT)
-    user = models.OneToOneField(User, on_delete=models.PROTECT)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.PROTECT)
     slug = models.SlugField()
     author = models.ForeignKey('self', on_delete=models.PROTECT,null=True, blank=True)
@@ -99,7 +99,6 @@ class Employe(models.Model):
     status = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to='avatar/', null=True, blank=True)
     email_add = models.ManyToManyField(Email)
-
 
 
     def save(self, *args, **kwargs):
