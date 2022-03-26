@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+{% load static %}
+<!-- saved from url=(0037)http://symfonator.herokuapp.com/login -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Sign In</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <style>
+    #loader {
+      transition: all 0.3s ease-in-out;
+      opacity: 1;
+      visibility: visible;
+      position: fixed;
+      height: 100vh;
+      width: 100%;
+      background: #fff;
+      z-index: 90000;
+    }
+
+    #loader.fadeOut {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      position: absolute;
+      top: calc(50% - 20px);
+      left: calc(50% - 20px);
+      background-color: #333;
+      border-radius: 100%;
+      -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+      animation: sk-scaleout 1.0s infinite ease-in-out;
+    }
+
+    @-webkit-keyframes sk-scaleout {
+      0% { -webkit-transform: scale(0) }
+      100% {
+        -webkit-transform: scale(1.0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes sk-scaleout {
+      0% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+      } 100% {
+          -webkit-transform: scale(1.0);
+          transform: scale(1.0);
+          opacity: 0;
+        }
+    }
+  </style>
+<style type="text/css">/* Chart.js */
+@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
+<body class="app" cz-shortcut-listen="true">
+<div id="loader" class="fadeOut">
+  <div class="spinner"></div>
+</div>
+
+<script>
+    window.addEventListener('load', () => {
+        const loader = document.getElementById('loader');
+        setTimeout(() => {
+            loader.classList.add('fadeOut');
+        }, 300);
+    });
+</script>
+
+    
+
+    <div class="peers ai-s fxw-nw h-100vh">
+        <div class="d-n@sm- peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style="background-image:  url(&quot;{% static '/assets/images/bg.fd1a1dd6.jpg' %}&quot;)">
+                                                                                    </div>
+
+        <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r ps" style="min-width: 320px;">
+            
+            <h3>Welcome to Symfonator</h3>
+
+            <h4 class="fw-300 c-grey-900 mB-40">Login</h4>
+
+            <form action="http://symfonator.herokuapp.com/login_check" method="POST">
+                <input type="hidden" name="_csrf_token" value="ZUY1PQ2B0ygGqZI4OViFC168dQAhXlnNuYBMESTrBqw">
+                <div class="form-group">
+                    <label class="text-normal text-dark">Username: <strong>admin</strong></label>
+                    <input type="text" class="form-control" placeholder="Username" id="username" name="_username" value="" required="required">
+                </div>
+                <div class="form-group">
+                    <label class="text-normal text-dark">Password: <strong>password</strong></label>
+                    <input type="password" class="form-control" placeholder="Password" id="password" name="_password" required="required">
+                </div>
+                <div class="form-group">
+                    <div class="peers ai-c jc-sb fxw-nw">
+                        <div class="peer">
+                            <div class="checkbox checkbox-circle checkbox-info peers ai-c">
+                                <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
+                                <label for="inputCall1" class=" peers peer-greed js-sb ai-c">
+                                    <span class="peer peer-greed">Remember Me</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="peer">
+                            <button class="btn btn-primary" id="_submit" name="_submit">Log in</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+    </div>
+
+
+
+
+<script src="{% static 'js/app.js' %}"></script>
+
+</body></html>

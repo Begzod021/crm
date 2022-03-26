@@ -5,8 +5,8 @@ from django.shortcuts import render, HttpResponse
 
 
 def user_registor(request):
-    return render(request, 'SignUp.html')
+    return render(request, 'Sign Up.html')
 
 
 def user_login(request):
-    return render(request, 'SignIn.html')
+    return render(request, 'Sign In_.html')
