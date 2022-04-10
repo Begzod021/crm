@@ -22,7 +22,15 @@ class User(AbstractUser):
 
 
 class Section(models.Model):
-    name = models.CharField(max_length=250, null=True)
+
+    section_type = (
+        ('',''),
+        ('CEO','CEO'),
+        ('Agent','Agent'),
+    )
+
+
+    name = models.CharField(max_length=250, null=True, choices=section_type, default=False)
     section = models.ForeignKey('Section', on_delete=models.PROTECT, related_name='sections', null=True, blank=True)
     slug = models.SlugField()
     author = models.ForeignKey(User, on_delete=models.PROTECT)
