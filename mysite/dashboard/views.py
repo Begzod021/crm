@@ -13,7 +13,7 @@ def dashboard(request, username):
         return HttpResponse('NO HACKING')
     try:
         user = User.objects.get(username=username)
-        employe = Employe.objects.filter(user=user)
+        employe = Employe.objects.get(user=user)
     except User.DoesNotExist:
         return redirect('user_registor')
     context = {

@@ -25,7 +25,7 @@ class AddAdmin(forms.ModelForm):
 class AdminChange(forms.ModelForm):
     class Meta:
         model = Employe
-        fields = ['first_name', 'last_name', 'email', 'bio','adress', 'status']
+        fields = ['first_name', 'last_name', 'email', 'bio','adress', 'status', 'gender']
 
         widgets = {
             'first_name':forms.TextInput(attrs={
