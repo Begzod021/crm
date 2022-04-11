@@ -18,12 +18,16 @@
         <fieldset>
           <legend><span class="number">1</span>Profile</legend>
           <label for="job">Section</label>
+          {% for el in employe %}
+          {% if el.section.id != 1 %}
           <select name="section" required id="id_section">
             <option value="" selected>---------</option>
-            {% for el in employe %}
               <option name="el.section.id" value="{{ el.section.id }}">{{ el.section }}</option>
-            {% endfor %}
           </select>
+          {% else %}
+          {{ position.section }}
+          {% endif %}
+          {% endfor %}
           <label for="job">Position</label>
           {{ position.position }}
           <label for="job">User</label>
