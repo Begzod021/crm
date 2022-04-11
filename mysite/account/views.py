@@ -6,21 +6,23 @@ from .forms import *
 # Create your views here.
 
 
-def user_registor(request):
-
-    form = AddAdmin()
-    if request.method == 'POST':
-        form = AddAdmin(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(user.password)
-            user.save()
-            return redirect('user_login')
-        else:
-            return redirect('user_registor')
+def user_registor(request, username):
+    if request.user.username !=username:
+        return HttpResponse('NO HACKING')
+    else:
+        form = AddAdmin()
+        if request.method == 'POST':
+            form = AddAdmin(request.POST)
+            if form.is_valid():
+                user = form.save(commit=False)
+                user.set_password(user.password)
+                user.save()
+                return redirect('employe', username)
+            else:
+                return redirect('user_registor', username)
 
     context = {
-        'form':form
+        'form':form,
     }
 
 
@@ -66,3 +68,18 @@ def user_profile(request, slug):
     }
 
     return render(request, 'account/profile.html', context)
+
+def employe(request, username):
+    user = User.objects.get(username=username)
+    employe = Employe.objects.filter(user=user)
+    position = PositionForm()
+    if request.method == 'POST':
+        position = PositionForm(request.POST, request.FILES)
+        if position.is_valid():
+            position.save()
+            return redirect('employe', username)
+    context = {
+        'position':position,
+        'employe':employe
+    }
+    return render(request, 'account/employe.html', context)

@@ -1,5 +1,6 @@
 
 
+from turtle import position
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
@@ -27,13 +28,14 @@ class Section(models.Model):
         ('',''),
         ('CEO','CEO'),
         ('Agent','Agent'),
+        ('Call Center','Call Center')
     )
 
 
     name = models.CharField(max_length=250, null=True, choices=section_type, default=False)
     section = models.ForeignKey('Section', on_delete=models.PROTECT, related_name='sections', null=True, blank=True)
     slug = models.SlugField()
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     def save(self, *args, **kwargs):
@@ -55,11 +57,10 @@ class Postion(models.Model):
     )
 
 
-    section = models.ForeignKey(Section, on_delete=models.PROTECT)
     position = models.CharField(max_length=250, choices=type, null=True, default=False)
     description = models.CharField(max_length=250, null=True)
     task = models.TextField(null=True, blank=True)
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
 
 
     def __str__(self) -> str:
@@ -84,8 +85,6 @@ class Email(models.Model):
 
 
 class Employe(models.Model):
-
-
     choice = (
         ('',''),
         ('Male','Male'),
@@ -94,8 +93,8 @@ class Employe(models.Model):
 
 
     
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     position = models.ForeignKey(Postion, on_delete=models.PROTECT)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
     section = models.ForeignKey(Section, on_delete=models.PROTECT)
     slug = models.SlugField()
     author = models.ForeignKey('self', on_delete=models.PROTECT,null=True, blank=True)

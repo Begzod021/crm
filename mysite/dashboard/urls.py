@@ -22,5 +22,5 @@ from .views import dashboard
 
 
 urlpatterns = [
-    path('<str:username>/dashboard/',dashboard, name='dashboard')
+    path('dashboard/<str:username>/',dashboard, name='dashboard')
 ]

@@ -22,6 +22,18 @@ class AddAdmin(forms.ModelForm):
             }),
         }
 
+class PositionForm(forms.ModelForm):
+    class Meta:
+        model = Employe
+        fields = ['section','position', 'user', 'author']
+
+        def __init__(self, user, **kwargs) -> None:
+            super(PositionForm, self).__init__(**kwargs)
+            if user:
+                self.fields['section'].queryset = Employe.objects.create(user=user)
+
+
+
 class AdminChange(forms.ModelForm):
     class Meta:
         model = Employe

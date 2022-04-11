@@ -17,11 +17,12 @@ Including another URLconf
 from unicodedata import name
 from django.urls import path
 
-from account.views import user_registor, user_login, logout_user, user_profile
+from account.views import user_registor, user_login, logout_user, user_profile, employe
 
 urlpatterns = [
-    path('register/', user_registor, name='user_registor'),
+    path('register/<str:username>/', user_registor, name='user_registor'),
     path('', user_login, name='user_login'),
     path('logout/', logout_user, name='logout'),
-    path('profile/<slug:slug>/', user_profile, name='user_profile')
+    path('profile/<slug:slug>/', user_profile, name='user_profile'),
+    path('employe/<str:username>/', employe, name='employe')
 ]
