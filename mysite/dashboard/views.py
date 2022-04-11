@@ -17,7 +17,7 @@ def dashboard(request, username):
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
         user_count = User.objects.all().count()
-        s = 10
+        s = 22
         procent = (user_count*100)/s
         print(procent)
         print(user_count)
