@@ -51,7 +51,7 @@ class Postion(models.Model):
     type =(
 
         ('',''),
-        ('chief','chief'),
+        ('director','director'),
         ('deputy','deputy'),
         ('worker','worker'),
     )
@@ -93,11 +93,11 @@ class Employe(models.Model):
 
 
     
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name="profile")
     position = models.ForeignKey(Postion, on_delete=models.PROTECT)
     section = models.ForeignKey(Section, on_delete=models.PROTECT)
     slug = models.SlugField()
-    author = models.ForeignKey('self', on_delete=models.PROTECT,null=True, blank=True)
+    author = models.ForeignKey('self', on_delete=models.CASCADE,null=True, blank=True)
     first_name = models.CharField(max_length=150, null=True, blank=True)
     last_name = models.CharField(max_length=150, null=True, blank=True)
     email = models.EmailField(max_length=150, null=True, blank=True)
