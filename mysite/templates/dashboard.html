@@ -566,13 +566,15 @@
                   </a>
                 </li>
                 <li>
-                  {% if employe.position.id == 1 %}
+                  {% for i in position %}
+                  {% if i.position == "director" %}
                   <a href="{% url 'user_registor' request.user.username %}"
                     class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                     <i class="ti-user mR-10"></i>
                     <span>Add User</span>
                   </a>
                   {% endif %}
+                  {% endfor %}
                 </li>
                 <li>
                   <a href="http://symfonator.herokuapp.com/admin/email" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
@@ -1654,7 +1656,7 @@
                         <div class="peers pT-20 mT-20 bdT fxw-nw@lg+ jc-sb ta-c gap-10">
                           <div class="peer">
                             <div class="easy-pie-chart" data-size="80" data-percent="{{ procent }}" data-bar-color="#f44336">
-                              <span>{{ procent }} %</span>
+                              <span>{{ procent }}%</span>
                               <canvas height="80" width="80"></canvas>
                             </div>
                             <h6 class="fsz-sm">New Users</h6>
@@ -1731,7 +1733,8 @@
             </div>
             <div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 712.875px;">
               <!-- #Todo ==================== -->
-              {% if employe.position.id == 1 %}
+              {% for el in position %}
+              {% if el.position == "director" %}
               <div class="bd bgc-white p-20">
                 <div class="layers">
                   <div class="layer w-100 mB-10">
@@ -1809,6 +1812,7 @@
               {% else %}
               <h1>YOU CANT SEE</h1>
               {% endif %}
+              {% endfor %}
             </div>
             <div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 1073.88px;">
               <!-- #Sales Report ==================== -->
