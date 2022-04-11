@@ -16,9 +16,15 @@ def dashboard(request, username):
     else:
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
+        user_count = User.objects.all().count()
+        s = 10
+        procent = (user_count*100)/s
+        print(procent)
+        print(user_count)
     context = {
         'user':user,
         'employe':employe,
+        'procent':procent
     }
 
 
