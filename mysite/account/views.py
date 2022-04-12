@@ -1,10 +1,20 @@
 from multiprocessing import context
 from django.conf import UserSettingsHolder
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import Http404, HttpRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
 # Create your views here.
+
+def error_404(request, username):
+    user = User.objects.get(username=username)
+    employe = Employe.objects.filter(user=user)
+
+    context = {
+        'employe':employe
+    }
+    return render(request, '404.html', context)
+
 
 
 def user_registor(request, username):
@@ -13,7 +23,7 @@ def user_registor(request, username):
     postion = Postion.objects.filter(id=employe.position.id)
     for el in postion:
         if request.user.username !=username or el.position == "worker" or el.position == "deputy":
-            return HttpResponse('NO HACKING')
+            return redirect('error' , username)
         else:
             form = AddAdmin()
             if request.method == 'POST':
@@ -31,7 +41,7 @@ def user_registor(request, username):
     }
 
 
-    return render(request, 'Sign Up.html', context)
+    return render(request, 'SignUp.html', context)
 
 
 def user_login(request):
@@ -49,7 +59,7 @@ def user_login(request):
     context = {
         'form':form
     }
-    return render(request, 'Sign In_.html', context)
+    return render(request, 'SignIn.html', context)
 
 def logout_user(request):
     logout(request)
@@ -80,7 +90,7 @@ def employe(request, username):
     postion = Postion.objects.filter(id=employes.position.id)
     for el in postion:
         if request.user.username !=username or el.position == "worker" or el.position == "deputy":
-            return HttpResponse('NO HACKING')
+             return redirect('error', username)
         else:
             user = User.objects.get(username=username)
             employe = Employe.objects.filter(user=user)

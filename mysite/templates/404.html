@@ -1,15 +1,16 @@
 <!DOCTYPE html>
+{% load static %}
 <!-- saved from url=(0041)http://symfonator.herokuapp.com/admin/404 -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>404</title>
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
   </head>
   <body class="app" cz-shortcut-listen="true">
     <div class="pos-a t-0 l-0 bgc-white w-100 h-100 d-f fxd-r fxw-w ai-c jc-c pos-r p-30">
       <div class="mR-60">
-        <img alt="#" src="img/404/404.f97802b0.png">
+        <img alt="#" src="{% static 'img/404/404.f97802b0.png' %}">
       </div>
 
       <div class="d-f jc-c fxd-c">
@@ -17,7 +18,7 @@
         <h3 class="mB-10 fsz-lg c-grey-900 tt-c">Oops Page Not Found</h3>
         <p class="mB-30 fsz-def c-grey-700">The page you are looking for does not exist or has been moved.</p>
         <div>
-          <a href="http://symfonator.herokuapp.com/admin/vector-maps" type="primary" class="btn btn-primary">Go to Home</a>
+          <a href="{% url 'dashboard' request.user.username %}" type="primary" class="btn btn-primary">Go to Home</a>
         </div>
       </div>
     </div>

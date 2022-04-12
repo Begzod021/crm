@@ -12,7 +12,7 @@ from account.models import Postion
 def dashboard(request, username):
 
     if request.user.username !=username:
-        return HttpResponse('NO HACKING')
+         return redirect('error', username)
     else:
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
