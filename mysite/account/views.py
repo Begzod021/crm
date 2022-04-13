@@ -55,7 +55,7 @@ def user_login(request):
             login(request, user)
             return redirect('dashboard', user.username)
         else:
-            return redirect('user_registor')
+            return redirect('user_login')
     
     context = {
         'form':form
