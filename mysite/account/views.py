@@ -1,3 +1,4 @@
+from __future__ import barry_as_FLUFL
 from multiprocessing import context
 from django.conf import UserSettingsHolder
 from django.contrib.auth import authenticate, login, logout
@@ -93,8 +94,50 @@ def employe(request, username):
              return redirect('error', username)
         else:
             user = User.objects.get(username=username)
-            employe = Employe.objects.filter(user=user)
             position = PositionForm()
+            employes = Employe.objects.get(user=user)
+            section = Section.objects.get(id=employes.section.id)
+            if section.name == "CEO":
+                employe = Employe.objects.all()
+                users = User.objects.all()
+                users_list = []
+                employes_list = []
+                for i in employe:
+                    employes_list.append(i.user)
+                    continue
+                for j in users:
+                    users_list.append(j)
+                    continue
+                for use in employes_list:
+                    for emp in users_list:
+                        if use==emp:
+                            users_list.remove(emp)
+                context = {
+                    'employe':employe,
+                    'position':position,
+                    'users_dict':users_list
+                }
+            else:
+                employe_filter = Employe.objects.get(user=user)
+                users_list = []
+                employes_list = []
+                employe = Employe.objects.all()
+                users = User.objects.all()
+                for i in employe:
+                    employes_list.append(i.user)
+                    continue
+                for j in users:
+                    users_list.append(j)
+                    continue
+                for use in employes_list:
+                    for emp in users_list:
+                        if use==emp:
+                            users_list.remove(emp)
+                context = {
+                    'employe_filter':employe_filter,
+                    'position':position,
+                    'users_dict':users_list
+                }
             if request.method == 'POST':
                 position = PositionForm(request.POST, request.FILES)
                 if position.is_valid():
@@ -102,8 +145,4 @@ def employe(request, username):
                     return redirect('employe', username)
                 else:
                     return HttpResponse('REGISTER HAS DONE')
-    context = {
-        'position':position,
-        'employe':employe,
-    }
     return render(request, 'account/employe.html', context)

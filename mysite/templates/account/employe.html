@@ -17,21 +17,25 @@
         
         <fieldset>
           <legend><span class="number">1</span>Profile</legend>
+          {% if employe_filter %}
           <label for="job">Section</label>
-          {% for el in employe %}
-          {% if el.section.id != 1 %}
           <select name="section" required id="id_section">
             <option value="" selected>---------</option>
-              <option name="el.section.id" value="{{ el.section.id }}">{{ el.section }}</option>
+              <option name="employe_filter.section.id" value="{{ employe_filter.section.id }}">{{ employe_filter.section }}</option>
           </select>
           {% else %}
+          <label for="job">Section</label>
           {{ position.section }}
           {% endif %}
-          {% endfor %}
           <label for="job">Position</label>
           {{ position.position }}
           <label for="job">User</label>
-          {{ position.user }}
+          <select name="user" required="" id="id_user">
+            <option value="" selected="">---------</option>
+            {% for use in users_dict %}
+            <option name="use.id" value="{{ use.id }}">{{ use }}</option>
+            {% endfor %}
+          </select>
           <label for="job">Author</label>
           {{ position.author }}
         </fieldset>
