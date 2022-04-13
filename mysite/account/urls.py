@@ -17,7 +17,7 @@ Including another URLconf
 from unicodedata import name
 from django.urls import path
 
-from account.views import user_registor, user_login, logout_user, user_profile, employe, error_404
+from account.views import user_registor, user_login, logout_user, user_profile, employe, error_404, error_500
 
 urlpatterns = [
     path('register/<str:username>/', user_registor, name='user_registor'),
@@ -25,5 +25,6 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('profile/<slug:slug>/', user_profile, name='user_profile'),
     path('employe/<str:username>/', employe, name='employe'),
-    path('404/<str:username>/', error_404, name='error')
+    path('404/<str:username>/', error_404, name='error'),
+    path('505-erorrs/<str:username>/', error_500, name='erorr_505')
 ]

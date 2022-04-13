@@ -22,6 +22,7 @@ class AddAdmin(forms.ModelForm):
             }),
         }
 
+
 class PositionForm(forms.ModelForm):
     class Meta:
         model = Employe

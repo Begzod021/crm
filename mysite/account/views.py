@@ -1,7 +1,19 @@
+from multiprocessing import context
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
+from django.conf import settings
+from django.contrib import messages
 # Create your views here.
+
+def error_500(request, username):
+    user = User.objects.get(username=username)
+    context = {
+        'user':user
+
+    }
+    return render(request, '500.html', context)
+
 
 def error_404(request, username):
     user = User.objects.get(username=username)
@@ -51,7 +63,16 @@ def user_login(request):
             login(request, user)
             return redirect('dashboard', user.username)
         else:
-            return redirect('user_login')
+            form = AddAdmin(request.POST, request.FILES)
+            if form.is_valid():
+                form = form.cleaned_data['password']
+                print(form)
+            if password!=form:
+                form = AddAdmin()
+                messages.error(request, 'password')
+            else:
+                form = AddAdmin()
+                messages.error(request, 'username')
     
     context = {
         'form':form

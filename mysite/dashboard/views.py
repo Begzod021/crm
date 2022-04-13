@@ -10,22 +10,24 @@ from account.models import Postion
 
 
 def dashboard(request, username):
-
+    user = User.objects.get(username=username)
+    employes = Employe.objects.all()
     if request.user.username !=username:
-         return redirect('error', username)
-    else:
+        return redirect('error', username)
+    elif Employe.objects.filter(user=user):
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
         position = Postion.objects.filter(id=employe.position.id)
         user_count = User.objects.all().count()
         s = 22
         procent = (user_count*100)/s
+    else:
+        return redirect('erorr_505', username)
     context = {
         'user':user,
         'employe':employe,
         'procent':procent,
-        'position':position
+        'position':position,
+        'user_count':user_count
     }
-
-
     return render(request, 'dashboard.html', context)
