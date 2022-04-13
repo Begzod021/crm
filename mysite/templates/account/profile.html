@@ -59,11 +59,31 @@
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">Name</label>{{ user_change.first_name }}</div>
                         <div class="col-md-6"><label class="labels">Surname</label>{{ user_change.last_name }}</div>
-                        <div class="col-md-12"><label class="labels">Gender:</label><br>{{ user_change.gender }}</div>
+                        {% if user.id == employe.user.id %}
+                            <div class="col-md-12"><label class="labels">Gender:</label><br>{{ user_change.gender }}</div>
+                        {% else %}
+                            <div class="col-md-12"><label class="labels">Gender:</label><br>{{ employe.gender }}</div>
+                        {% endif %}
                     </div>
                     <div class="row mt-3">
-                        <div class="col-md-12"><label class="labels">Section:</label><br>{{ employe.section }}</div>
+                        {% if request.user.username != employe.user %}
+                        {% if section.id == employe.section.id %}
+                        {% if position.position == "director" %}
+                        <div class="col-md-12"><label class="labels">Position:</label><br>
+                            {{ user_change.position }}
+                        </div>
+                        {% elif position.position != "director" %}
+                        <div class="col-md-12"><label class="labels">Position:</label><br>
+                            <select name="position" required="" id="id_position">
+                                <option name="employe.position.id" value="{{ employe.position.id }}">{{ employe.position }}</option>
+                            </select>
+                        </div>
+                        {% endif %}
+                        {% else %}
                         <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}</div>
+                        {% endif %}
+                        {% endif %}
+                        <div class="col-md-12"><label class="labels">Section:</label><br>{{ employe.section }}</div>
                         <div class="col-md-12"><label class="labels">Email:</label>{{ user_change.email }}</div>
                         <div class="col-md-12"><label class="labels">Bio</label>{{ user_change.bio }}</div>
                         <div class="col-md-12"><label class="labels">Address</label>{{ user_change.adress }}</div>
@@ -73,7 +93,8 @@
                         <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
                     </div>
                     <div class="mt-5 text-center"><button type="submit" class="btn btn-dark btn-lg">Save Changes</button></div>
-                    <div class="mt-5 text-center"><a class="btn btn-dark btn-lg" href="{% url 'dashboard' employe.user %}">Home</a></div>
+                    <div class="mt-5 text-center"><a class="btn btn-dark btn-lg" href="{% url 'dashboard' request.user.username %}">Home</a></div>
+                    
                 </form>
             </div>
         </div>
