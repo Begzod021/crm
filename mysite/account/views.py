@@ -1,8 +1,4 @@
-from __future__ import barry_as_FLUFL
-from multiprocessing import context
-from django.conf import UserSettingsHolder
 from django.contrib.auth import authenticate, login, logout
-from django.http import Http404, HttpRequest, HttpResponseRedirect
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
 # Create your views here.
