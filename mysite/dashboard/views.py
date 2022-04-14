@@ -4,7 +4,6 @@ from account.models import User, Employe
 from account.models import Postion, AdduserCount
 # Create your views here.
 
-
 def dashboard(request, username):
     user = User.objects.get(username=username)
     if request.user.username !=username:
