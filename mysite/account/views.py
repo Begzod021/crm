@@ -101,9 +101,7 @@ def user_profile(request, slug):
     if request.method == 'POST':
         user_add = AddUser(request.POST, request.FILES, instance=user_count)
         user_change = AdminChange(request.POST, request.FILES, instance=employe)
-        print('1')
         if user_change.is_valid() or user_add.is_valid():
-            print('2')
             user_change.save()
             if user.username=="admin":
                 user_add.save()
@@ -183,6 +181,4 @@ def employe(request, username):
                 if position.is_valid():
                     position.save()
                     return redirect('user_registor', username)
-                else:
-                    return HttpResponse('REGISTER HAS DONE')
     return render(request, 'account/employe.html', context)
