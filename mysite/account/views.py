@@ -1,3 +1,4 @@
+from doctest import Example
 from multiprocessing import context
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, HttpResponse
@@ -30,10 +31,12 @@ def user_registor(request, username):
     user = User.objects.get(username=username)
     employe = Employe.objects.get(user=user)
     postion = Postion.objects.filter(id=employe.position.id)
+    users = User.objects.all().count()
+    user_count = AdduserCount.objects.first()
     for el in postion:
         if request.user.username !=username or el.position == "worker" or el.position == "deputy":
             return redirect('error' , username)
-        else:
+        elif users < user_count.users:
             form = AddAdmin()
             if request.method == 'POST':
                 form = AddAdmin(request.POST)
@@ -44,6 +47,8 @@ def user_registor(request, username):
                     return redirect('employe', username)
                 else:
                     return redirect('user_registor', username)
+        else:
+            return HttpResponse("You do not have permission to add a new user !!!")
 
     context = {
         'form':form,
@@ -59,20 +64,19 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
+       
+ 
         if user:
             login(request, user)
             return redirect('dashboard', user.username)
         else:
             form = AddAdmin(request.POST, request.FILES)
-            if form.is_valid():
-                form = form.cleaned_data['password']
-                print(form)
-            if password!=form:
-                form = AddAdmin()
-                messages.error(request, 'password')
-            else:
-                form = AddAdmin()
-                messages.error(request, 'username')
+
+            try:
+                name_error = User.objects.get(username=username)
+                messages.error(request, 'Password error')
+            except:
+                messages.error(request, 'Login error')
     
     context = {
         'form':form
@@ -92,21 +96,27 @@ def user_profile(request, slug):
     section = Section.objects.get(id=director.section.id)
     user_change = AdminChange(instance=employe)
     positions = Postion.objects.all()
+    user_count =  AdduserCount.objects.first()
+    user_add = AddUser(request.POST or None, request.FILES or None, instance=user_count)
     if request.method == 'POST':
+        user_add = AddUser(request.POST, request.FILES, instance=user_count)
         user_change = AdminChange(request.POST, request.FILES, instance=employe)
         print('1')
-        if user_change.is_valid():
+        if user_change.is_valid() or user_add.is_valid():
             print('2')
             user_change.save()
+            if user.username=="admin":
+                user_add.save()
             return redirect('user_profile', employe.slug)
-    
+
     context = {
         'employe':employe,
         'user_change':user_change,
         'position':position,
         'section':section,
         'positions':positions,
-        'users':user
+        'user':user,
+        'adduser':user_add
     }
 
     return render(request, 'account/profile.html', context)
@@ -126,6 +136,7 @@ def employe(request, username):
             if section.name == "CEO":
                 employe = Employe.objects.all()
                 users = User.objects.all()
+                employe_filt = Employe.objects.get(user=user)
                 users_list = []
                 employes_list = []
                 for i in employe:
@@ -141,13 +152,15 @@ def employe(request, username):
                 context = {
                     'employe':employe,
                     'position':position,
-                    'users_dict':users_list
+                    'users_dict':users_list,
+                    'employe_filt':employe_filt
                 }
             else:
                 employe_filter = Employe.objects.get(user=user)
                 users_list = []
                 employes_list = []
                 employe = Employe.objects.all()
+                employe_filt = Employe.objects.get(user=user)
                 users = User.objects.all()
                 for i in employe:
                     employes_list.append(i.user)
@@ -162,7 +175,8 @@ def employe(request, username):
                 context = {
                     'employe_filter':employe_filter,
                     'position':position,
-                    'users_dict':users_list
+                    'users_dict':users_list,
+                    'employe_filt':employe_filt
                 }
             if request.method == 'POST':
                 position = PositionForm(request.POST, request.FILES)

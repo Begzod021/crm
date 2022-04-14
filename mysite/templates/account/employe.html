@@ -20,8 +20,7 @@
           {% if employe_filter %}
           <label for="job">Section</label>
           <select name="section" required id="id_section">
-            <option value="" selected>---------</option>
-              <option name="employe_filter.section.id" value="{{ employe_filter.section.id }}">{{ employe_filter.section }}</option>
+            <option name="employe_filter.section.id" value="{{ employe_filter.section.id }}">{{ employe_filter.section }}</option>
           </select>
           {% else %}
           <label for="job">Section</label>
@@ -37,7 +36,9 @@
             {% endfor %}
           </select>
           <label for="job">Author</label>
-          {{ position.author }}
+          <select name="author" id="id_author">
+            <option name="employe_filter.author.id" value="{{ employe_filter.author.id }}">{{ employe_filt.user }}</option>     
+          </select>
         </fieldset>
         <button type="submit">Sign Up</button>
       </form>

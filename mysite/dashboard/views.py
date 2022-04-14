@@ -1,11 +1,7 @@
-from multiprocessing import context
-from re import S
-from turtle import position
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import authenticate
 from account.models import User, Employe
-from account.models import Postion
+from account.models import Postion, AdduserCount
 # Create your views here.
 
 
@@ -19,8 +15,8 @@ def dashboard(request, username):
         position = Postion.objects.filter(id=employe.position.id)
         user_count = User.objects.all().count()
         employes = Employe.objects.all()
-        s = 22
-        procent = (user_count*100)/s
+        for i in AdduserCount.objects.all():
+            procent = (user_count*100)/i.users
     else:
         return redirect('erorr_505', username)
     context = {
