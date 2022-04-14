@@ -28,7 +28,10 @@ class Section(models.Model):
         ('',''),
         ('CEO','CEO'),
         ('Agent','Agent'),
-        ('Call Center','Call Center')
+        ('Manager-dispatcher','Manager-dispatcher'),
+        ('Accountant','Accountant'),
+        ('Sales Manager','Sales Manager'),
+        ('Office Manager','Office Manager'),
     )
 
 

@@ -59,10 +59,13 @@
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">Name</label>{{ user_change.first_name }}</div>
                         <div class="col-md-6"><label class="labels">Surname</label>{{ user_change.last_name }}</div>
-                        {% if user.id == employe.user.id %}
+                        {% if admin.id == employe.user.id %}
                             <div class="col-md-12"><label class="labels">Gender:</label><br>{{ user_change.gender }}</div>
                         {% else %}
-                            <div class="col-md-12"><label class="labels">Gender:</label><br>{{ employe.gender }}</div>
+                        <div class="col-md-12"><label class="labels">Gender:</label><br>
+                        <select name="gender" id="id_gender">
+                            <option name="employe.gender.id" value="{{ employe.gender.id }}">{{ employe.gender }}</option>
+                        </select>
                         {% endif %}
                     </div>
                     <div class="row mt-3">
@@ -97,7 +100,6 @@
                     </div>
                     <div class="mt-5 text-center"><button type="submit" class="btn btn-dark btn-lg">Save Changes</button></div>
                     <div class="mt-5 text-center"><a class="btn btn-dark btn-lg" href="{% url 'dashboard' request.user.username %}">Home</a></div>
-                    
                 </form>
             </div>
         </div>
