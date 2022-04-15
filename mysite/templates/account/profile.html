@@ -27,7 +27,7 @@
                                 <select name="gender" id="id_gender">
                                     <option name="employe.gender.id" value="{{ employe.gender.id }}">{{ employe.gender }}</option>
                                 </select>
-                                {% endif %}
+                            {% endif %}
                             </div>
                             <div class="row mt-3">
                                 {% if request.user.username != employe.user %}
@@ -44,8 +44,7 @@
                                 </div>
                                 {% endif %}
                                 {% else %}
-                                <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}
-                                </div>
+                                <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}</div>
                                 {% endif %}
                                 {% endif %}
                                 <div class="col-md-12"><label class="labels">Section:</label><br>{{ employe.section }}
@@ -56,7 +55,7 @@
                                 </div>
                                 <div class="col-md-12"><label class="labels">Status</label><br>{{ user_change.status }}
                                 </div>
-                                {% if user.username == "admin" %}
+                                {% if request.user.username == "admin"%}
                                 <div class="col-md-12"><label class="labels">User Limit</label><br>{{ adduser.users }}
                                 </div>
                                 {% endif %}

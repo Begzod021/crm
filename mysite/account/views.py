@@ -5,7 +5,7 @@ from django.contrib import messages
 # Create your views here.
 
 def error_500(request, username):
-    user = User.objects.get(username=username)
+    user = User.objects.get(username=request.user.username)
     context = {
         'user':user
 
@@ -14,7 +14,7 @@ def error_500(request, username):
 
 
 def error_404(request, username):
-    user = User.objects.get(username=username)
+    user = User.objects.get(username=request.user.username)
     employe = Employe.objects.filter(user=user)
 
     context = {
@@ -25,27 +25,30 @@ def error_404(request, username):
 
 
 def user_registor(request, username):
-    user = User.objects.get(username=username)
-    employe = Employe.objects.get(user=user)
-    postion = Postion.objects.filter(id=employe.position.id)
-    users = User.objects.all().count()
-    user_count = AdduserCount.objects.first()
-    for el in postion:
-        if request.user.username !=username or el.position == "worker" or el.position == "deputy":
-            return redirect('error' , username)
-        elif users < user_count.users:
-            form = AddAdmin()
-            if request.method == 'POST':
-                form = AddAdmin(request.POST)
-                if form.is_valid():
-                    user = form.save(commit=False)
-                    user.set_password(user.password)
-                    user.save()
-                    return redirect('employe', username)
-                else:
-                    return redirect('user_registor', username)
-        else:
-            return HttpResponse("You do not have permission to add a new user !!!")
+    if request.user.username != username:
+        return redirect('error' , username)
+    else:
+        user = User.objects.get(username=username)
+        employe = Employe.objects.get(user=user)
+        postion = Postion.objects.filter(id=employe.position.id)
+        users = User.objects.all().count()
+        user_count = AdduserCount.objects.first()
+        for el in postion:
+            if request.user.username !=username or el.position == "worker" or el.position == "deputy":
+                return redirect('error' , username)
+            elif users < user_count.users:
+                form = AddAdmin()
+                if request.method == 'POST':
+                    form = AddAdmin(request.POST)
+                    if form.is_valid():
+                        user = form.save(commit=False)
+                        user.set_password(user.password)
+                        user.save()
+                        return redirect('employe', username)
+                    else:
+                        return redirect('user_registor', username)
+            else:
+                return HttpResponse("You do not have permission to add a new user !!!")
 
     context = {
         'form':form,
@@ -99,7 +102,8 @@ def user_profile(request, username):
         user_add = AddUser(request.POST, request.FILES, instance=user_count)
         user_change = AdminChange(request.POST, request.FILES, instance=employe)
         if user_change.is_valid() or user_add.is_valid():
-            user_change.save()
+            if section.id==employe.section.id:
+                user_change.save()
             if user.username=="admin":
                 user_add.save()
             return redirect('user_profile', user.username)
