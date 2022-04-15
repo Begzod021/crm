@@ -25,8 +25,7 @@
                             {% else %}
                             <div class="col-md-12"><label class="labels">Gender:</label><br>
                                 <select name="gender" id="id_gender">
-                                    <option name="employe.gender.id" value="{{ employe.gender.id }}">{{ employe.gender
-                                        }}</option>
+                                    <option name="employe.gender.id" value="{{ employe.gender.id }}">{{ employe.gender }}</option>
                                 </select>
                                 {% endif %}
                             </div>
@@ -40,8 +39,7 @@
                                 {% elif position1.position != "director" %}
                                 <div class="col-md-12"><label class="labels">Position:</label><br>
                                     <select name="position" required="" id="id_position">
-                                        <option name="employe.position.id" value="{{ employe.position.id }}">{{
-                                            employe.position }}</option>
+                                        <option name="employe.position.id" value="{{ employe.position.id }}">{{ employe.position }}</option>
                                     </select>
                                 </div>
                                 {% endif %}

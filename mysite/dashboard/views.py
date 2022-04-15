@@ -11,7 +11,7 @@ def dashboard(request, username):
     elif Employe.objects.filter(user=user):
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
-        position = Postion.objects.filter(id=employe.position.id)
+        position1 = Postion.objects.get(id=employe.position.id)
         user_count = User.objects.all().count()
         employes = Employe.objects.all()
         for i in AdduserCount.objects.all():
@@ -22,7 +22,7 @@ def dashboard(request, username):
         'user':user,
         'employe':employe,
         'procent':procent,
-        'position':position,
+        'position1':position1,
         'user_count':user_count,
         'employes':employes
     }

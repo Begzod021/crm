@@ -569,15 +569,13 @@
                   </a>
                 </li>
                 <li>
-                  {% for i in position %}
-                  {% if i.position == "director" %}
+                  {% if position1.position == "director" %}
                   <a href="{% url 'user_registor' request.user.username %}"
                     class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
                     <i class="fa-solid fa-user-plus"></i>
                     <span>Add User</span>
                   </a>
                   {% endif %}
-                  {% endfor %}
                 </li>
                 <li>
                   <a href="http://symfonator.herokuapp.com/admin/email" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">

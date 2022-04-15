@@ -91,7 +91,6 @@ def user_profile(request, username):
     admin_employe = Employe.objects.get(user=admin)
     employe = Employe.objects.get(user=user)
     position1 = Postion.objects.get(id=admin_employe.position.id)
-    position = Postion.objects.all()
     section = Section.objects.get(id=admin_employe.section.id)
     user_change = AdminChange(request.POST or None, instance=employe)
     user_count =  AdduserCount.objects.first()
@@ -113,7 +112,6 @@ def user_profile(request, username):
         'user':user,
         'adduser':user_add,
         'admin':admin,
-        'position':position
     }
 
     return render(request, 'account/profile.html', context)
