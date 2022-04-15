@@ -90,7 +90,8 @@ def user_profile(request, username):
     admin = User.objects.get(username=request.user.username)
     admin_employe = Employe.objects.get(user=admin)
     employe = Employe.objects.get(user=user)
-    position = Postion.objects.get(id=admin_employe.position.id)
+    position1 = Postion.objects.get(id=admin_employe.position.id)
+    position = Postion.objects.all()
     section = Section.objects.get(id=admin_employe.section.id)
     user_change = AdminChange(request.POST or None, instance=employe)
     user_count =  AdduserCount.objects.first()
@@ -107,11 +108,12 @@ def user_profile(request, username):
     context = {
         'employe':employe,
         'user_change':user_change,
-        'position':position,
+        'position1':position1,
         'section':section,
         'user':user,
         'adduser':user_add,
         'admin':admin,
+        'position':position
     }
 
     return render(request, 'account/profile.html', context)
