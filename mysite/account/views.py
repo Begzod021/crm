@@ -71,7 +71,7 @@ def user_login(request):
 
             try:
                 name_error = User.objects.get(username=username)
-                messages.error(request, 'Password error')
+                messages.error(request,'Password error')
             except:
                 messages.error(request, 'Login error')
     
