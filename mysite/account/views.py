@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
@@ -89,24 +90,27 @@ def logout_user(request):
 
 
 def user_profile(request, username):
-    user = User.objects.get(username=username)
-    admin = User.objects.get(username=request.user.username)
-    admin_employe = Employe.objects.get(user=admin)
-    employe = Employe.objects.get(user=user)
-    position1 = Postion.objects.get(id=admin_employe.position.id)
-    section = Section.objects.get(id=admin_employe.section.id)
-    user_change = AdminChange(request.POST or None, instance=employe)
-    user_count =  AdduserCount.objects.first()
-    user_add = AddUser(request.POST or None, request.FILES or None, instance=user_count)
-    if request.method == 'POST':
-        user_add = AddUser(request.POST, request.FILES, instance=user_count)
-        user_change = AdminChange(request.POST, request.FILES, instance=employe)
-        if user_change.is_valid() or user_add.is_valid():
-            if section.id==employe.section.id:
-                user_change.save()
-            if user.username=="admin":
-                user_add.save()
-            return redirect('user_profile', user.username)
+    if username != username:
+        return redirect('error' , username)
+    else:
+        user = User.objects.get(username=username)
+        admin = User.objects.get(username=request.user.username)
+        admin_employe = Employe.objects.get(user=admin)
+        employe = Employe.objects.get(user=user)
+        position1 = Postion.objects.get(id=admin_employe.position.id)
+        section = Section.objects.get(id=admin_employe.section.id)
+        user_change = AdminChange(request.POST or None, instance=employe)
+        user_count =  AdduserCount.objects.first()
+        user_add = AddUser(request.POST or None, request.FILES or None, instance=user_count)
+        if request.method == 'POST':
+            user_add = AddUser(request.POST, request.FILES, instance=user_count)
+            user_change = AdminChange(request.POST, request.FILES, instance=employe)
+            if user_change.is_valid() or user_add.is_valid():
+                if section.id==employe.section.id:
+                    user_change.save()
+                if user.username=="admin":
+                    user_add.save()
+                return redirect('user_profile', user.username)
 
     context = {
         'employe':employe,
@@ -183,3 +187,23 @@ def employe(request, username):
                     position.save()
                     return redirect('user_registor', username)
     return render(request, 'account/employe.html', context)
+
+
+
+
+
+def calendar(request, username):
+    if request.user.username !=username:
+        return redirect('error', username)
+    else:
+        user = User.objects.get(username=username)
+        if request.user.username !=username:
+            return redirect('error', username)
+        elif Employe.objects.filter(user=user):
+            user = User.objects.get(username=username)
+            employe = Employe.objects.get(user=user)
+            position1 = Postion.objects.get(id=employe.position.id)
+    context = {
+        'position1':position1,
+    }
+    return render(request,'calendar.html', context)

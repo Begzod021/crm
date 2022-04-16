@@ -187,7 +187,7 @@
           <li class="nav-item">
             <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/email">
               <span class="icon-holder">
-                <i class="c-brown-500 fa-solid fa-envelope"></i>
+                <i class="c-blue-500 fa-solid fa-envelope"></i>
               </span>
               <span class="title">Email</span>
             </a>
@@ -201,9 +201,9 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/calendar">
+            <a class="sidebar-link" href="{% url 'calendar' request.user.username %}">
               <span class="icon-holder">
-                <i class="c-deep-orange-500 fa-solid fa-calendar"></i>
+                <i class="c-blue-500 fa-solid fa-calendar"></i>
               </span>
               <span class="title">Calendar</span>
             </a>
@@ -211,7 +211,7 @@
           <li class="nav-item">
             <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/chat">
               <span class="icon-holder">
-                <i class="c-deep-purple-500 fa-solid fa-comment"></i>
+                <i class="c-blue-500 fa-solid fa-comment"></i>
               </span>
               <span class="title">Chat</span>
             </a>
@@ -219,7 +219,7 @@
           <li class="nav-item">
             <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/charts">
               <span class="icon-holder">
-                <i class="c-indigo-500 fa-solid fa-chart-bar"></i>
+                <i class="c-blue-500 fa-solid fa-chart-bar"></i>
               </span>
               <span class="title">Charts</span>
             </a>
@@ -227,7 +227,7 @@
           <li class="nav-item">
             <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/forms">
               <span class="icon-holder">
-                <i class="c-light-blue-500 fa-brands fa-wpforms"></i>
+                <i class="c-blue-500 fa-brands fa-wpforms"></i>
               </span>
               <span class="title">Forms</span>
             </a>
@@ -235,7 +235,7 @@
           <li class="nav-item dropdown">
             <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/ui">
               <span class="icon-holder">
-                <i class="c-pink-500 fa-solid fa-palette"></i>
+                <i class="c-blue-500 fa-solid fa-palette"></i>
               </span>
               <span class="title">UI Elements</span>
             </a>
@@ -243,7 +243,7 @@
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="c-orange-500 fa-solid fa-table"></i>
+                <i class="c-blue-500 fa-solid fa-table"></i>
               </span>
               <span class="title">Tables</span>
               <span class="arrow">
@@ -262,7 +262,7 @@
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="c-purple-500 fa-solid fa-map-location"></i>
+                <i class="c-blue-500 fa-solid fa-map-location"></i>
               </span>
               <span class="title">Maps</span>
               <span class="arrow">
@@ -281,7 +281,7 @@
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="c-red-500 fa-solid fa-file"></i>
+                <i class="c-blue-500 fa-solid fa-file"></i>
               </span>
               <span class="title">Pages</span>
               <span class="arrow">
@@ -303,7 +303,7 @@
           <li class="nav-item dropdown">
             <a class="dropdown-toggle" href="javascript:void(0);">
               <span class="icon-holder">
-                <i class="c-teal-500 fa-solid fa-list"></i>
+                <i class="c-blue-500 fa-solid fa-list"></i>
               </span>
               <span class="title">Multiple Levels</span>
               <span class="arrow">
@@ -564,7 +564,7 @@
               <ul class="dropdown-menu fsz-sm">
                 <li>
                   <a href="{% url 'user_profile' request.user.username %}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <i class="fas fa-tools"></i>
+                    <i class="fas fa-tools mR-10"></i>
                     <span>Setting</span>
                   </a>
                 </li>
@@ -572,7 +572,7 @@
                   {% if position1.position == "director" %}
                   <a href="{% url 'user_registor' request.user.username %}"
                     class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                    <i class="fa-solid fa-user-plus"></i>
+                    <i class="fa-solid fa-user-plus mR-10"></i>
                     <span>Add User</span>
                   </a>
                   {% endif %}

@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+    <div style="padding-top: 65px;">
         <div class="row">
             <div class="col-md-5 border-right">
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5"
@@ -59,11 +60,12 @@
                                 <div class="col-md-12"><label class="labels">User Limit</label><br>{{ adduser.users }}
                                 </div>
                                 {% endif %}
-                                <div class="mt-5 text-center"><button type="submit" class="btn btn-dark btn-lg">Save
+                                <div class="mt-5 text-center" style="margin-bottom: 20px;"><button type="submit" class="btn btn-dark btn-lg">Save
                                         Changes</button></div>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
 
 {% endblock content %}
