@@ -6,22 +6,11 @@ from django.contrib import messages
 # Create your views here.
 
 def error_500(request, username):
-    user = User.objects.get(username=request.user.username)
-    context = {
-        'user':user
-
-    }
-    return render(request, '500.html', context)
+    return render(request, '500.html')
 
 
 def error_404(request, username):
-    user = User.objects.get(username=request.user.username)
-    employe = Employe.objects.filter(user=user)
-
-    context = {
-        'employe':employe
-    }
-    return render(request, '404.html', context)
+    return render(request, '404.html')
 
 
 
@@ -211,16 +200,20 @@ def user_tablets(request, username):
         return redirect('error', username)
     else:
         user = User.objects.get(username=username)
-        if request.user.username !=username or user.username!='admin':
+        employe = Employe.objects.get(user=user)
+        position1 = Postion.objects.get(id=employe.position.id)
+        if request.user.username !=username or position1.position != "director":
             return redirect('error', username)
         elif Employe.objects.filter(user=user):
             user = User.objects.get(username=username)
             employe = Employe.objects.get(user=user)
             position1 = Postion.objects.get(id=employe.position.id)
+            section = Section.objects.get(id=employe.section.id)
             employes = Employe.objects.all()
     context = {
         'position1':position1,
         'employes':employes,
+        'section':section,
     }
     return render(request, 'basic_tablets.html', context)
 

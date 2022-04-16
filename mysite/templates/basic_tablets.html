@@ -22,6 +22,7 @@
                         </tr>
                       </thead>
                       {% for el in employes %}
+                      {% if section.id == el.section.id or user.username == "admin" %}
                       <tbody>
                         <tr>
                           <th scope="row">{{ el.id }}</th>
@@ -32,6 +33,7 @@
                           <td><a href="{% url 'delete-employe' el.user %}">Delete</a></td>
                         </tr>
                       </tbody>
+                      {% endif %}
                       {% endfor %}
                     </table>
                   </div>
