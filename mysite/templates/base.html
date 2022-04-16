@@ -9,7 +9,7 @@
   <script src="https://kit.fontawesome.com/bd8bfefed0.js" crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Welcome to Symfonator - Responsive Bootstrap 4 Admin Template on the Symfony Foundation!</title>
-  <link rel="stylesheet" href="{% static 'assets/app.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
   {% block static %}
   {% endblock static %}
   <style>
@@ -582,6 +582,15 @@
                     <i class="fa-solid fa-envelope mR-10"></i>
                     <span>Messages</span>
                   </a>
+                </li>
+                <li>
+                  {% if request.user.username == "admin" %}
+                  <a href="{% url 'user_tablets' request.user.username %}"
+                    class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <i class="fa-solid fa-table mR-10"></i>
+                    <span>Tabelts User</span>
+                  </a>
+                  {% endif %}
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>

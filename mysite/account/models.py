@@ -96,7 +96,7 @@ class Employe(models.Model):
 
 
     
-    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name="profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     position = models.ForeignKey(Postion, on_delete=models.PROTECT)
     section = models.ForeignKey(Section, on_delete=models.PROTECT)
     slug = models.SlugField()

@@ -103,7 +103,7 @@ def user_profile(request, username):
         user_add = AddUser(request.POST, request.FILES, instance=user_count)
         user_change = AdminChange(request.POST, request.FILES, instance=employe)
         if user_change.is_valid() or user_add.is_valid():
-            if section.id==employe.section.id:
+            if section.id==employe.section.id or request.user.username=="admin":
                 user_change.save()
             if user.username=="admin":
                 user_add.save()
@@ -204,3 +204,28 @@ def calendar(request, username):
         'position1':position1,
     }
     return render(request,'calendar.html', context)
+
+
+def user_tablets(request, username):
+    if request.user.username !=username:
+        return redirect('error', username)
+    else:
+        user = User.objects.get(username=username)
+        if request.user.username !=username or user.username!='admin':
+            return redirect('error', username)
+        elif Employe.objects.filter(user=user):
+            user = User.objects.get(username=username)
+            employe = Employe.objects.get(user=user)
+            position1 = Postion.objects.get(id=employe.position.id)
+            employes = Employe.objects.all()
+    context = {
+        'position1':position1,
+        'employes':employes,
+    }
+    return render(request, 'basic_tablets.html', context)
+
+def delete_employe(request, username):
+    user = User.objects.get(username=username)
+    employe = Employe.objects.get(user=user)
+    employe.delete()
+    return redirect('user_tablets', request.user.username)

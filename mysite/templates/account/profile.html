@@ -32,7 +32,7 @@
                             </div>
                             <div class="row mt-3">
                                 {% if request.user.username != employe.user %}
-                                {% if section.id == employe.section.id %}
+                                {% if section.id == employe.section.id or request.user.username == 'admin' %}
                                 {% if position1.position == "director" %}
                                 <div class="col-md-12"><label class="labels">Position:</label><br>
                                     {{ user_change.position }}
@@ -48,8 +48,18 @@
                                 <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}</div>
                                 {% endif %}
                                 {% endif %}
-                                <div class="col-md-12"><label class="labels">Section:</label><br>{{ employe.section }}
+                                {% if request.user.username != employe.user %}
+                                {% if request.user.username == 'admin' %}
+                                <div class="col-md-12"><label class="labels">Section:</label><br>{{ user_change.section }}
                                 </div>
+                                {% else %}
+                                <div class="col-md-12"><label class="labels">Section:</label><br>
+                                    <select name="section" required="" id="id_section">
+                                        <option name="employe.section.id" value="{{ employe.section.id }}">{{ employe.section }}</option>
+                                    </select>
+                                </div>
+                                {% endif %}
+                                {% endif %}
                                 <div class="col-md-12"><label class="labels">Email:</label>{{ user_change.email }}</div>
                                 <div class="col-md-12"><label class="labels">Bio</label>{{ user_change.bio }}</div>
                                 <div class="col-md-12"><label class="labels">Address</label>{{ user_change.adress }}
