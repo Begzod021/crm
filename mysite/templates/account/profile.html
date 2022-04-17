@@ -32,7 +32,7 @@
                             </div>
                             <div class="row mt-3">
                                 {% if request.user.username != employe.user %}
-                                {% if section.id == employe.section.id or request.user.username == 'admin' %}
+                                {% if section.id == employe.section.id or request.user.is_superuser %}
                                 {% if position1.position == "director" %}
                                 <div class="col-md-12"><label class="labels">Position:</label><br>
                                     {{ user_change.position }}
@@ -49,7 +49,7 @@
                                 {% endif %}
                                 {% endif %}
                                 {% if request.user.username != employe.user %}
-                                {% if request.user.username == 'admin' %}
+                                {% if request.user.is_superuser %}
                                 <div class="col-md-12"><label class="labels">Section:</label><br>{{ user_change.section }}
                                 </div>
                                 {% else %}
@@ -66,7 +66,7 @@
                                 </div>
                                 <div class="col-md-12"><label class="labels">Status</label><br>{{ user_change.status }}
                                 </div>
-                                {% if request.user.username == "admin"%}
+                                {% if request.user.is_superuser %}
                                 <div class="col-md-12"><label class="labels">User Limit</label><br>{{ adduser.users }}
                                 </div>
                                 {% endif %}

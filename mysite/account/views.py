@@ -92,9 +92,9 @@ def user_profile(request, username):
         user_add = AddUser(request.POST, request.FILES, instance=user_count)
         user_change = AdminChange(request.POST, request.FILES, instance=employe)
         if user_change.is_valid() or user_add.is_valid():
-            if section.id==employe.section.id or request.user.username=="admin":
+            if section.id==employe.section.id or request.user.is_superuser:
                 user_change.save()
-            if user.username=="admin":
+            if request.user.is_superuser:
                 user_add.save()
             return redirect('user_profile', user.username)
 
