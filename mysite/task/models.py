@@ -1,3 +1,4 @@
+from operator import mod
 from django.db import models
 from django.utils.text import slugify
 # Create your models here.
@@ -13,25 +14,25 @@ class Task(models.Model):
 
 
 
-    employe = models.ManyToManyField(Employe, blank=True)
-    creator = models.ForeignKey(Employe, on_delete=models.PROTECT, related_name='creators')
+    employe = models.ForeignKey(Employe,on_delete=models.PROTECT, blank=True, null=True)
+    creator = models.ForeignKey(Employe, on_delete=models.PROTECT, related_name='creators', blank=True, null=True)
     checker = models.ManyToManyField(Employe, related_name='checkers')
     active = models.BooleanField(default=False)
-    deadline = models.DateTimeField(blank=True)
-    starteddate = models.DateTimeField(auto_now_add=True,blank=True)
-    upload = models.DateTimeField(blank=True)
-    section = models.ManyToManyField(Section)
-    status = models.CharField(max_length=100, choices=choice, default=False, blank=True)
-    name = models.CharField(max_length=100,blank=True)
-    description = models.TextField(blank=True)
+    end = models.DateTimeField(null=True,blank=True)
+    start = models.DateTimeField(null=True,blank=True)
+    upload = models.DateTimeField(blank=True, null=True)
+    section = models.ForeignKey(Section, on_delete=models.PROTECT, blank=True, null=True)
+    status = models.CharField(max_length=100, choices=choice, default=False, blank=True, null=True)
+    title = models.CharField(max_length=100,blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     slug = models.SlugField()
     file = models.FileField(upload_to='files/', blank=True, null=True)
     image = models.ImageField(upload_to='task_images/', blank=True, null=True)
-
+    id = models.AutoField(primary_key=True)
 
     def save(self, *args, **kwargs):
         
-        slug = f'{self.name}'
+        slug = f'{self.title}'
 
 
         self.slug = slugify(slug)

@@ -1,8 +1,11 @@
+
 from multiprocessing import context
 from django.contrib.auth import authenticate, login, logout
+from django.http import JsonResponse
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
 from django.contrib import messages
+from task.models import Task
 # Create your views here.
 
 def error_500(request, username):
@@ -178,21 +181,7 @@ def employe(request, username):
 
 
 
-def calendar(request, username):
-    if request.user.username !=username:
-        return redirect('error', username)
-    else:
-        user = User.objects.get(username=username)
-        if request.user.username !=username:
-            return redirect('error', username)
-        elif Employe.objects.filter(user=user):
-            user = User.objects.get(username=username)
-            employe = Employe.objects.get(user=user)
-            position1 = Postion.objects.get(id=employe.position.id)
-    context = {
-        'position1':position1,
-    }
-    return render(request,'calendar.html', context)
+
 
 
 def user_tablets(request, username):
