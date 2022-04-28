@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block static %}
-
+    <link href="{% static 'js/attention.css' %}" rel="stylesheet">
+    <script src="{% static 'js/attention.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
@@ -9,6 +10,7 @@
     <script>
 
       $(document).ready(function () {
+          
           var calendar = $('#calendar').fullCalendar({
               header: {
                   left: 'prev,next today',
@@ -20,32 +22,21 @@
               selectHelper: true,
               editable: true,
               eventLimit: true,
-              select: function (start, end, allDay) {
-                  var title = prompt("Enter Task Title");
+              select: function (start, end, allDay, user) {
+                  var title = prompt('Enter Task')
                   if (title) {
                       var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
                       var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
-                      $.ajax({
-                          type: "GET",
-                          url: '/all_tasks/{{ user.username }}',
-                          data: {'title': title, 'start': start, 'end': end},
-                          dataType: "json",
-                          success: function (data) {
-                              calendar.fullCalendar('refetchEvents');
-                              alert("Added Successfully");
-                          },
-                          error: function (data) {
-                              alert('There is a problem!!!');
-                          }
-                      });
+                      var employe = user.username
+                      var creator = user.username
                       $.ajax({
                         type: "GET",
-                        url: '/add_task',
-                        data: {'title': title, 'start': start, 'end': end},
+                        url: '/add_task/{{ user.username }}',
+                        data: {'title': title, 'start':start, 'end':end, 'employe':employe, 'creator':creator},
                         dataType: "json",
                         success: function (data) {
                             calendar.fullCalendar('refetchEvents');
-                            alert("Added Successfully");
+                            alert('Added task')
                         },
                         error: function (data) {
                             alert('There is a problem!!!');
@@ -119,6 +110,18 @@
       });
 
   </script>
+  <script>
+   $(document).ready(function()
+   {
+    var $id_employe=$('#id_employe'),
+        $id_section=$('#id_section'),
+        $options=$id_section.find('option');
+        $id_employe.on('change', function()
+        {
+          $id_section.html($options.filter('[value="'+this.value+'"]'));
+        }).trigger('change');
+   });
+ </script>
 {% endblock static %}
 {% block content %}
                 <!-- ### $App Screen Content ### -->
@@ -180,33 +183,26 @@
                       <h5 class="m-0">Add Event</h5>
                     </div>
                     <div class="modal-body">
-                      <form  method="POST">{% csrf_token %}
+                      <form  method="POST" id="formEmploye">{% csrf_token %}
                         <div class="form-group">
                           <label class="fw-500">Event title</label>
                           {{ form.title }}
                         </div>
                         <div class="row">
-                          {% if request.user.is_superuser %}
-                            <p>Choose Employe:</p><br>
-                            {{ form.employe }}
-                          {% else %}
-                          <p>Choose Employe:</p><br>
-                          <select name="employe" id="id_employe">
-                            <option value="" selected="">---------</option>
-                            {% for el1 in task_users %}
-                            <option name="el1.user.id" value="{{ el1.user.id }}">{{ el1.user }}</option>
+                          <label for="">Employe</label>
+                          <select name="employe"  id="id_employe">
+                            <option value="">--Select--</option>
+                            {% for el in task_users %}
+                            <option value="{{ el.id }}">{{ el.user }}</option>
                             {% endfor %}
                           </select>
-                          {% endif %}
-                          {% if task %}
-                          <label for="job">Section</label>
-                          <select name="section" required id="id_section">
-                            <option name="task.section.id" value="{{ task.section.id }}">{{ task.section }}</option>
+                          <label for="">Section</label>
+                          <select name="section" id="id_section">
+                            <option class="after" value="">--Select--</option>
+                            {% for i in task_users %}
+                            <option class="after" value="{{ i.id }}">{{ i.section }}</option>
+                            {% endfor %}
                           </select>
-                          {% else %}
-                          <label for="job">Section</label>
-                            {{ form.section }}
-                          {% endif %}
                         </div>
                         <div class="row">
                           <div class="col-md-6"><br>
@@ -247,4 +243,5 @@
             </div>
           </div>
         </main>
+        <p id="demo" ></p>
 {% endblock content %}

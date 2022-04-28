@@ -1,9 +1,12 @@
-from asyncio.base_tasks import _task_get_stack
-from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from account.models import *
 from .models import *
 from .forms import TaskForm
+from .serializers import EmployeSerialerz
+from rest_framework.views import APIView
+from rest_framework import permissions
 # Create your views here.
 def calendar(request, username):
     if request.user.username !=username:
@@ -20,10 +23,12 @@ def calendar(request, username):
             form = TaskForm()
             section = Section.objects.get(id=employe.section.id)
             if section.name == "CEO":
-                task_users = Task.objects.all()
+                task_users = Employe.objects.all()
                 context = {
                         'position1':position1,
                         'form':form,
+                        'employe':employe,
+                        'task_users':task_users
                 }
             else:
                 task = Task.objects.filter(section=employe.section.id).first()
@@ -33,6 +38,7 @@ def calendar(request, username):
                     'position1':position1,
                     'form':form,
                     'task_users':task_users,
+                    'employe':employe
                 }
             if request.method == 'POST':
                 form = TaskForm(request.POST, request.FILES)
@@ -58,16 +64,17 @@ def all_tasks(request, username):
         })
     
     return JsonResponse(out, safe=False)
-
-def add_task(request):
-    title = request.GET.get('title', None)
-    start = request.GET.get('start', None)
-    end = request.GET.get('end', None)
-    id = request.GET.get('id', None)
-    task = Task(title=str(title),start=start, end=end, id=id)
-    task.save()
-    data = {}
-    return JsonResponse(data)
+def add_task(request, username):
+    if request.method == 'GET':
+        user = User.objects.get(username=username)
+        title = request.GET.get('title')
+        start = request.GET.get('start')
+        end = request.GET.get('end')
+        task = Task(title=str(title), start=start, end=end, employe=Employe.objects.get(user=user), creator = Employe.objects.get(user=user))
+        task.save()
+        print(title)
+        data = {}
+        return JsonResponse(data)
 
 def update(request):
     start = request.GET.get('start',None)
@@ -88,3 +95,4 @@ def remove(request):
     task.delete()
     data = {}
     return JsonResponse(data)
+    
