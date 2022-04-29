@@ -1,11 +1,12 @@
-
-from multiprocessing import context
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
 from django.contrib import messages
-from task.models import Task
+from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz
 # Create your views here.
 
 def error_500(request, username):
@@ -211,3 +212,29 @@ def delete_employe(request, username):
     employe = Employe.objects.get(user=user)
     employe.delete()
     return redirect('user_tablets', request.user.username)
+
+
+class UserRegister(APIView):
+    def post(self, request):
+        user = UserRegisterSerialerz(data=request.data)
+        user.is_valid(raise_exception=True)
+        user.save()
+        return Response({'user':user.data})
+
+
+class RegisterEmploye(APIView):
+    def post(self, request, username):
+        user = User.objects.get(username=username)
+        author = Employe.objects.get(author=user)
+        employe = EmployeRegisterSerializer(author, data=request.data)
+        employe.is_valid(raise_exception=True)
+        employe.save()
+        return Response({'employe':employe.data}, status=status.HTTP_200_OK)
+
+
+class GetEmploye(APIView):
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        employe = Employe.objects.get(user=user)
+        serializer = EmployeSerializer(employe)
+        return Response(serializer.data)

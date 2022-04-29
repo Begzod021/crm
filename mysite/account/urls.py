@@ -17,7 +17,7 @@ Including another URLconf
 from unicodedata import name
 from django.urls import path
 
-from account.views import *
+from .views import *
 
 urlpatterns = [
     path('register/<str:username>/', user_registor, name='user_registor'),
@@ -29,4 +29,7 @@ urlpatterns = [
     path('505-erorrs/<str:username>/', error_500, name='erorr_505'),
     path('user-tablets/<str:username>/', user_tablets, name='user_tablets'),
     path('delete-employe/<str:username>/', delete_employe, name='delete-employe'),
+    path('api-register/',UserRegister.as_view(), name='api-register'),
+    path('api-get/<str:username>/', GetEmploye.as_view(), name='get-api'),
+    path('api-employe/<str:username>/', RegisterEmploye.as_view(), name='api-employe')
 ]
