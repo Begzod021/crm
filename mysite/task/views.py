@@ -71,7 +71,6 @@ def add_task(request, username):
         end = request.GET.get('end')
         task = Task(title=str(title), start=start, end=end, employe=Employe.objects.get(user=user), creator = Employe.objects.get(user=user))
         task.save()
-        print(title)
         data = {}
         return JsonResponse(data)
 

@@ -29,8 +29,8 @@
                           <td>{{ el.user }}</td>
                           <td>{{ el.section }}</td>
                           <td>{{ el.position }}</td>
-                          <td><a href="{% url 'user_profile' el.user %}">Edit</a></td>
-                          <td><a href="{% url 'delete-employe' el.user %}">Delete</a></td>
+                          <td><a href="{% url 'user_profile' el.user %}" class="fa-solid fa-user-pen"></a></td>
+                          <td><a href="{% url 'delete-employe' el.user %}" class="fa-solid fa-trash td-n c-red-500"></a></td>
                         </tr>
                       </tbody>
                       {% endif %}

@@ -8,8 +8,18 @@ from django.utils.text import slugify
 
 
 class User(AbstractUser):
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
+    has_profile = models.BooleanField(default=False)
 
+
+
+    def has_profile_true(self):
+        self.has_profile = True
+        print(self.has_profile)
+
+
+    def has_profile_false(self):
+        self.has_profile = False
 
 
     def save(self, *args, **kwargs):
@@ -122,6 +132,9 @@ class Employe(models.Model):
 
     def __str__(self) -> str:
         return str(self.user)
+
+    
+
 
 class AdduserCount(models.Model):
     users = models.PositiveIntegerField()

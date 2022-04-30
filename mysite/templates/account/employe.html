@@ -17,7 +17,7 @@
         
         <fieldset>
           <legend><span class="number">1</span>Profile</legend>
-          {% if employe_filter %}
+          {% if employe_filt %}
           <label for="job">Section</label>
           <select name="section" required id="id_section">
             <option name="employe_filter.section.id" value="{{ employe_filter.section.id }}">{{ employe_filter.section }}</option>
@@ -31,13 +31,13 @@
           <label for="job">User</label>
           <select name="user" required="" id="id_user">
             <option value="" selected="">---------</option>
-            {% for use in users_dict %}
+            {% for use in users %}
             <option name="use.id" value="{{ use.id }}">{{ use }}</option>
             {% endfor %}
           </select>
           <label for="job">Author</label>
           <select name="author" id="id_author">
-            <option name="employe_filter.author.id" value="{{ employe_filter.author.id }}">{{ employe_filt.user }}</option>     
+            <option name="employe_filter.author.id" value="{{ employe_filter.author.id }}">{{ employe_filter.user }}</option>     
           </select>
         </fieldset>
         <button type="submit">Sign Up</button>
