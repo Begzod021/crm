@@ -15,7 +15,6 @@ class User(AbstractUser):
 
     def has_profile_true(self):
         self.has_profile = True
-        print(self.has_profile)
 
 
     def has_profile_false(self):
