@@ -2,8 +2,11 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.forms import authenticate
 from account.models import User, Employe
 from account.models import Postion, AdduserCount
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+
+@login_required(login_url='user_login')
 def dashboard(request, username):
     if request.user.username !=username:
         return redirect('error', username)

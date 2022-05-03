@@ -2,23 +2,30 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
 from django.contrib import messages
 from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from .decorators import unauthenticated_user
 
+
+
+
+
+
+# Create your views here.
+@login_required(login_url='user_login')
 def error_500(request, username):
     return render(request, '500.html')
 
-
+@login_required(login_url='user_login')
 def error_404(request, username):
     return render(request, '404.html')
 
 
-
+@login_required(login_url='user_login')
 def user_registor(request, username):
     if request.user.username != username:
         return redirect('error' , username)
@@ -26,7 +33,6 @@ def user_registor(request, username):
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
         postion = Postion.objects.get(id=employe.position.id)
-        print(postion)
         users = User.objects.all().count()
         user_count = AdduserCount.objects.first()
         if postion.position in ('director',) and users < user_count.users:
@@ -49,6 +55,8 @@ def user_registor(request, username):
 
     return render(request, 'SignUp.html', context)
 
+
+@unauthenticated_user
 def user_login(request):
     form = AddAdmin()
     if request.method=="POST":
@@ -70,15 +78,16 @@ def user_login(request):
                 messages.error(request, 'Login error')
     
     context = {
-        'form':form
-    }
+            'form':form
+        }
     return render(request, 'SignIn.html', context)
+
 
 def logout_user(request):
     logout(request)
     return redirect('user_login')
 
-
+@login_required(login_url='user_login')
 def user_profile(request, username):
     user = User.objects.get(username=username)
     admin = User.objects.get(username=request.user.username)
@@ -111,7 +120,7 @@ def user_profile(request, username):
 
     return render(request, 'account/profile.html', context)
 
-
+@login_required(login_url='user_login')
 def employe(request, username):
     user = User.objects.get(username=username)
     employes = Employe.objects.get(user=user)
@@ -151,11 +160,14 @@ def employe(request, username):
                 user_data = User.objects.get(id=user_id)
                 user_data.has_profile_true()
                 user_data.save()
+
                 return redirect('user_registor', username)
     else:
          return redirect('error', username)
     return render(request, 'account/employe.html', context)
 
+
+@login_required(login_url='user_login')
 def user_tablets(request, username):
     if request.user.username != username:
         return redirect('error', username)

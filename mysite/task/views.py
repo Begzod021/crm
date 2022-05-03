@@ -6,7 +6,12 @@ from .models import *
 from .forms import TaskForm
 from rest_framework.views import APIView
 from rest_framework import permissions
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+
+
+@login_required(login_url='user_login')
 def calendar(request, username):
     if request.user.username !=username:
         return redirect('error', username)
@@ -18,7 +23,6 @@ def calendar(request, username):
             user = User.objects.get(username=username)
             employe = Employe.objects.get(user=user)
             position1 = Postion.objects.get(id=employe.position.id)
-            tasks = Task.objects.all()
             form = TaskForm()
             section = Section.objects.get(id=employe.section.id)
             if section.name == "CEO":
@@ -45,6 +49,9 @@ def calendar(request, username):
                     form.save()
                     return redirect('calendar', request.user.username)
     return render(request,'calendar.html', context)
+
+
+
 
 def all_tasks(request, username):
     user = User.objects.get(username=username)
