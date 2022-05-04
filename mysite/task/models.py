@@ -14,14 +14,13 @@ class Task(models.Model):
 
 
 
-    employe = models.ForeignKey(Employe,on_delete=models.PROTECT, blank=True, null=True)
-    creator = models.ForeignKey(Employe, on_delete=models.PROTECT, related_name='creators', blank=True, null=True)
+    employe = models.ForeignKey(Employe,on_delete=models.CASCADE, blank=True, null=True)
+    creator = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name='creators', blank=True, null=True)
     checker = models.ManyToManyField(Employe, related_name='checkers')
     active = models.BooleanField(default=False)
     end = models.DateTimeField(null=True,blank=True)
     start = models.DateTimeField(null=True,blank=True)
     upload = models.DateTimeField(blank=True, null=True)
-    section = models.ForeignKey(Section, on_delete=models.PROTECT, blank=True, null=True)
     status = models.CharField(max_length=100, choices=choice, default=False, blank=True, null=True)
     title = models.CharField(max_length=100,blank=True, null=True)
     description = models.TextField(blank=True, null=True)

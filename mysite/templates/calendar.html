@@ -8,7 +8,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script>
-
       $(document).ready(function () {
           
           var calendar = $('#calendar').fullCalendar({
@@ -108,20 +107,7 @@
 
           });
       });
-
   </script>
-  <script>
-   $(document).ready(function()
-   {
-    var $id_employe=$('#id_employe'),
-        $id_section=$('#id_section'),
-        $options=$id_section.find('option');
-        $id_employe.on('change', function()
-        {
-          $id_section.html($options.filter('[value="'+this.value+'"]'));
-        }).trigger('change');
-   });
- </script>
 {% endblock static %}
 {% block content %}
                 <!-- ### $App Screen Content ### -->
@@ -132,6 +118,8 @@
                 <div class="col-md-4">
                   <div class="bdrs-3 ov-h bgc-white bd">
                     <div class="bgc-deep-purple-500 ta-c p-30">
+                      {% if task %}
+                      {% for i in task %}
                       <h1 class="fw-300 mB-5 lh-1 c-white">01<span class="fsz-def">st</span></h1>
                       <h3 class="c-white">Monday</h3>
                     </div>
@@ -145,28 +133,29 @@
                             <div class="peer mR-15">
                               <i class="fa fa-fw fa-clock-o c-red-500"></i>
                             </div>
-                            <div class="peer">
-                              <span class="fw-600">All Day Event</span>
+                            <div class="peer" id='id_task'>
+                              <span class="fw-600">{{ i.title }}</span>
                               <div class="c-grey-600">
-                                <span class="c-grey-700">Nov 01 - </span>
-                                <i>Website Development</i>
+                                <span class="c-grey-700">{{ i.start }}</span>
                               </div>
                             </div>
                           </a>
                           <div class="peers mR-15">
                             <div class="peer">
-                              <a href="http://symfonator.herokuapp.com/admin/calendar" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
-                                <i class="ti-pencil"></i>
+                              <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
+                                <i class="fa-solid fa-marker"></i>
                               </a>
                             </div>
                             <div class="peer">
-                              <a href="http://symfonator.herokuapp.com/admin/calendar" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
-                                <i class="ti-trash"></i>
+                              <a href="{% url 'delete-task' request.user.username %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                <i class="fa-solid fa-trash"></i>
                               </a>
                             </div>
                           </div>
                         </li>
                       </ul>
+                      {% endfor %}
+                      {% endif %}
                     </div>
                   </div>
                 </div>
@@ -183,26 +172,24 @@
                       <h5 class="m-0">Add Event</h5>
                     </div>
                     <div class="modal-body">
-                      <form  method="POST" id="formEmploye">{% csrf_token %}
+                      <form  method="POST">{% csrf_token %}
                         <div class="form-group">
                           <label class="fw-500">Event title</label>
                           {{ form.title }}
                         </div>
                         <div class="row">
-                          <label for="">Employe</label>
-                          <select name="employe"  id="id_employe">
-                            <option value="">--Select--</option>
-                            {% for el in task_users %}
-                            <option value="{{ el.id }}">{{ el.user }}</option>
-                            {% endfor %}
-                          </select>
-                          <label for="">Section</label>
-                          <select name="section" id="id_section">
-                            <option class="after" value="">--Select--</option>
-                            {% for i in task_users %}
-                            <option class="after" value="{{ i.id }}">{{ i.section }}</option>
-                            {% endfor %}
-                          </select>
+                          <div class="form-group col-md-5 row">
+                            <label for="">Employe</label>
+                            <select name="employe"  id="id_employe" class="form-control">
+                              {% for el in task %}
+                              <option value="{{ el.id }}">{{ el.employe }}</option>
+                            </select>
+                            <label for="">Section</label>
+                            <select name="section" id="id_section" class="form-control">
+                              <option class="after" value="{{ section.id }}">{{ section.name }}</option>
+                              {% endfor %}
+                            </select>
+                          </div>
                         </div>
                         <div class="row">
                           <div class="col-md-6"><br>

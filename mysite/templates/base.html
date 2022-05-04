@@ -367,19 +367,19 @@
           </ul>
           <ul class="nav-right">
             <li class="notifications dropdown">
-              <span class="counter bgc-red">3</span>
+              <span class="counter bgc-red">{{ task_count.count }}</span>
               <a href="http://symfonator.herokuapp.com/admin/dashboard" class="dropdown-toggle no-after"
                 data-toggle="dropdown">
                 <i class="fa-solid fa-bell"></i>
               </a>
-
               <ul class="dropdown-menu">
                 <li class="pX-20 pY-15 bdB">
                   <i class="fa-solid fa-bell pR-10"></i>
-                  <span class="fsz-sm fw-600 c-grey-900">Notifications</span>
+                  <span class="fsz-sm fw-600 c-grey-900">New tasks</span>
                 </li>
                 <li>
                   <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm ps">
+                    {% for el in task_count %}
                     <li>
                       <a href="http://symfonator.herokuapp.com/admin/dashboard"
                         class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
@@ -388,8 +388,8 @@
                         </div>
                         <div class="peer peer-greed">
                           <span>
-                            <span class="fw-500">John Doe</span>
-                            <span class="c-grey-600">liked your <span class="text-dark">post</span>
+                            <span class="fw-500">{{ el.creator }}</span><br>
+                            <span class="c-grey-600">{{ el.title }}
                             </span>
                           </span>
                           <p class="m-0">
@@ -398,42 +398,7 @@
                         </div>
                       </a>
                     </li>
-                    <li>
-                      <a href="http://symfonator.herokuapp.com/admin/dashboard"
-                        class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                        <div class="peer mR-15">
-                          <img class="w-3r bdrs-50p" src="{% static './dashboard_files/2.jpg' %}" alt="">
-                        </div>
-                        <div class="peer peer-greed">
-                          <span>
-                            <span class="fw-500">Moo Doe</span>
-                            <span class="c-grey-600">liked your <span class="text-dark">cover image</span>
-                            </span>
-                          </span>
-                          <p class="m-0">
-                            <small class="fsz-xs">7 mins ago</small>
-                          </p>
-                        </div>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="http://symfonator.herokuapp.com/admin/dashboard"
-                        class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                        <div class="peer mR-15">
-                          <img class="w-3r bdrs-50p" src="{% static './dashboard_files/3.jpg' %}" alt="">
-                        </div>
-                        <div class="peer peer-greed">
-                          <span>
-                            <span class="fw-500">Lee Doe</span>
-                            <span class="c-grey-600">commented on your <span class="text-dark">video</span>
-                            </span>
-                          </span>
-                          <p class="m-0">
-                            <small class="fsz-xs">10 mins ago</small>
-                          </p>
-                        </div>
-                      </a>
-                    </li>
+                    {% endfor %}
                     <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                       <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
                     </div>
@@ -591,6 +556,13 @@
                     <span>Tabelts User</span>
                   </a>
                   {% endif %}
+                </li>
+                <li>
+                  <a href="{% url 'task' request.user.username %}"
+                    class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                    <i class="fa-solid fa-clipboard-list mR-10"></i>
+                    <span>Add task</span>
+                  </a>
                 </li>
                 <li role="separator" class="divider"></li>
                 <li>

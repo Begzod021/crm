@@ -9,7 +9,7 @@ from django.contrib import messages
 from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
-
+from task.models import *
 
 
 
@@ -98,6 +98,7 @@ def user_profile(request, username):
     user_change = AdminChange(request.POST or None, instance=employe)
     user_count =  AdduserCount.objects.first()
     user_add = AddUser(request.POST or None, request.FILES or None, instance=user_count)
+    task_count = Task.objects.filter(employe=employe)
     if request.method == 'POST':
         user_add = AddUser(request.POST, request.FILES, instance=user_count)
         user_change = AdminChange(request.POST, request.FILES, instance=employe)
@@ -116,54 +117,57 @@ def user_profile(request, username):
         'user':user,
         'adduser':user_add,
         'admin':admin,
+        'task_count':task_count
     }
 
     return render(request, 'account/profile.html', context)
 
 @login_required(login_url='user_login')
 def employe(request, username):
-    user = User.objects.get(username=username)
-    employes = Employe.objects.get(user=user)
-    postion = Postion.objects.get(id=employes.position.id)
-    if postion.position in ('director',):
-        user = User.objects.get(username=username)
-        position = PositionForm()
-        employes = Employe.objects.get(user=user)
-        section = Section.objects.get(id=employes.section.id)
-        if section.name == "CEO":
-            employe = Employe.objects.all()
-            users = User.objects.filter(has_profile=False)
-            employe_filter = Employe.objects.get(user=user)
-            context = {
-                'employe':employe,
-                'position':position,
-                'employe_filter':employe_filter,
-                'users':users
-            }
-        else:
-            employe_filt = Employe.objects.get(user=user)
-            employe_filter = Employe.objects.get(user=user)
-            print(employe_filter)
-            employe = Employe.objects.all()
-            users = User.objects.filter(has_profile=False)
-            context = {
-                'employe_filter':employe_filter,
-                'position':position,
-                'users':users,
-                'employe_filt':employe_filt
-            }
-        if request.method == 'POST':
-            position = PositionForm(request.POST, request.FILES)
-            if position.is_valid():
-                position.save()
-                user_id = request.POST.get('user')
-                user_data = User.objects.get(id=user_id)
-                user_data.has_profile_true()
-                user_data.save()
-
-                return redirect('user_registor', username)
+    if request.user.username != username:
+        return redirect('error', username)
     else:
-         return redirect('error', username)
+        user = User.objects.get(username=username)
+        employes = Employe.objects.get(user=user)
+        postion = Postion.objects.get(id=employes.position.id)
+        if postion.position in ('director',):
+            user = User.objects.get(username=username)
+            position = PositionForm()
+            employes = Employe.objects.get(user=user)
+            section = Section.objects.get(id=employes.section.id)
+            if section.name == "CEO":
+                employe = Employe.objects.all()
+                users = User.objects.filter(has_profile=False)
+                employe_filter = Employe.objects.get(user=user)
+                context = {
+                    'employe':employe,
+                    'position':position,
+                    'employe_filter':employe_filter,
+                    'users':users
+                }
+            else:
+                employe_filt = Employe.objects.get(user=user)
+                employe_filter = Employe.objects.get(user=user)
+                employe = Employe.objects.all()
+                users = User.objects.filter(has_profile=False)
+                context = {
+                    'employe_filter':employe_filter,
+                    'position':position,
+                    'users':users,
+                    'employe_filt':employe_filt
+                }
+            if request.method == 'POST':
+                position = PositionForm(request.POST, request.FILES)
+                if position.is_valid():
+                    position.save()
+                    user_id = request.POST.get('user')
+                    user_data = User.objects.get(id=user_id)
+                    user_data.has_profile_true()
+                    user_data.save()
+
+                    return redirect('user_registor', username)
+        else:
+            return redirect('error', username)
     return render(request, 'account/employe.html', context)
 
 
@@ -183,10 +187,12 @@ def user_tablets(request, username):
             position1 = Postion.objects.get(id=employe.position.id)
             section = Section.objects.get(id=employe.section.id)
             employes = Employe.objects.all()
+            task_count = Task.objects.filter(employe=employe)
     context = {
         'position1':position1,
         'employes':employes,
         'section':section,
+        'task_count':task_count
     }
     return render(request, 'basic_tablets.html', context)
 

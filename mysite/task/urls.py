@@ -8,4 +8,6 @@ urlpatterns = [
     path('update', update, name='update'),
     path('remove', remove, name='remove'),
     path('all_tasks/<str:username>', all_tasks, name='all_tasks'),
+    path('task/<str:username>/', task, name='task'),
+    path('delete-task/<str:username>/', delete, name='delete-task')
 ]
