@@ -34,11 +34,28 @@ def calendar(request, username):
             'position1':position1,
             'section':section,
             'form':form,
-            'task_count':task_count
+            'task_count':task_count,
+            'employes':employes
         }
     return render(request,'calendar.html', context)
 
 
+def get_tasks(request):
+    user = request.user
+    employee = Employe.objects.get(user=user)
+
+    tasks = list(Task.objects.filter(employe=employee).values())
+
+    return JsonResponse({'tasks': tasks, 'tasks_cnt': len(tasks)})
+
+
+
+def task_detail(request):
+    id = request.GET['task_id']
+
+    task_title = Task.objects.get(id=id).title
+
+    return JsonResponse({'task_title': task_title})
 
 
 @login_required(login_url='user_login')
@@ -83,6 +100,7 @@ def task(request, username):
 
 
 def all_tasks(request, username):
+
     user = User.objects.get(username=username)
     employe = Employe.objects.get(user=user)
 
@@ -99,6 +117,8 @@ def all_tasks(request, username):
         })
     
     return JsonResponse(out, safe=False)
+
+
 def add_task(request, username):
     if request.method == 'GET':
         user = User.objects.get(username=username)

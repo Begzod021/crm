@@ -36,11 +36,58 @@
                         success: function (data) {
                             calendar.fullCalendar('refetchEvents');
                             alert('Added task');
+
+                            const tasks = document.getElementById('emp_tasks');
+                            const tasks_cnt = document.getElementById('tasks_cnt');
+                            tasks.innerHTML = "";
+
+                            $.ajax({
+                              url: '{% url "get-tasks" %}',
+                              type: 'GET',
+                              success: function(data) {
+                                (data.tasks).forEach(task => {
+                                  const taskHTML = `
+                                      <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
+                                        <a onclick="taskDetail(${task.id})" class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" data-toggle="modal" data-target="#calendar-edit">
+                                          <div class="peer mR-15">
+                                            <i class="fa fa-fw fa-clock-o c-red-500"></i>
+                                          </div>
+                                          <div class="peer" id='id_task'>
+                                            <span class="fw-600">${ task.title }</span>
+                                            <div class="c-grey-600">
+                                              <span class="c-grey-700">${ task.start }</span>
+                                            </div>
+                                          </div>
+                                        </a>
+                                        <div class="peers mR-15">
+                                          <div class="peer">
+                                            <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
+                                              <i class="fa-solid fa-marker"></i>
+                                            </a>
+                                          </div>
+                                          <div class="peer">
+                                            <a href="{% url 'delete-task' request.user.username %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                              <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </li>`
+
+                                  tasks.innerHTML += taskHTML;
+                                });
+                                tasks_cnt.innerHTML = `${data.tasks_cnt}`;
+                                console.log(tasks_cnt);
+                              }
+                            });
+
+                      
                         },
                         error: function (data) {
                             alert('There is a problem!!!');
                         }
-                    });
+                      });
+
+                     
                   }
               },
               {% if position1.position == "director" %}
@@ -106,8 +153,28 @@
               {% endif %}
 
           });
-      });
-  </script>
+          
+      })
+    </script>
+    <script>
+      function taskDetail(id) {
+        const taskTitle = document.getElementById('taskTitle');
+        taskTitle.innerHTML = "";
+
+        $.ajax({
+          url: '{% url "task-detail" %}',
+          type: 'GET',
+          data: {
+            'task_id': id,
+          },
+          
+          success: function(data) {
+            console.log('11111111111111111');
+            taskTitle.innerHTML += `<input type="text" value="${data.task_title}">`;
+          }
+        });
+      }
+    </script>
 {% endblock static %}
 {% block content %}
                 <!-- ### $App Screen Content ### -->
@@ -118,8 +185,6 @@
                 <div class="col-md-4">
                   <div class="bdrs-3 ov-h bgc-white bd">
                     <div class="bgc-deep-purple-500 ta-c p-30">
-                      {% if task %}
-                      {% for i in task %}
                       <h1 class="fw-300 mB-5 lh-1 c-white">01<span class="fsz-def">st</span></h1>
                       <h3 class="c-white">Monday</h3>
                     </div>
@@ -127,36 +192,36 @@
                       <button type="button" class="mT-nv-50 pos-a r-10 t-2 btn cur-p bdrs-50p p-0 w-3r h-3r btn-warning">
                         <i class="ti-plus"></i>
                       </button>
-                      <ul class="m-0 p-0 mT-20">
-                        <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
-                          <a class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
-                            <div class="peer mR-15">
-                              <i class="fa fa-fw fa-clock-o c-red-500"></i>
-                            </div>
-                            <div class="peer" id='id_task'>
-                              <span class="fw-600">{{ i.title }}</span>
-                              <div class="c-grey-600">
-                                <span class="c-grey-700">{{ i.start }}</span>
+                      <ul class="m-0 p-0 mT-20" id="emp_tasks">
+                          {% for i in task %}
+                            <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
+                              <a onclick="taskDetail({{ i.id }})" class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
+                                <div class="peer mR-15">
+                                  <i class="fa fa-fw fa-clock-o c-red-500"></i>
+                                </div>
+                                <div class="peer" id='id_task'>
+                                  <span class="fw-600">{{ i.title }}</span>
+                                  <div class="c-grey-600">
+                                    <span class="c-grey-700">{{ i.start }}</span>
+                                  </div>
+                                </div>
+                              </a>
+                              <div class="peers mR-15">
+                                <div class="peer">
+                                  <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
+                                    <i class="fa-solid fa-marker"></i>
+                                  </a>
+                                </div>
+                                <div class="peer">
+                                  <a href="{% url 'delete-task' request.user.username %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                    <i class="fa-solid fa-trash"></i>
+                                  </a>
+                                </div>
                               </div>
-                            </div>
-                          </a>
-                          <div class="peers mR-15">
-                            <div class="peer">
-                              <a href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
-                                <i class="fa-solid fa-marker"></i>
-                              </a>
-                            </div>
-                            <div class="peer">
-                              <a href="{% url 'delete-task' request.user.username %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
-                                <i class="fa-solid fa-trash"></i>
-                              </a>
-                            </div>
-                          </div>
-                        </li>
-                      </ul>
-                      {% endfor %}
-                      {% endif %}
-                    </div>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      </div>
                   </div>
                 </div>
                 <div class="col-md-8">
@@ -175,19 +240,17 @@
                       <form  method="POST">{% csrf_token %}
                         <div class="form-group">
                           <label class="fw-500">Event title</label>
-                          {{ form.title }}
+                          <span id="taskTitle">{{ form.title }}</span>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-5 row">
                             <label for="">Employe</label>
                             <select name="employe"  id="id_employe" class="form-control">
-                              {% for el in task %}
-                              <option value="{{ el.id }}">{{ el.employe }}</option>
+                              <option value="{{ employes.id }}">{{ employes.user }}</option>
                             </select>
                             <label for="">Section</label>
                             <select name="section" id="id_section" class="form-control">
                               <option class="after" value="{{ section.id }}">{{ section.name }}</option>
-                              {% endfor %}
                             </select>
                           </div>
                         </div>
@@ -230,5 +293,4 @@
             </div>
           </div>
         </main>
-        <p id="demo" ></p>
 {% endblock content %}
