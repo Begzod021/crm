@@ -47,6 +47,8 @@ INSTALLED_APPS = [
 
 
     'task',
+    'chat',
+    'contact',
 ]
 
 MIDDLEWARE = [

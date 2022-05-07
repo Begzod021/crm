@@ -209,7 +209,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/chat">
+            <a class="sidebar-link" href="{% url 'chat' request.user.username %}">
               <span class="icon-holder">
                 <i class="c-blue-500 fa-solid fa-comment"></i>
               </span>

@@ -1,15 +1,10 @@
-from multiprocessing import context
-from django.shortcuts import get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from account.models import *
 from .models import *
 from .forms import TaskEditForm, TaskForm
-from rest_framework.views import APIView
-from rest_framework import permissions
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
 
 
 @login_required(login_url='user_login')
@@ -21,8 +16,7 @@ def calendar(request, username):
         employes = Employe.objects.get(user=user)
         position1 = Postion.objects.get(id=employes.position.id)
         section = Section.objects.get(id=employes.section.id)
-        task = Task.objects.filter(employe=employes)
-        task_count = Task.objects.filter(employe=employes)
+        task_count = Task.objects.filter(employe=employes).order_by('-id')
         form = TaskEditForm(request.POST or None, request.GET or None, instance=Task.objects.filter(employe=employes).first())
         if request.method == 'POST':
             form = TaskEditForm(request.POST, request.FILES, instance=Task.objects.filter(employe=employes).first())
@@ -30,7 +24,6 @@ def calendar(request, username):
                 form.save()
                 return redirect('calendar', request.user.username)
         context = {
-            'task':task,
             'position1':position1,
             'section':section,
             'form':form,
@@ -44,7 +37,7 @@ def get_tasks(request):
     user = request.user
     employee = Employe.objects.get(user=user)
 
-    tasks = list(Task.objects.filter(employe=employee).values())
+    tasks = list(Task.objects.filter(employe=employee).values().order_by('-id'))
 
     return JsonResponse({'tasks': tasks, 'tasks_cnt': len(tasks)})
 
@@ -54,8 +47,11 @@ def task_detail(request):
     id = request.GET['task_id']
 
     task_title = Task.objects.get(id=id).title
-
-    return JsonResponse({'task_title': task_title})
+    task_start = Task.objects.get(id=id).start
+    task_end = Task.objects.get(id=id).end
+    task_des = Task.objects.get(id=id).description
+    print(task_title)
+    return JsonResponse({'task_title': task_title, 'task_start':task_start, 'task_end':task_end, 'task_des':task_des})
 
 
 @login_required(login_url='user_login')
@@ -144,17 +140,9 @@ def update(request):
     data={}
     return JsonResponse(data)
 
-def remove(request):
-    id = request.GET.get('id', None)
-    task = Task.objects.get(id=id)
-    task.delete()
-    data = {}
-    return JsonResponse(data)
 
-def delete(request, username):
-    user = User.objects.get(username=username)
-    employe = Employe.objects.get(user=user)
-    task = Task.objects.filter(employe=employe).first()
+def delete(request, slug):
+    task = Task.objects.filter(slug=slug).first()
     task.delete()
     return redirect('calendar', request.user.username)
     

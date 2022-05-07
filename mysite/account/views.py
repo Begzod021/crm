@@ -221,7 +221,7 @@ class RegisterEmploye(APIView):
         employe.save()
         return Response({'employe':employe.data}, status=status.HTTP_200_OK)
 
-
+ 
 class GetEmploye(APIView):
     def get(self, request, username):
         user = User.objects.get(username=username)

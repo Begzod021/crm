@@ -1,61 +1,121 @@
+{% load static %}
 <!DOCTYPE html>
 <!-- saved from url=(0042)http://symfonator.herokuapp.com/admin/chat -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Welcome to Symfonator - Responsive Bootstrap 4 Admin Template on the Symfony Foundation!</title>
-        <link rel="stylesheet" href="./chat_files/app.css">
-                    <style>
-                #loader {
-                    transition: all 0.3s ease-in-out;
-                    opacity: 1;
-                    visibility: visible;
-                    position: fixed;
-                    height: 100vh;
-                    width: 100%;
-                    background: #fff;
-                    z-index: 90000;
-                }
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://kit.fontawesome.com/bd8bfefed0.js" crossorigin="anonymous"></script>
 
-                #loader.fadeOut {
-                    opacity: 0;
-                    visibility: hidden;
-                }
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>
+      Welcome to Symfonator - Responsive Bootstrap 4 Admin Template on the
+      Symfony Foundation!
+    </title>
+    <link rel="stylesheet" href="{% static 'chat_files/app.css' %}" />
+    <style>
+      #loader {
+        transition: all 0.3s ease-in-out;
+        opacity: 1;
+        visibility: visible;
+        position: fixed;
+        height: 100vh;
+        width: 100%;
+        background: #fff;
+        z-index: 90000;
+      }
 
-                .spinner {
-                    width: 40px;
-                    height: 40px;
-                    position: absolute;
-                    top: calc(50% - 20px);
-                    left: calc(50% - 20px);
-                    background-color: #333;
-                    border-radius: 100%;
-                    -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-                    animation: sk-scaleout 1.0s infinite ease-in-out;
-                }
+      #loader.fadeOut {
+        opacity: 0;
+        visibility: hidden;
+      }
 
-                @-webkit-keyframes sk-scaleout {
-                    0% { -webkit-transform: scale(0) }
-                    100% {
-                        -webkit-transform: scale(1.0);
-                        opacity: 0;
-                    }
-                }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        top: calc(50% - 20px);
+        left: calc(50% - 20px);
+        background-color: #333;
+        border-radius: 100%;
+        -webkit-animation: sk-scaleout 1s infinite ease-in-out;
+        animation: sk-scaleout 1s infinite ease-in-out;
+      }
 
-                @keyframes sk-scaleout {
-                    0% {
-                        -webkit-transform: scale(0);
-                        transform: scale(0);
-                    } 100% {
-                          -webkit-transform: scale(1.0);
-                          transform: scale(1.0);
-                          opacity: 0;
-                      }
-                }
-            </style>
-            <style type="text/css">/* Chart.js */
-@-webkit-keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}@keyframes chartjs-render-animation{from{opacity:0.99}to{opacity:1}}.chartjs-render-monitor{-webkit-animation:chartjs-render-animation 0.001s;animation:chartjs-render-animation 0.001s;}</style><style type="text/css">.jqstooltip { position: absolute;left: 0px;top: 0px;visibility: hidden;background: rgb(0, 0, 0) transparent;background-color: rgba(0,0,0,0.6);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";color: white;font: 10px arial, san serif;text-align: left;white-space: nowrap;padding: 5px;border: 1px solid white;box-sizing: content-box;z-index: 10000;}.jqsfield { color: white;font: 10px arial, san serif;text-align: left;}</style></head>
-    <body class="app" cz-shortcut-listen="true">
+      @-webkit-keyframes sk-scaleout {
+        0% {
+          -webkit-transform: scale(0);
+        }
+        100% {
+          -webkit-transform: scale(1);
+          opacity: 0;
+        }
+      }
+
+      @keyframes sk-scaleout {
+        0% {
+          -webkit-transform: scale(0);
+          transform: scale(0);
+        }
+        100% {
+          -webkit-transform: scale(1);
+          transform: scale(1);
+          opacity: 0;
+        }
+      }
+    </style>
+    <style type="text/css">
+      /* Chart.js */
+      @-webkit-keyframes chartjs-render-animation {
+        from {
+          opacity: 0.99;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes chartjs-render-animation {
+        from {
+          opacity: 0.99;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      .chartjs-render-monitor {
+        -webkit-animation: chartjs-render-animation 0.001s;
+        animation: chartjs-render-animation 0.001s;
+      }
+    </style>
+    <style type="text/css">
+      .jqstooltip {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        visibility: hidden;
+        background: rgb(0, 0, 0) transparent;
+        background-color: rgba(0, 0, 0, 0.6);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000, endColorstr=#99000000)";
+        color: white;
+        font: 10px arial, san serif;
+        text-align: left;
+        white-space: nowrap;
+        padding: 5px;
+        border: 1px solid white;
+        box-sizing: content-box;
+        z-index: 10000;
+      }
+      .jqsfield {
+        color: white;
+        font: 10px arial, san serif;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body class="app" cz-shortcut-listen="true">
     <!-- @TOC -->
     <!-- =================================================== -->
     <!--
@@ -73,430 +133,469 @@
     <!-- @Page Loader -->
     <!-- =================================================== -->
     <div id="loader" class="fadeOut">
-        <div class="spinner"></div>
+      <div class="spinner"></div>
     </div>
 
     <!-- @App Content -->
     <!-- =================================================== -->
     <div>
-        <!-- #Left Sidebar ==================== -->
-        <div class="sidebar">
-            <div class="sidebar-inner">
-                <!-- ### $Sidebar Header ### -->
-                <div class="sidebar-logo">
-                    <div class="peers ai-c fxw-nw">
-                        <div class="peer peer-greed">
-                            <a class="sidebar-link td-n" href="http://symfonator.herokuapp.com/admin">
-                                <div class="peers ai-c fxw-nw">
-                                    <div class="peer">
-                                        <div class="logo">
-                                            <img src="./chat_files/sf.f10c2d76.png" alt="logo">
-                                        </div>
-                                    </div>
-                                    <div class="peer peer-greed">
-                                        <h5 class="lh-1 mB-0 logo-text">Symfonator</h5>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="peer">
-                            <div class="mobile-toggle sidebar-toggle">
-                                <a href="http://symfonator.herokuapp.com/admin/chat" class="td-n">
-                                    <i class="ti-arrow-circle-left"></i>
-                                </a>
-                            </div>
-                        </div>
+      <!-- #Left Sidebar ==================== -->
+      <div class="sidebar">
+        <div class="sidebar-inner">
+          <!-- ### $Sidebar Header ### -->
+          <div class="sidebar-logo">
+            <div class="peers ai-c fxw-nw">
+              <div class="peer peer-greed">
+                <a
+                  class="sidebar-link td-n"
+                  href="http://symfonator.herokuapp.com/admin"
+                >
+                  <div class="peers ai-c fxw-nw">
+                    <div class="peer">
+                      <div class="logo">
+                        <img
+                          src="{% static 'chat_files/sf.f10c2d76.png' %}"
+                          alt="logo"
+                        />
+                      </div>
                     </div>
+                    <div class="peer peer-greed">
+                      <h5 class="lh-1 mB-0 logo-text">Symfonator</h5>
+                    </div>
+                  </div>
+                </a>
+              </div>
+              <div class="peer">
+                <div class="mobile-toggle sidebar-toggle">
+                  <a
+                    href="http://symfonator.herokuapp.com/admin/chat"
+                    class="td-n"
+                  >
+                    <i class="ti-arrow-circle-left"></i>
+                  </a>
                 </div>
-
-                <!-- ### $Sidebar Menu ### -->
-                <ul class="sidebar-menu scrollable pos-r ps">
-                    <li class="nav-item mT-30 active">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/dashboard">
-                <span class="icon-holder">
-                  <i class="c-blue-500 ti-home"></i>
-                </span>
-                            <span class="title">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/email">
-                <span class="icon-holder">
-                  <i class="c-brown-500 ti-email"></i>
-                </span>
-                            <span class="title">Email</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/compose">
-                <span class="icon-holder">
-                  <i class="c-blue-500 ti-share"></i>
-                </span>
-                            <span class="title">Compose</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/calendar">
-                <span class="icon-holder">
-                  <i class="c-deep-orange-500 ti-calendar"></i>
-                </span>
-                            <span class="title">Calendar</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="sidebar-link active" href="http://symfonator.herokuapp.com/admin/chat">
-                <span class="icon-holder">
-                  <i class="c-deep-purple-500 ti-comment-alt"></i>
-                </span>
-                            <span class="title">Chat</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/charts">
-                <span class="icon-holder">
-                  <i class="c-indigo-500 ti-bar-chart"></i>
-                </span>
-                            <span class="title">Charts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/forms">
-                <span class="icon-holder">
-                  <i class="c-light-blue-500 ti-pencil"></i>
-                </span>
-                            <span class="title">Forms</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/ui">
-                <span class="icon-holder">
-                    <i class="c-pink-500 ti-palette"></i>
-                  </span>
-                            <span class="title">UI Elements</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-orange-500 ti-layout-list-thumb"></i>
-                </span>
-                            <span class="title">Tables</span>
-                            <span class="arrow">
-                  <i class="ti-angle-right"></i>
-                </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/basic-table">Basic Table</a>
-                            </li>
-                            <li>
-                                <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/datatable">Data Table</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                    <i class="c-purple-500 ti-map"></i>
-                  </span>
-                            <span class="title">Maps</span>
-                            <span class="arrow">
-                    <i class="ti-angle-right"></i>
-                  </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="http://symfonator.herokuapp.com/admin/google-maps">Google Map</a>
-                            </li>
-                            <li>
-                                <a href="http://symfonator.herokuapp.com/admin/vector-maps">Vector Map</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                    <i class="c-red-500 ti-files"></i>
-                  </span>
-                            <span class="title">Pages</span>
-                            <span class="arrow">
-                    <i class="ti-angle-right"></i>
-                  </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/404">404</a>
-                            </li>
-                            <li>
-                                <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/500">500</a>
-                            </li>
-                            <li>
-                                <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/signup">Sign Up</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="dropdown-toggle" href="javascript:void(0);">
-                <span class="icon-holder">
-                  <i class="c-teal-500 ti-view-list-alt"></i>
-                </span>
-                            <span class="title">Multiple Levels</span>
-                            <span class="arrow">
-                  <i class="ti-angle-right"></i>
-                </span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-item dropdown">
-                                <a href="javascript:void(0);">
-                                    <span>Menu Item</span>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="javascript:void(0);">
-                                    <span>Menu Item</span>
-                                    <span class="arrow">
-                      <i class="ti-angle-right"></i>
-                    </span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="javascript:void(0);">Menu Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">Menu Item</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></ul>
+              </div>
             </div>
+          </div>
+
+          <!-- ### $Sidebar Menu ### -->
+          <ul class="sidebar-menu scrollable pos-r">
+            <li class="nav-item mT-30 active">
+              <a class="sidebar-link" href="{% url 'dashboard' request.user.username %}">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-gauge"></i>
+                </span>
+                <span class="title">Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/email">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-envelope"></i>
+                </span>
+                <span class="title">Email</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/compose">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-share-from-square"></i>
+                </span>
+                <span class="title">Compose</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="sidebar-link" href="{% url 'calendar' request.user.username %}">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-calendar"></i>
+                </span>
+                <span class="title">Calendar</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="sidebar-link" href="{% url 'chat' request.user.username %}">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-comment"></i>
+                </span>
+                <span class="title">Chat</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/charts">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-chart-bar"></i>
+                </span>
+                <span class="title">Charts</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/forms">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-brands fa-wpforms"></i>
+                </span>
+                <span class="title">Forms</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/ui">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-palette"></i>
+                </span>
+                <span class="title">UI Elements</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle" href="javascript:void(0);">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-table"></i>
+                </span>
+                <span class="title">Tables</span>
+                <span class="arrow">
+                  <i class="fa-solid fa-angles-right"></i>
+                </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/basic-table">Basic Table</a>
+                </li>
+                <li>
+                  <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/datatable">Data Table</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle" href="javascript:void(0);">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-map-location"></i>
+                </span>
+                <span class="title">Maps</span>
+                <span class="arrow">
+                  <i class="fa-solid fa-angles-right"></i>
+                </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="http://symfonator.herokuapp.com/admin/google-maps">Google Map</a>
+                </li>
+                <li>
+                  <a href="http://symfonator.herokuapp.com/admin/vector-maps">Vector Map</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle" href="javascript:void(0);">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-file"></i>
+                </span>
+                <span class="title">Pages</span>
+                <span class="arrow">
+                  <i class="fa-solid fa-angles-right"></i>
+                </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/404">404</a>
+                </li>
+                <li>
+                  <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/500">500</a>
+                </li>
+                <li>
+                  <a class="sidebar-link" href="http://symfonator.herokuapp.com/admin/signup">Sign Up</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="dropdown-toggle" href="javascript:void(0);">
+                <span class="icon-holder">
+                  <i class="c-blue-500 fa-solid fa-list"></i>
+                </span>
+                <span class="title">Multiple Levels</span>
+                <span class="arrow">
+                  <i class="fa-solid fa-angles-right"></i>
+                </span>
+              </a>
+              <ul class="dropdown-menu">
+                <li class="nav-item dropdown">
+                  <a href="javascript:void(0);">
+                    <span>Menu Item</span>
+                  </a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="javascript:void(0);">
+                    <span>Menu Item</span>
+                    <span class="arrow">
+                      <i class="fa-solid fa-angles-right"></i>
+                    </span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a href="javascript:void(0);">Menu Item</a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">Menu Item</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+            <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+              <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+            </div>
+            <div class="ps__rail-y" style="top: 0px; right: 0px;">
+              <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+            </div>
+          </ul>
         </div>
+      </div>
 
-        <!-- #Main ============================ -->
-        <div class="page-container">
-            <!-- ### $Topbar ### -->
-            <div class="header navbar">
-                <div class="header-container">
-                    <ul class="nav-left">
-                        <li>
-                            <a id="sidebar-toggle" class="sidebar-toggle" href="javascript:void(0);">
-                                <i class="ti-menu"></i>
-                            </a>
-                        </li>
-                        <li class="search-box">
-                            <a class="search-toggle no-pdd-right" href="javascript:void(0);">
-                                <i class="search-icon ti-search pdd-right-10"></i>
-                                <i class="search-icon-close ti-close pdd-right-10"></i>
-                            </a>
-                        </li>
-                        <li class="search-input">
-                            <input class="form-control" type="text" placeholder="Search...">
-                        </li>
+      <!-- #Main ============================ -->
+      <div class="page-container">
+        <!-- ### $Topbar ### -->
+        <div class="header navbar">
+          <div class="header-container">
+            <ul class="nav-left">
+              <li>
+                <a
+                  id="sidebar-toggle"
+                  class="sidebar-toggle"
+                  href="javascript:void(0);"
+                >
+                  <i class="fa-solid fa-bars"></i>
+
+                </a>
+              </li>
+              <li class="search-box">
+                <a
+                  class="search-toggle no-pdd-right"
+                  href="javascript:void(0);"
+                >
+                <i class="search-icon fa-solid fa-magnifying-glass pdd-right-10"></i>
+                <i class="search-icon-close fa-solid fa-xmark pdd-right-10"></i>
+
+                </a>
+              </li>
+              <li class="search-input">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Search..."
+                />
+              </li>
+            </ul>
+            <ul class="nav-right">
+              <li class="notifications dropdown">
+                <span class="counter bgc-red" id="task_cnt">{{ task_count.count }}</span>
+                <a href="http://symfonator.herokuapp.com/admin/dashboard" class="dropdown-toggle no-after"
+                  data-toggle="dropdown">
+                  <i class="fa-solid fa-bell"></i>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="pX-20 pY-15 bdB">
+                    <i class="fa-solid fa-bell pR-10"></i>
+                    <span class="fsz-sm fw-600 c-grey-900">New tasks</span>
+                  </li>
+                  <li>
+                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm ps">
+                      {% for el in task_count %}
+                      <li>
+                        <a href="http://symfonator.herokuapp.com/admin/dashboard"
+                          class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                          <div class="peer mR-15">
+                            <img class="w-3r bdrs-50p" src="{% static './dashboard_files/1.jpg' %}" alt="">
+                          </div>
+                          <div class="peer peer-greed">
+                            <span>
+                              <span class="fw-500">{{ el.creator }}</span><br>
+                              <span class="c-grey-600">{{ el.title }}
+                              </span>
+                            </span>
+                            <p class="m-0">
+                              <small class="fsz-xs">5 mins ago</small>
+                            </p>
+                          </div>
+                        </a>
+                      </li>
+                      {% endfor %}
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                      </div>
                     </ul>
-                    <ul class="nav-right">
-                        <li class="notifications dropdown">
-                            <span class="counter bgc-red">3</span>
-                            <a href="http://symfonator.herokuapp.com/admin/chat" class="dropdown-toggle no-after" data-toggle="dropdown">
-                                <i class="ti-bell"></i>
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li class="pX-20 pY-15 bdB">
-                                    <i class="ti-bell pR-10"></i>
-                                    <span class="fsz-sm fw-600 c-grey-900">Notifications</span>
-                                </li>
-                                <li>
-                                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm ps">
-                                        <li>
-                                            <a href="http://symfonator.herokuapp.com/admin/chat" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div class="peer mR-15">
-                                                    <img class="w-3r bdrs-50p" src="./chat_files/1.jpg" alt="">
-                                                </div>
-                                                <div class="peer peer-greed">
-                            <span>
-                              <span class="fw-500">John Doe</span>
-                              <span class="c-grey-600">liked your <span class="text-dark">post</span>
-                              </span>
-                            </span>
-                                                    <p class="m-0">
-                                                        <small class="fsz-xs">5 mins ago</small>
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="http://symfonator.herokuapp.com/admin/chat" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div class="peer mR-15">
-                                                    <img class="w-3r bdrs-50p" src="./chat_files/2.jpg" alt="">
-                                                </div>
-                                                <div class="peer peer-greed">
-                            <span>
-                              <span class="fw-500">Moo Doe</span>
-                              <span class="c-grey-600">liked your <span class="text-dark">cover image</span>
-                              </span>
-                            </span>
-                                                    <p class="m-0">
-                                                        <small class="fsz-xs">7 mins ago</small>
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="http://symfonator.herokuapp.com/admin/chat" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div class="peer mR-15">
-                                                    <img class="w-3r bdrs-50p" src="./chat_files/3.jpg" alt="">
-                                                </div>
-                                                <div class="peer peer-greed">
-                            <span>
-                              <span class="fw-500">Lee Doe</span>
-                              <span class="c-grey-600">commented on your <span class="text-dark">video</span>
-                              </span>
-                            </span>
-                                                    <p class="m-0">
-                                                        <small class="fsz-xs">10 mins ago</small>
-                                                    </p>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></ul>
-                                </li>
-                                <li class="pX-20 pY-15 ta-c bdT">
+                  </li>
+                  <li class="pX-20 pY-15 ta-c bdT">
                     <span>
-                      <a href="http://symfonator.herokuapp.com/admin/chat" class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i class="ti-angle-right fsz-xs mL-10"></i></a>
+                      <a href="http://symfonator.herokuapp.com/admin/dashboard"
+                        class="c-grey-600 cH-blue fsz-sm td-n">View All Notifications <i
+                          class="ti-angle-right fsz-xs mL-10"></i></a>
                     </span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="notifications dropdown">
-                            <span class="counter bgc-blue">3</span>
-                            <a href="http://symfonator.herokuapp.com/admin/chat" class="dropdown-toggle no-after" data-toggle="dropdown">
-                                <i class="ti-email"></i>
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li class="pX-20 pY-15 bdB">
-                                    <i class="ti-email pR-10"></i>
-                                    <span class="fsz-sm fw-600 c-grey-900">Emails</span>
-                                </li>
-                                <li>
-                                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm ps">
-                                        <li>
-                                            <a href="http://symfonator.herokuapp.com/admin/chat" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div class="peer mR-15">
-                                                    <img class="w-3r bdrs-50p" src="./chat_files/1.jpg" alt="">
-                                                </div>
-                                                <div class="peer peer-greed">
-                                                    <div>
-                                                        <div class="peers jc-sb fxw-nw mB-5">
-                                                            <div class="peer">
-                                                                <p class="fw-500 mB-0">John Doe</p>
-                                                            </div>
-                                                            <div class="peer">
-                                                                <small class="fsz-xs">5 mins ago</small>
-                                                            </div>
-                                                        </div>
-                                                        <span class="c-grey-600 fsz-sm">
-                                Want to create your own customized data generator for your app...
-                              </span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="http://symfonator.herokuapp.com/admin/chat" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div class="peer mR-15">
-                                                    <img class="w-3r bdrs-50p" src="./chat_files/2.jpg" alt="">
-                                                </div>
-                                                <div class="peer peer-greed">
-                                                    <div>
-                                                        <div class="peers jc-sb fxw-nw mB-5">
-                                                            <div class="peer">
-                                                                <p class="fw-500 mB-0">Moo Doe</p>
-                                                            </div>
-                                                            <div class="peer">
-                                                                <small class="fsz-xs">15 mins ago</small>
-                                                            </div>
-                                                        </div>
-                                                        <span class="c-grey-600 fsz-sm">
-                                Want to create your own customized data generator for your app...
-                              </span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="http://symfonator.herokuapp.com/admin/chat" class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
-                                                <div class="peer mR-15">
-                                                    <img class="w-3r bdrs-50p" src="./chat_files/3.jpg" alt="">
-                                                </div>
-                                                <div class="peer peer-greed">
-                                                    <div>
-                                                        <div class="peers jc-sb fxw-nw mB-5">
-                                                            <div class="peer">
-                                                                <p class="fw-500 mB-0">Lee Doe</p>
-                                                            </div>
-                                                            <div class="peer">
-                                                                <small class="fsz-xs">25 mins ago</small>
-                                                            </div>
-                                                        </div>
-                                                        <span class="c-grey-600 fsz-sm">
-                                Want to create your own customized data generator for your app...
-                              </span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></ul>
-                                </li>
-                                <li class="pX-20 pY-15 ta-c bdT">
-                    <span>
-                      <a href="http://symfonator.herokuapp.com/admin/email" class="c-grey-600 cH-blue fsz-sm td-n">View All Email <i class="fs-xs ti-angle-right mL-10"></i></a>
-                    </span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="http://symfonator.herokuapp.com/admin/chat" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
-                                <div class="peer mR-10">
-                                    <img class="w-2r bdrs-50p" src="./chat_files/10.jpg" alt="">
+                  </li>
+                </ul>
+              </li>
+              <li class="notifications dropdown">
+                <span class="counter bgc-blue">3</span>
+                <a href="http://symfonator.herokuapp.com/admin/dashboard" class="dropdown-toggle no-after"
+                  data-toggle="dropdown">
+                  <i class="fa-solid fa-envelope"></i>
+                </a>
+  
+                <ul class="dropdown-menu">
+                  <li class="pX-20 pY-15 bdB">
+                    <i class="fa-solid fa-envelope pR-10"></i>
+                    <span class="fsz-sm fw-600 c-grey-900">Emails</span>
+                  </li>
+                  <li>
+                    <ul class="ovY-a pos-r scrollable lis-n p-0 m-0 fsz-sm ps">
+                      <li>
+                        <a href="http://symfonator.herokuapp.com/admin/dashboard"
+                          class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                          <div class="peer mR-15">
+                            <img class="w-3r bdrs-50p" src="{% static './dashboard_files/1.jpg' %}" alt="">
+                          </div>
+                          <div class="peer peer-greed">
+                            <div>
+                              <div class="peers jc-sb fxw-nw mB-5">
+                                <div class="peer">
+                                  <p class="fw-500 mB-0">John Doe</p>
                                 </div>
                                 <div class="peer">
-                                    <span class="fsz-sm c-grey-900">admin</span>
+                                  <small class="fsz-xs">5 mins ago</small>
                                 </div>
-                            </a>
-                            <ul class="dropdown-menu fsz-sm">
-                                <li>
-                                    <a href="http://symfonator.herokuapp.com/admin/chat" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                        <i class="ti-settings mR-10"></i>
-                                        <span>Setting</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="http://symfonator.herokuapp.com/admin/chat" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                        <i class="ti-user mR-10"></i>
-                                        <span>Profile</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="http://symfonator.herokuapp.com/admin/email" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                        <i class="ti-email mR-10"></i>
-                                        <span>Messages</span>
-                                    </a>
-                                </li>
-                                <li role="separator" class="divider"></li>
-                                <li>
-                                    <a href="http://symfonator.herokuapp.com/logout" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
-                                        <i class="ti-power-off mR-10"></i>
-                                        <span>Logout</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                              </div>
+                              <span class="c-grey-600 fsz-sm">
+                                Want to create your own customized data generator for your app...
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="http://symfonator.herokuapp.com/admin/dashboard"
+                          class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                          <div class="peer mR-15">
+                            <img class="w-3r bdrs-50p" src="{% static './dashboard_files/2.jpg' %}" alt="">
+                          </div>
+                          <div class="peer peer-greed">
+                            <div>
+                              <div class="peers jc-sb fxw-nw mB-5">
+                                <div class="peer">
+                                  <p class="fw-500 mB-0">Moo Doe</p>
+                                </div>
+                                <div class="peer">
+                                  <small class="fsz-xs">15 mins ago</small>
+                                </div>
+                              </div>
+                              <span class="c-grey-600 fsz-sm">
+                                Want to create your own customized data generator for your app...
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="http://symfonator.herokuapp.com/admin/dashboard"
+                          class="peers fxw-nw td-n p-20 bdB c-grey-800 cH-blue bgcH-grey-100">
+                          <div class="peer mR-15">
+                            <img class="w-3r bdrs-50p" src="{% static './dashboard_files/3.jpg' %}" alt="">
+                          </div>
+                          <div class="peer peer-greed">
+                            <div>
+                              <div class="peers jc-sb fxw-nw mB-5">
+                                <div class="peer">
+                                  <p class="fw-500 mB-0">Lee Doe</p>
+                                </div>
+                                <div class="peer">
+                                  <small class="fsz-xs">25 mins ago</small>
+                                </div>
+                              </div>
+                              <span class="c-grey-600 fsz-sm">
+                                Want to create your own customized data generator for your app...
+                              </span>
+                            </div>
+                          </div>
+                        </a>
+                      </li>
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
+                        <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; right: 0px;">
+                        <div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div>
+                      </div>
                     </ul>
-                </div>
-            </div>
-                <!-- ### $App Screen Content ### -->
+                  </li>
+                  <li class="pX-20 pY-15 ta-c bdT">
+                    <span>
+                      <a href="http://symfonator.herokuapp.com/admin/email" class="c-grey-600 cH-blue fsz-sm td-n">View
+                        All Email <i class="fs-xs ti-angle-right mL-10"></i></a>
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                {% if request.user.is_authenticated %}
+                <a href="http://symfonator.herokuapp.com/admin/dashboard"
+                  class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
+                  <div class="peer mR-10">
+                    <img class="w-2r bdrs-50p" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg" alt="">
+                  </div>
+                  <div class="peer">
+                    <span class="fsz-sm c-grey-900">{{ request.user.username }}</span>
+                  </div>
+                </a>
+                <ul class="dropdown-menu fsz-sm">
+                  <li>
+                    <a href="{% url 'user_profile' request.user.username %}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="fas fa-tools mR-10"></i>
+                      <span>Setting</span>
+                    </a>
+                  </li>
+                  <li>
+                    {% if position1.position == "director" %}
+                    <a href="{% url 'user_registor' request.user.username %}"
+                      class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="fa-solid fa-user-plus mR-10"></i>
+                      <span>Add User</span>
+                    </a>
+                    {% endif %}
+                  </li>
+                  <li>
+                    <a href="http://symfonator.herokuapp.com/admin/email" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="fa-solid fa-envelope mR-10"></i>
+                      <span>Messages</span>
+                    </a>
+                  </li>
+                  <li>
+                    {% if position1.position == "director" %}
+                    <a href="{% url 'user_tablets' request.user.username %}"
+                      class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="fa-solid fa-table mR-10"></i>
+                      <span>Tabelts User</span>
+                    </a>
+                    {% endif %}
+                  </li>
+                  <li>
+                    <a href="{% url 'task' request.user.username %}"
+                      class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="fa-solid fa-clipboard-list mR-10"></i>
+                      <span>Add task</span>
+                    </a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a href="{% url 'logout' %}" class="d-b td-n pY-5 bgcH-grey-100 c-grey-700">
+                      <i class="fa-solid fa-right-from-bracket mR-10"></i>
+                      <span>Logout</span>
+                    </a>
+                  </li>
+                </ul>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- ### $App Screen Content ### -->
         <main class="main-content bgc-grey-100">
           <div id="mainContent">
             <div class="full-container">
@@ -506,84 +605,50 @@
                   <div class="layers h-100">
                     <!-- Search -->
                     <div class="bdB layer w-100">
-                      <input type="text" placeholder="Search contacts..." name="chatSearch" class="form-constrol p-15 bdrs-0 w-100 bdw-0">
+                      <input
+                        type="text"
+                        placeholder="Search contacts..."
+                        name="chatSearch"
+                        class="form-constrol p-15 bdrs-0 w-100 bdw-0"
+                      />
                     </div>
-
+                    
                     <!-- List -->
-                    <div class="layer w-100 fxg-1 scrollable pos-r ps ps--active-y">
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/1.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">John Doe</h6>
-                          <small class="lh-1 c-green-500">Online</small>
-                        </div>
+                    {% if employee.my_contacts.all %}
+                      <div class="bdB layer w-100 d-flex align-items-center" style="padding: 12px;">
+                        <i class="fa fa-address-book-o" style="font-size:38px;"></i>
+                        <span class="ml-2 font-weight-bold">Contacts</span>
                       </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/2.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
-                          <small class="lh-1 c-amber-500">Away</small>
-                        </div>
+                      <div class="layer w-100 fxg-1 scrollable pos-r ps ps--active-y">
+                        {% for contact in employee.my_contacts.all %}
+                            
+                          <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p" onclick="getContact({{ contact.id }})">
+                            <div class="peer">
+                              
+                              {% if contact.add_contact.avatar %}
+
+                                <img
+                                  src="{{ contact.add_contact.avatar.url }}"
+                                  alt=""
+                                  class="w-3r h-3r bdrs-50p"
+                                />
+
+                              {% else %}
+
+                                <i class="fa fa-user" aria-hidden="true" style="font-size:38px;"></i>
+
+                              {% endif %}
+                                
+                            </div>
+                            <div class="peer peer-greed pL-20">
+                              <h6 class="mB-0 lh-1 fw-400">{{ contact | title }}</h6>
+                              <small class="lh-1 c-green-500">Online</small>
+                            </div>
+                          </div>
+
+                        {% endfor %}
                       </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/3.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
-                          <small class="lh-1 c-grey-500">Offline</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/4.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
-                          <small class="lh-1 c-red-500">Busy</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/1.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">John Doe</h6>
-                          <small class="lh-1 c-green-500">Online</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/2.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Moo Doe</h6>
-                          <small class="lh-1 c-amber-500">Away</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/3.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Adam Jones</h6>
-                          <small class="lh-1 c-grey-500">Offline</small>
-                        </div>
-                      </div>
-                      <div class="peers fxw-nw ai-c p-20 bdB bgc-white bgcH-grey-50 cur-p">
-                        <div class="peer">
-                          <img src="./chat_files/4.jpg" alt="" class="w-3r h-3r bdrs-50p">
-                        </div>
-                        <div class="peer peer-greed pL-20">
-                          <h6 class="mB-0 lh-1 fw-400">Mizo Doe</h6>
-                          <small class="lh-1 c-red-500">Busy</small>
-                        </div>
-                      </div>
-                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 703px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 694px;"></div></div></div>
+                    {% endif %}
                   </div>
                 </div>
 
@@ -595,41 +660,69 @@
                       <div class="peers fxw-nw jc-sb ai-c pY-20 pX-30 bgc-white">
                         <div class="peers ai-c">
                           <div class="peer d-n@md+">
-                            <a href="http://symfonator.herokuapp.com/admin/chat" title="" id="chat-sidebar-toggle" class="td-n c-grey-900 cH-blue-500 mR-30">
+                            <a
+                              href="http://symfonator.herokuapp.com/admin/chat"
+                              title=""
+                              id="chat-sidebar-toggle"
+                              class="td-n c-grey-900 cH-blue-500 mR-30"
+                            >
                               <i class="ti-menu"></i>
                             </a>
                           </div>
-                          <div class="peer mR-20">
-                            <img src="./chat_files/12.jpg" alt="" class="w-3r h-3r bdrs-50p">
+                          <div class="peer mR-20" id="receiver_avatar">
+                            <img
+                              src="{% static 'chat_files/12.jpg' %}"
+                              alt=""
+                              class="w-3r h-3r bdrs-50p"
+                            />
                           </div>
                           <div class="peer">
-                            <h6 class="lh-1 mB-0">John Doe</h6>
+                            <h6 class="lh-1 mB-0" id="receiver_name">John Doe</h6>
                             <i class="fsz-sm lh-1">Typing...</i>
                           </div>
                         </div>
                         <div class="peers">
-                          <a href="http://symfonator.herokuapp.com/admin/chat" class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30" title="">
-                            <i class="ti-video-camera"></i>
+                          <a
+                            href="http://symfonator.herokuapp.com/admin/chat"
+                            class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30"
+                            title=""
+                          >
+                            <i class="fa fa-video-camera"></i>
                           </a>
-                          <a href="http://symfonator.herokuapp.com/admin/chat" class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30" title="">
-                            <i class="ti-headphone"></i>
+                          <a
+                            href="http://symfonator.herokuapp.com/admin/chat"
+                            class="peer td-n c-grey-900 cH-blue-500 fsz-md mR-30"
+                            title=""
+                          >
+                          <i class="fa-solid fa-headphones"></i>
                           </a>
-                          <a href="http://symfonator.herokuapp.com/admin/chat" class="peer td-n c-grey-900 cH-blue-500 fsz-md" title="">
-                            <i class="ti-more"></i>
+                          <a
+                            href="http://symfonator.herokuapp.com/admin/chat"
+                            class="peer td-n c-grey-900 cH-blue-500 fsz-md"
+                            title=""
+                          >
+                          <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                           </a>
                         </div>
                       </div>
                     </div>
                     <div class="layer w-100 fxg-1 bgc-grey-200 scrollable pos-r ps">
+
                       <!-- Chat Box -->
-                      <div class="p-20 gapY-15">
+                      <div class="p-20 gapY-15" id="chat_messages">
+
                         <!-- Chat Conversation -->
                         <div class="peers fxw-nw">
-                          <div class="peer mR-20">
-                            <img class="w-2r bdrs-50p" src="./chat_files/11.jpg" alt="">
-                          </div>
+                          <!-- <div class="peer mR-20">
+                            <img
+                              class="w-2r bdrs-50p"
+                              src="{% static 'chat_files/11.jpg' %}"
+                              alt=""
+                            />
+                          </div> -->
                           <div class="peer peer-greed">
                             <div class="layers ai-fs gapY-5">
+
                               <div class="layer">
                                 <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
                                   <div class="peer mR-10">
@@ -640,37 +733,19 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>the printing and typesetting industry.</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mR-10">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed">
-                                    <span>Lorem Ipsum has been the industry's</span>
-                                  </div>
-                                </div>
-                              </div>
+
                             </div>
                           </div>
                         </div>
 
                         <!-- Chat Conversation -->
                         <div class="peers fxw-nw ai-fe">
-                          <div class="peer ord-1 mL-20">
-                            <img class="w-2r bdrs-50p" src="./chat_files/12.jpg" alt="">
-                          </div>
+                          <!-- <div class="peer ord-1 mL-20">
+                            <img class="w-2r bdrs-50p" src="{% static 'chat_files/12.jpg' %}" alt=""/>
+                          </div> -->
                           <div class="peer peer-greed ord-0">
                             <div class="layers ai-fe gapY-10">
+
                               <div class="layer">
                                 <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
                                   <div class="peer mL-10 ord-1">
@@ -681,31 +756,44 @@
                                   </div>
                                 </div>
                               </div>
-                              <div class="layer">
-                                <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
-                                  <div class="peer mL-10 ord-1">
-                                    <small>10:00 AM</small>
-                                  </div>
-                                  <div class="peer-greed ord-0">
-                                    <span>??</span>
-                                  </div>
-                              </div>
+                              
+
                             </div>
                           </div>
                         </div>
+
+                      </div>
+
+                      <div class="ps__rail-x" style="left: 0px; bottom: 0px">
+                        <div
+                          class="ps__thumb-x"
+                          tabindex="0"
+                          style="left: 0px; width: 0px"
+                        ></div>
+                      </div>
+                      <div class="ps__rail-y" style="top: 0px; right: 0px">
+                        <div
+                          class="ps__thumb-y"
+                          tabindex="0"
+                          style="top: 0px; height: 0px"
+                        ></div>
                       </div>
                     </div>
-                    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div>
+
                     <div class="layer w-100">
                       <!-- Chat Send -->
-                      <div class="p-20 bdT bgc-white">
-                        <div class="pos-r">
-                          <input type="text" class="form-control bdrs-10em m-0" placeholder="Say something...">
-                          <button type="button" class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1">
-                            <i class="fa fa-paper-plane-o"></i>
-                          </button>
+                      <form id="post_message_form">{% csrf_token %}
+                        <div class="p-20 bdT bgc-white">
+                          <div class="pos-r">
+                            <input id="receiver" type="hidden" name="receiver">
+                            <input id="message" type="text" name="message" class="form-control bdrs-10em m-0" placeholder="Say something..."/>
+                            <button type="submit" class="btn btn-primary bdrs-50p w-2r p-0 h-2r pos-a r-1 t-1">
+                              <i class="fa fa-paper-plane-o"></i>
+                            </button>
+                          </div>
                         </div>
-                      </div>
+                      </form>
+
                     </div>
                   </div>
                 </div>
@@ -714,30 +802,162 @@
           </div>
         </main>
 
-            <!-- ### $App Screen Footer ### -->
-            <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
-                <span>Copyright © 2017 Designed by <a href="https://colorlib.com/" target="_blank" title="Colorlib" rel="noopener noreferrer">Colorlib</a>. All rights reserved.</span>
-            </footer>
-        </div>
-
+        <!-- ### $App Screen Footer ### -->
+        <footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600">
+          <span
+            >Copyright © 2017 Designed by
+            <a
+              href="https://colorlib.com/"
+              target="_blank"
+              title="Colorlib"
+              rel="noopener noreferrer"
+              >Colorlib</a
+            >. All rights reserved.</span
+          >
+        </footer>
+      </div>
     </div>
 
     <script>
-        (function() {
-            if('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('assets/service-worker.js');
-            }
-        })();
+      (function () {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("{% static 'assets/service-worker.js' %}");
+        }
+      })();
 
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            setTimeout(() => {
-                loader.classList.add('fadeOut');
-            }, 300);
-        });
+      window.addEventListener("load", () => {
+        const loader = document.getElementById("loader");
+        setTimeout(() => {
+          loader.classList.add("fadeOut");
+        }, 300);
+      });
     </script>
 
-    <script src="./chat_files/app.js.Без названия"></script>
-    
+    <script src="{% static 'chat_files/app.js' %}"></script>
 
-</body></html>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script>
+      
+      function getContact(id) {
+        
+        $.ajax({
+          url: '{{ request.user.username }}',
+          dataType: 'json',
+          data: {
+            'contact_id': id,
+            'contact': 1,
+          },
+          type: 'GET',
+          success: function(data) {
+            const chat_messages = document.getElementById("chat_messages");
+            chat_messages.innerHTML = "";
+
+            const receiver_input = document.getElementById("receiver")
+            receiver_input.value = data.receiver_id
+
+            const receiver_avatar = document.getElementById("receiver_avatar");
+            const receiver_name = document.getElementById("receiver_name");
+
+            receiver_avatar.innerHTML = "";
+            receiver_name.innerHTML = "";
+
+
+            receiver_name.innerHTML += `${data.receiver_name}`;
+
+            if ( data.receiver_avatar_url != null ) {
+              receiver_avatar.innerHTML += `<img src="${data.receiver_avatar_url}" class="w-3r h-3r bdrs-50p"/>`;
+            }
+
+            else {
+              receiver_avatar.innerHTML += `<i class="fa fa-user" aria-hidden="true" style="font-size: 48px"></i>`;
+            }
+
+            (data.messages).forEach(message => {
+
+              if (message.author_id == data.receiver_id) {
+                chat_messages.innerHTML += `
+                  <div class="peers fxw-nw">
+                    <div class="peer peer-greed">
+                      <div class="layers ai-fs gapY-5">
+
+                        <div class="layer">
+                          <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
+                            <div class="peer mR-10">
+                              <small>${message.time} |</small>
+                            </div>
+                            <div class="peer-greed">
+                              <span>${message.message}</span>
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>`
+              }
+
+              else {
+                chat_messages.innerHTML += `
+                  <div class="peers fxw-nw ai-fe">
+                    <div class="peer peer-greed ord-0">
+                      <div class="layers ai-fe gapY-10">
+                        <div class="layer">
+                          <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
+                            <div class="peer mL-10 ord-1">
+                              <small>| ${message.time}</small>
+                            </div>
+                            <div class="peer-greed ord-0">
+                              <span>${message.message}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>`
+              }
+            });
+          }
+        });
+      };
+      
+      $(document).on('submit', '#post_message_form', function(e){
+        e.preventDefault();
+
+        $.ajax({
+          type: 'POST',
+          url: 'send-message/',
+          data: {
+            message:$('#message').val(),
+            receiver:$('#receiver').val(),
+            csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+          },
+          success: function(data) {
+            document.getElementById('post_message_form').reset();
+            const chat_messages = document.getElementById("chat_messages");
+            console.log(123)
+            
+            chat_messages.innerHTML += `
+              <div class="peers fxw-nw ai-fe">
+                <div class="peer peer-greed ord-0">
+                  <div class="layers ai-fe gapY-10">
+                    <div class="layer">
+                      <div class="peers fxw-nw ai-c pY-3 pX-10 bgc-white bdrs-2 lh-3/2">
+                        <div class="peer mL-10 ord-1">
+                          <small>| ${data.message_time}</small>
+                        </div>
+                        <div class="peer-greed ord-0">
+                          <span>${data.message}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>`
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

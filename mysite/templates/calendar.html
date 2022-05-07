@@ -35,7 +35,7 @@
                         dataType: "json",
                         success: function (data) {
                             calendar.fullCalendar('refetchEvents');
-                            alert('Added task');
+
 
                             const tasks = document.getElementById('emp_tasks');
                             const tasks_cnt = document.getElementById('tasks_cnt');
@@ -66,7 +66,7 @@
                                             </a>
                                           </div>
                                           <div class="peer">
-                                            <a href="{% url 'delete-task' request.user.username %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                            <a href="/delete-task/${ task.slug }/" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
                                               <i class="fa-solid fa-trash"></i>
                                             </a>
                                           </div>
@@ -131,27 +131,6 @@
                   });
               },
               {% endif %}
-              {% if position1.position == "director" %}
-              eventClick: function (task) {
-                  if (confirm("Are you sure you want to remove it?")) {
-                      var id = task.id;
-                      $.ajax({
-                          type: "GET",
-                          url: '/remove',
-                          data: {'id': id},
-                          dataType: "json",
-                          success: function (data) {
-                              calendar.fullCalendar('refetchEvents');
-                              alert('Event Removed');
-                          },
-                          error: function (data) {
-                              alert('There is a problem!!!');
-                          }
-                      });
-                  }
-              },
-              {% endif %}
-
           });
           
       })
@@ -159,7 +138,13 @@
     <script>
       function taskDetail(id) {
         const taskTitle = document.getElementById('taskTitle');
+        const taskStart = document.getElementById('taskStart');
+        const taskEnd = document.getElementById('taskEnd');
+        const taskDescription = document.getElementById('taskDescription')
         taskTitle.innerHTML = "";
+        taskStart.innerHTML = "";
+        taskEnd.innerHTML = "";
+        taskDescription.innerHTML = "";
 
         $.ajax({
           url: '{% url "task-detail" %}',
@@ -169,11 +154,14 @@
           },
           
           success: function(data) {
-            console.log('11111111111111111');
-            taskTitle.innerHTML += `<input type="text" value="${data.task_title}">`;
-          }
+              taskTitle.innerHTML += `<input type="text" name="title" value="${ data.task_title }" class="form-control bdc-grey-200" maxlength="100" id="id_title">`;
+              taskStart.innerHTML += `<input type="text" name="start" value="${ data.task_start }" class="form-control bdc-grey-200 start-date" id="id_start">`;
+              taskEnd.innerHTML += `<input type="text" name="end" value="${ data.task_end }" class="form-control bdc-grey-200 end-date" id="id_end">`;
+              taskDescription.innerHTML += ` <label class="fw-500">Event title</label>
+              <textarea name="description" cols="40" rows="10" value="${ data.task_des }" class="form-control bdc-grey-200" id="id_description">${ data.task_des }</textarea>`;
+            },
         });
-      }
+      };
     </script>
 {% endblock static %}
 {% block content %}
@@ -193,7 +181,7 @@
                         <i class="ti-plus"></i>
                       </button>
                       <ul class="m-0 p-0 mT-20" id="emp_tasks">
-                          {% for i in task %}
+                          {% for i in task_count %}
                             <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
                               <a onclick="taskDetail({{ i.id }})" class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" href="javascript:void(0);" data-toggle="modal" data-target="#calendar-edit">
                                 <div class="peer mR-15">
@@ -213,7 +201,7 @@
                                   </a>
                                 </div>
                                 <div class="peer">
-                                  <a href="{% url 'delete-task' request.user.username %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                  <a href="{% url 'delete-task' i.slug %}" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
                                     <i class="fa-solid fa-trash"></i>
                                   </a>
                                 </div>
@@ -240,7 +228,7 @@
                       <form  method="POST">{% csrf_token %}
                         <div class="form-group">
                           <label class="fw-500">Event title</label>
-                          <span id="taskTitle">{{ form.title }}</span>
+                          <span id="taskTitle"><input type="text" name="title" value="{{ form.title }}" class="form-control bdc-grey-200" maxlength="100" id="id_title"></span>
                         </div>
                         <div class="row">
                           <div class="form-group col-md-5 row">
@@ -257,30 +245,30 @@
                         <div class="row">
                           <div class="col-md-6"><br>
                             <label class="fw-500">Start</label>
-                            <div class="timepicker-input input-icon form-group">
+                            <div class="timepicker-input input-icon form-group" id="taskStart">
                               <div class="input-group">
                                 <div class="input-group-addon bgc-white bd bdwR-0">
                                   <i class="ti-calendar"></i>
                                 </div>
-                                {{ form.start }}
+                                <input type="text" name="start" value="{{ form.start }}" class="form-control bdc-grey-200 start-date" id="id_start">
                               </div>
                             </div>
                           </div>
                           <div class="col-md-6"><br>
                             <label class="fw-500">End</label>
-                            <div class="timepicker-input input-icon form-group">
+                            <div class="timepicker-input input-icon form-group" id="taskEnd">
                               <div class="input-group">
                                 <div class="input-group-addon bgc-white bd bdwR-0">
                                   <i class="ti-calendar"></i>
                                 </div>
-                                {{ form.end }}
+                                <input type="text" name="end" value="{{ form.end }}" class="form-control bdc-grey-200 end-date" id="id_end">
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" id="taskDescription">
                           <label class="fw-500">Event title</label>
-                          {{ form.description }}
+                          <textarea name="description" cols="40" rows="10" value="{{ form.description }}" class="form-control bdc-grey-200" id="id_description"></textarea>
                         </div>
                         <div class="text-right">
                           <button class="btn btn-primary cur-p">Done</button>
