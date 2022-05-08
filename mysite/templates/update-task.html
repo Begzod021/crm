@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<main class="main-content bgc-grey-100">
+    <div id="mainContent">
+      <div class="row gap-20 masonry pos-r" style="position: relative; height: 1122.8px;">
+        <div class="masonry-sizer col-md-6"></div>
+        <div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 523px;">
+          <div class="bgc-white p-20 bd">
+            <h6 class="c-grey-900">Employee</h6>
+            <div class="mT-30">
+            <fieldset disabled="">
+                <div class="form-group">
+                <label for="disabledTextInput">User</label>
+                <select id="disabledSelect" class="form-control">
+                    <option>{{ employe.user }}</option>
+                </select>
+                </div>
+                <div class="form-group">
+                <label for="disabledSelect">Section</label>
+                <select id="disabledSelect" class="form-control">
+                    <option>{{ section.name }}</option>
+                </select>
+                </div>
+            </fieldset>
+            </div>
+          </div>
+        </div>
+        <div class="masonry-item col-md-6" style="position: absolute; left: 0%; top: 802.797px;">
+          <div class="bgc-white p-20 bd">
+            <h6 class="c-grey-900">Tasks</h6>
+            <div class="mT-30">
+              <form method="POST">{% csrf_token %}
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="validationCustom01">Title</label>
+                    {{ form.title }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Start</label>
+                    {{ form.start }}
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Start</label>
+                    {{ form.end }}
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="validationCustom03">Status</label>
+                    {{ form.status }}
+                  </div>
+                </div>
+                <div>
+                    <label for="validationCustom05">Description</label>
+                    {{ form.description }}
+                </div><br>
+                <button class="btn btn-primary" type="submit">Save</button>
+              </form>
+              <script>
+                // Example starter JavaScript for disabling form submissions if there are invalid fields
+                (function() {
+                  'use strict';
+
+                  window.addEventListener('load', function() {
+                    var form = document.getElementById('needs-validation');
+                    form.addEventListener('submit', function(event) {
+                      if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                      }
+                      form.classList.add('was-validated');
+                    }, false);
+                  }, false);
+                })();
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+{% endblock content %}

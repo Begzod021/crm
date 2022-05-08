@@ -25,7 +25,7 @@ class TaskForm(forms.ModelForm):
 class TaskEditForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ['title', 'description', 'start', 'end']
+        fields = ['title', 'description', 'start', 'end', 'status']
 
         widgets = {
             'title':forms.TextInput(attrs={
