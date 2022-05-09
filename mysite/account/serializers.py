@@ -1,9 +1,7 @@
-from pyexpat import model
 from wsgiref import validate
 from xml.dom import UserDataHandler
 from .models import User, Employe
 from rest_framework import serializers
-
 
 
 class UserRegisterSerialerz(serializers.ModelSerializer):

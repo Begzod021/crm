@@ -23,6 +23,7 @@
                             {% if admin.id == employe.user.id %}
                             <div class="col-md-12"><label class="labels">Gender:</label><br>{{ user_change.gender }}
                             </div>
+                            <div class="col-md-6"><label class="labels">Status: </label>{{ employe.online }}</div>
                             {% else %}
                             <div class="col-md-12"><label class="labels">Gender:</label><br>
                                 <select name="gender" id="id_gender">
@@ -48,6 +49,7 @@
                                 <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}</div>
                                 {% endif %}
                                 {% endif %}
+                                
                                 {% if request.user.username != employe.user %}
                                 {% if request.user.is_superuser %}
                                 <div class="col-md-12"><label class="labels">Section:</label><br>{{ user_change.section }}

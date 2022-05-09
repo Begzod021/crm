@@ -17,6 +17,7 @@
                           <th scope="col">Username</th>
                           <th scope="col">Section</th>
                           <th scope="col">Position</th>
+                          <th scope="col">Status</th>
                           <th scope="col">Edit</th>
                           <th scope="col">Delete</th>
                         </tr>
@@ -29,6 +30,7 @@
                           <td>{{ el.user }}</td>
                           <td>{{ el.section }}</td>
                           <td>{{ el.position }}</td>
+                          <td>{{ el.online }}</td>
                           <td><a href="{% url 'user_profile' el.user %}" class="fa-solid fa-user-pen"></a></td>
                           <td><a href="{% url 'delete-employe' el.user %}" class="fa-solid fa-trash td-n c-red-500"></a></td>
                         </tr>

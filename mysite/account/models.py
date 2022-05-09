@@ -1,15 +1,21 @@
-
-
-from turtle import position
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.text import slugify
+from django.core.cache import cache
+import datetime
+from django.utils import timezone
+from django.conf import settings
 # Create your models here.
 
 
 class User(AbstractUser):
     slug = models.SlugField(blank=True)
     has_profile = models.BooleanField(default=False)
+
+
+
+
+
 
 
 
@@ -104,6 +110,24 @@ class Employe(models.Model):
     )
 
 
+
+    COUNTRY = (
+        ('Tashkent','Tashkent'),
+        ('Samarkand','Samarkand'),
+        ('Andijan','Andijan'),
+        ('Karakalpakstan','Karakalpakstan'),
+        ('Ferghana', 'Ferghana'),
+        ('Bukhoro','Bukhoro'),
+        ('Namangan', 'Namangan'),
+        ('Khorezm', 'Khorezm'),
+        ('Kashkadarya','Kashkadarya'),
+        ('Jizzakh','Jizzakh'),
+        ('Surkhandaryo','Surkhandaryo'),
+        ('Navoi','Navoi'),
+        ('Sirdaryo','Sirdaryo'),
+
+    )
+
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     position = models.ForeignKey(Postion, on_delete=models.PROTECT)
@@ -119,6 +143,25 @@ class Employe(models.Model):
     status = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to='avatar/', null=True, blank=True)
     email_add = models.ManyToManyField(Email)
+    country = models.CharField(max_length=120, choices=COUNTRY, blank=True, null=True)
+    last_login = models.DateTimeField(default=timezone.now)
+
+    def last_seen(self):
+        return cache.get('seen_%s' % self.user.username)
+
+    def online(self):
+        if self.last_seen():
+            now = datetime.datetime.now()
+            if now > self.last_seen() + datetime.timedelta(
+                         seconds=settings.USER_ONLINE_TIMEOUT):
+                return False
+            else:
+                return True
+        else:
+            return False
+
+    
+
 
 
     def save(self, *args, **kwargs):

@@ -90,23 +90,27 @@ def task(request, username):
         form = TaskForm()
         if section.name == "CEO":
             task_users = Employe.objects.all()
+            task_list = Task.objects.filter(creator=employe)
             context = {
                     'position1':position1,
                     'form':form,
                     'employe':employe,
                     'task_users':task_users,
                     'section':section,
-                    'task_count':task_count
+                    'task_count':task_count,
+                    'task_list':task_list
             }
         else:
             task_users = Employe.objects.filter(section=employe.section.id)
+            task_list = Task.objects.filter(creator=employe)
             context = {
                 'position1':position1,
                 'form':form,
                 'task_users':task_users,
                 'employe':employe,
                 'section':section,
-                'task_count':task_count
+                'task_count':task_count,
+                'task_list':task_list
                 
             }
         if request.method == 'POST':

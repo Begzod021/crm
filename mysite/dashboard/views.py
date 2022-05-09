@@ -1,9 +1,10 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import authenticate
 from account.models import User, Employe
 from account.models import Postion, AdduserCount
 from django.contrib.auth.decorators import login_required
-
+from django.views.decorators.cache import cache_page
 from task.models import Task
 # Create your views here.
 
@@ -20,6 +21,19 @@ def dashboard(request, username):
         employes = Employe.objects.all()
         users = User.objects.all()
         task_count = Task.objects.filter(employe=employe)
+        employe_tash = Employe.objects.filter(country="Tashkent")
+        employe_Samarkand = Employe.objects.filter(country="Samarkand")
+        employe_Andijan = Employe.objects.filter(country="Andijan")
+        employe_Karakalpakstan = Employe.objects.filter(country="Karakalpakstan")
+        employe_Ferghana = Employe.objects.filter(country="Ferghana")
+        employe_Bukhoro = Employe.objects.filter(country="Bukhoro")
+        employe_Namangan = Employe.objects.filter(country="Namangan")
+        employe_Khorezm = Employe.objects.filter(country="Khorezm")
+        employe_Kashkadarya = Employe.objects.filter(country="Kashkadarya")
+        employe_Jizzakh = Employe.objects.filter(country="Jizzakh")
+        employe_Surkhandaryo = Employe.objects.filter(country="Surkhandaryo")
+        employe_Navoi = Employe.objects.filter(country="Navoi")
+        employe_Sirdaryo = Employe.objects.filter(country="Sirdaryo")
         for i in AdduserCount.objects.all():
             procent = (user_count*100)/i.users
     context = {
@@ -30,6 +44,51 @@ def dashboard(request, username):
         'user_count':user_count,
         'employes':employes,
         'users':users,
-        'task_count':task_count
+        'task_count':task_count,
+        'employe_tash':employe_tash,
+        'employe_Samarkand':employe_Samarkand,
+        'employe_Andijan':employe_Andijan,
+        'employe_Karakalpakstan':employe_Karakalpakstan,
+        'employe_Ferghana':employe_Ferghana,
+        'employe_Bukhoro':employe_Bukhoro,
+        'employe_Namangan':employe_Namangan,
+        'employe_Khorezm':employe_Khorezm,
+        'employe_Kashkadarya':employe_Kashkadarya,
+        'employe_Jizzakh':employe_Jizzakh,
+        'employe_Surkhandaryo':employe_Surkhandaryo,
+        'employe_Navoi':employe_Navoi,
+        'employe_Sirdaryo':employe_Sirdaryo
     }
     return render(request, 'dashboard.html', context)
+
+
+
+
+def get_user_country(request):
+    #     ('Tashkent','Tashkent'),
+    #     ('Samarkand','Samarkand'),
+    #     ('Andijan','Andijan'),
+    #     ('Karakalpakstan','Karakalpakstan'),
+    #     ('Ferghana', 'Ferghana'),
+    #     ('Bukhoro','Bukhoro'),
+    #     ('Namangan', 'Namangan'),
+    #     ('Khorezm', 'Khorezm'),
+    #     ('Kashkadarya','Kashkadarya'),
+    #     ('Jizzakh','Jizzakh'),
+    #     ('Surkhandaryo','Surkhandaryo'),
+    #     ('Navoi','Navoi')
+    employe_tash = list(Employe.objects.filter(country="Tashkent").values())
+    print(employe_tash)
+    employe_Samarkand = list(Employe.objects.filter(country="Samarkand").values())
+    employe_Andijan = Employe.objects.filter(country="Andijan")
+    employe_Karakalpakstan = Employe.objects.filter(country="Karakalpakstan")
+    employe_Ferghana = Employe.objects.filter(country="Ferghana")
+    employe_Bukhoro = Employe.objects.filter(country="Bukhoro")
+    employe_Namangan = Employe.objects.filter(country="Namangan")
+    employe_Khorezm = Employe.objects.filter(country="Khorezm")
+    employe_Kashkadarya = Employe.objects.filter(country="Kashkadarya")
+    employe_Jizzakh = Employe.objects.filter(country="Jizzakh")
+    employe_Surkhandaryo = Employe.objects.filter(country="Surkhandaryo")
+    employe_Navoi = Employe.objects.filter(country="Navoi")
+
+    return JsonResponse({'employe_tash':len(employe_tash)})

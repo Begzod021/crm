@@ -14,7 +14,6 @@ from task.models import *
 
 
 
-
 # Create your views here.
 @login_required(login_url='user_login')
 def error_500(request, username):
@@ -83,9 +82,12 @@ def user_login(request):
     return render(request, 'SignIn.html', context)
 
 
+@login_required(login_url='user_login')
 def logout_user(request):
     logout(request)
     return redirect('user_login')
+
+
 
 @login_required(login_url='user_login')
 def user_profile(request, username):
@@ -117,7 +119,7 @@ def user_profile(request, username):
         'user':user,
         'adduser':user_add,
         'admin':admin,
-        'task_count':task_count
+        'task_count':task_count,
     }
 
     return render(request, 'account/profile.html', context)

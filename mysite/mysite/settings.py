@@ -41,8 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-
-
     'account',
 
 
@@ -50,6 +48,13 @@ INSTALLED_APPS = [
     'chat',
     'contact',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'account.backends.MyBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,7 +64,27 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
+
+
+MIDDLEWARE_CLASSES = (
+    'middleware.activeuser_middleware.ActiveUserMiddleware',
+)
+
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'default-cache'
+    }
+}
+
+
+USER_ONLINE_TIMEOUT = 300
+USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
+
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -81,6 +106,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+ 
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases

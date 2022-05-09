@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import dashboard
+from .views import dashboard, get_user_country
 
 
 
 
 
 urlpatterns = [
-    path('dashboard/<str:username>/',dashboard, name='dashboard')
+    path('dashboard/<str:username>/',dashboard, name='dashboard'),
+    path('country', get_user_country, name='get_user_country'),
 ]

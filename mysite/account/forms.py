@@ -26,7 +26,7 @@ class AddAdmin(forms.ModelForm):
 class PositionForm(forms.ModelForm):
     class Meta:
         model = Employe
-        fields = ['section','position', 'user', 'author']
+        fields = ['section','position', 'user', 'author', 'country']
 
         def __init__(self, user, **kwargs) -> None:
             super(PositionForm, self).__init__(**kwargs)
