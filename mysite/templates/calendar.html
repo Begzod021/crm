@@ -24,8 +24,8 @@
               select: function (start, end, allDay, user) {
                   var title = prompt('Enter Task')
                   if (title) {
-                      var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
-                      var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+                      var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm");
+                      var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm");
                       var employe = user.username
                       var creator = user.username
                       $.ajax({
@@ -78,7 +78,7 @@
                                 });
                                 tasks_cnt.innerHTML = `<h3 class="c-white">Tasks ${data.tasks_cnt}</h3>
                                 <h3 class="c-white">Completed ${data.task_completed}</h3>
-                                <h3 class="c-white">Uncompleted ${data.uncompleted}</h3>`;
+                                <h3 class="c-white">In Progress ${data.uncompleted}</h3>`;
                                 console.log(tasks_cnt);
                               }
                             });
@@ -95,8 +95,8 @@
               },
               {% if position1.position == "director" %}
               eventResize: function (task) {
-                  var start = $.fullCalendar.formatDate(task.start, "Y-MM-DD HH:mm:ss");
-                  var end = $.fullCalendar.formatDate(task.end, "Y-MM-DD HH:mm:ss");
+                  var start = $.fullCalendar.formatDate(task.start, "Y-MM-DD HH:mm");
+                  var end = $.fullCalendar.formatDate(task.end, "Y-MM-DD HH:mm");
                   var title = task.title;
                   var id = task.id;
                   $.ajax({
@@ -106,7 +106,51 @@
                       dataType: "json",
                       success: function (data) {
                           calendar.fullCalendar('refetchEvents');
-                          alert('Event Update');
+                          const tasks = document.getElementById('emp_tasks');
+                          const tasks_cnt = document.getElementById('tasks_cnt');
+                          tasks.innerHTML = "";
+                          tasks_cnt.innerHTML = "";
+
+                          $.ajax({
+                            url: '{% url "get-tasks" %}',
+                            type: 'GET',
+                            success: function(data) {
+                              (data.tasks).forEach(task => {
+                                const taskHTML = `
+                                    <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
+                                      <a onclick="taskDetail(${task.id})" class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" data-toggle="modal" data-target="#calendar-edit">
+                                        <div class="peer mR-15">
+                                          <i class="fa fa-fw fa-clock-o c-red-500"></i>
+                                        </div>
+                                        <div class="peer" id='id_task'>
+                                          <span class="fw-600">${ task.title }</span>
+                                          <div class="c-grey-600">
+                                            <span class="c-grey-700">${ task.start }</span>
+                                          </div>
+                                        </div>
+                                      </a>
+                                      <div class="peers mR-15">
+                                        <div class="peer">
+                                          <a href="/update-task/{{ request.user.username }}/${ task.id }/" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
+                                            <i class="fa-solid fa-marker"></i>
+                                          </a>
+                                        </div>
+                                        <div class="peer">
+                                          <a href="/delete-task/${ task.slug }/" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                            <i class="fa-solid fa-trash"></i>
+                                          </a>
+                                        </div>
+                                      </div>
+                                    </li>`
+
+                                tasks.innerHTML += taskHTML;
+                              });
+                              tasks_cnt.innerHTML = `<h3 class="c-white">Tasks ${data.tasks_cnt}</h3>
+                              <h3 class="c-white">Completed ${data.task_completed}</h3>
+                              <h3 class="c-white">In Progress ${data.uncompleted}</h3>`;
+                              console.log(tasks_cnt);
+                            }
+                          });
                       },
                       error: function (data) {
                           alert('There is a problem!!!');
@@ -115,8 +159,8 @@
               },
 
               eventDrop: function (task) {
-                  var start = $.fullCalendar.formatDate(task.start, "Y-MM-DD HH:mm:ss");
-                  var end = $.fullCalendar.formatDate(task.end, "Y-MM-DD HH:mm:ss");
+                  var start = $.fullCalendar.formatDate(task.start, "Y-MM-DD HH:mm");
+                  var end = $.fullCalendar.formatDate(task.end, "Y-MM-DD HH:mm");
                   var title = task.title;
                   var id = task.id;
                   $.ajax({
@@ -126,7 +170,51 @@
                       dataType: "json",
                       success: function (data) {
                           calendar.fullCalendar('refetchEvents');
-                          alert('Event Update');
+                          const tasks = document.getElementById('emp_tasks');
+                          const tasks_cnt = document.getElementById('tasks_cnt');
+                          tasks.innerHTML = "";
+                          tasks_cnt.innerHTML = "";
+
+                          $.ajax({
+                            url: '{% url "get-tasks" %}',
+                            type: 'GET',
+                            success: function(data) {
+                              (data.tasks).forEach(task => {
+                                const taskHTML = `
+                                    <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
+                                      <a onclick="taskDetail(${task.id})" class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" data-toggle="modal" data-target="#calendar-edit">
+                                        <div class="peer mR-15">
+                                          <i class="fa fa-fw fa-clock-o c-red-500"></i>
+                                        </div>
+                                        <div class="peer" id='id_task'>
+                                          <span class="fw-600">${ task.title }</span>
+                                          <div class="c-grey-600">
+                                            <span class="c-grey-700">${ task.start }</span>
+                                          </div>
+                                        </div>
+                                      </a>
+                                      <div class="peers mR-15">
+                                        <div class="peer">
+                                          <a href="/update-task/{{ request.user.username }}/${ task.id }/" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
+                                            <i class="fa-solid fa-marker"></i>
+                                          </a>
+                                        </div>
+                                        <div class="peer">
+                                          <a href="/delete-task/${ task.slug }/" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                                            <i class="fa-solid fa-trash"></i>
+                                          </a>
+                                        </div>
+                                      </div>
+                                    </li>`
+
+                                tasks.innerHTML += taskHTML;
+                              });
+                              tasks_cnt.innerHTML = `<h3 class="c-white">Tasks ${data.tasks_cnt}</h3>
+                              <h3 class="c-white">Completed ${data.task_completed}</h3>
+                              <h3 class="c-white">In Progress ${data.uncompleted}</h3>`;
+                              console.log(tasks_cnt);
+                            }
+                          });
                       },
                       error: function (data) {
                           alert('There is a problem!!!');
@@ -150,7 +238,7 @@
                     <div class="bgc-deep-purple-500 ta-c p-30" id="tasks_cnt">
                       <h3 class="c-white">Tasks {{ count_todos }}</h3>
                       <h3 class="c-white">Completed {{ count_completed_todo }}</h3>
-                      <h3 class="c-white">Uncompleted {{ uncompleted }}</h3>
+                      <h3 class="c-white">In Progress {{ uncompleted }}</h3>
                     </div>
                     <div class="pos-r">
                       <button type="button" class="mT-nv-50 pos-a r-10 t-2 btn cur-p bdrs-50p p-0 w-3r h-3r btn-warning">

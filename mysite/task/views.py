@@ -23,7 +23,7 @@ def calendar(request, username):
         task_count = Task.objects.filter(employe=employes).order_by('-id')
         tasks = Task.objects.all()
         count_todos = task_count.count()
-        completed_todo = Task.objects.filter(status=True).order_by('-id')
+        completed_todo = Task.objects.filter(status=True, employe=employes).order_by('-id')
         count_completed_todo = completed_todo.count()
         uncompleted = count_todos - count_completed_todo
         context = {
@@ -67,7 +67,7 @@ def get_tasks(request):
     employee = Employe.objects.get(user=user)
 
     tasks = list(Task.objects.filter(employe=employee).values().order_by('-id'))
-    task_completed = list(Task.objects.filter(status=True).values())
+    task_completed = list(Task.objects.filter(status=True, employe=employee).values())
     uncompleted = len(tasks) - len(task_completed)
     return JsonResponse({'tasks': tasks, 'tasks_cnt': len(tasks), 
     'task_completed':len(task_completed), 'uncompleted':uncompleted,})
