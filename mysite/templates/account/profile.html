@@ -21,11 +21,10 @@
                             <div class="col-md-6"><label class="labels">Name</label>{{ user_change.first_name }}</div>
                             <div class="col-md-6"><label class="labels">Surname</label>{{ user_change.last_name }}</div>
                             {% if admin.id == employe.user.id %}
-                            <div class="col-md-12"><label class="labels">Gender:</label><br>{{ user_change.gender }}
+                            <div class="col-md-3 "><label class="labels ">Gender:</label><br>{{ user_change.gender }}
                             </div>
-                            <div class="col-md-6"><label class="labels">Status: </label>{{ employe.online }}</div>
                             {% else %}
-                            <div class="col-md-12"><label class="labels">Gender:</label><br>
+                            <div class="col-md-12"><label class="form-control">Gender:</label><br>
                                 <select name="gender" id="id_gender">
                                     <option name="employe.gender.id" value="{{ employe.gender.id }}">{{ employe.gender }}</option>
                                 </select>
@@ -35,24 +34,24 @@
                                 {% if request.user.username != employe.user %}
                                 {% if section.id == employe.section.id or request.user.is_superuser %}
                                 {% if position1.position == "director" %}
-                                <div class="col-md-12"><label class="labels">Position:</label><br>
+                                <div class="col-md-5"><label class="labels">Position:</label><br>
                                     {{ user_change.position }}
                                 </div>
                                 {% elif position1.position != "director" %}
-                                <div class="col-md-12"><label class="labels">Position:</label><br>
+                                <div class="col-md-12"><label class="form-control">Position:</label><br>
                                     <select name="position" required="" id="id_position">
                                         <option name="employe.position.id" value="{{ employe.position.id }}">{{ employe.position }}</option>
                                     </select>
                                 </div>
                                 {% endif %}
                                 {% else %}
-                                <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}</div>
+                                <div class="col-md-12"><label class="">Position:</label><br>{{ employe.position }}</div>
                                 {% endif %}
                                 {% endif %}
                                 
                                 {% if request.user.username != employe.user %}
                                 {% if request.user.is_superuser %}
-                                <div class="col-md-12"><label class="labels">Section:</label><br>{{ user_change.section }}
+                                <div class="col-md-5"><label class="labels">Section:</label><br>{{ user_change.section }}
                                 </div>
                                 {% else %}
                                 <div class="col-md-12"><label class="labels">Section:</label><br>

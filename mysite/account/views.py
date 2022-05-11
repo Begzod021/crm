@@ -10,6 +10,8 @@ from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegis
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
 from task.models import *
+from .models import User, Employe, ChatSession
+from django.db.models import Q
 
 
 
@@ -190,11 +192,27 @@ def user_tablets(request, username):
             section = Section.objects.get(id=employe.section.id)
             employes = Employe.objects.all()
             task_count = Task.objects.filter(employe=employe)
+            user_inst = request.user
+            user_all_friends = ChatSession.objects.filter(Q(user1 = user_inst) | Q(user2 = user_inst)).select_related('user1','user2').order_by('-updated_on')
+            all_friends = []
+            for ch_session in user_all_friends:
+                user,user_inst = [ch_session.user2,ch_session.user1] if request.user.username == ch_session.user1.username else [ch_session.user1,ch_session.user2]
+                data = {
+                    "user_name" : user.username,
+                    "room_name" : ch_session.room_group_name,
+                    "status" : user.profile.is_online,
+                    "user_id" : user.id
+                }
+                all_friends.append(data)
+            print(all_friends)
+
     context = {
         'position1':position1,
         'employes':employes,
         'section':section,
-        'task_count':task_count
+        'task_count':task_count,
+        'user_list':all_friends,
+        'user':user,
     }
     return render(request, 'basic_tablets.html', context)
 
@@ -230,3 +248,18 @@ class GetEmploye(APIView):
         employe = Employe.objects.get(user=user)
         serializer = EmployeSerializer(employe)
         return Response(serializer.data)
+
+
+from django.contrib.auth.signals import user_logged_out, user_logged_in
+from django.dispatch import receiver
+
+@receiver(user_logged_in)
+def got_online(sender, user, request, **kwargs):
+    user.profile.is_online = True
+    user.profile.save()
+
+
+@receiver(user_logged_out)
+def got_offline(sender, user, request, **kwargs):   
+    user.profile.is_online = False
+    user.profile.save()

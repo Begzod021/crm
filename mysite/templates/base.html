@@ -5,6 +5,9 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <link rel="stylesheet" href="{% static 'font-awesome/font-awesome.min.css' %}">
   <script src="https://kit.fontawesome.com/bd8bfefed0.js" crossorigin="anonymous"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -118,6 +121,42 @@
       text-align: left;
     }
   </style>
+<script>
+  const PersonalroomName = JSON.parse(document.getElementById('personal_room').textContent);
+  const PersonalSocket = new WebSocket(
+      'ws://' + window.location.host + '/ws/personal_chat/' + PersonalroomName + '/'
+  );
+  const set_online = () => {
+      setTimeout(() => {
+          PersonalSocket.send(JSON.stringify({
+              'msg_type': 'WENT_ONLINE',
+              'user_id': '{{request.user.id}}'
+          }));
+      }, 1000)
+  }
+
+  document.addEventListener("visibilitychange", event => {
+          if (document.visibilityState == "visible") {
+              if (PersonalSocket.readyState === WebSocket.OPEN){
+                  PersonalSocket.send(JSON.stringify({
+                      'msg_type': 'WENT_ONLINE',
+                      'user_id': '{{request.user.id}}'
+                  }));
+              }
+          }
+          else{
+              if(PersonalSocket.readyState === WebSocket.OPEN){
+                          PersonalSocket.send(JSON.stringify({
+                              'msg_type': 'WENT_OFFLINE',
+                              'user_id': '{{request.user.id}}'
+                          }));
+                  }
+              }
+      }
+  );
+
+  PersonalSocket.onopen = set_online();
+</script>
 </head>
 
 <body class="app" cz-shortcut-listen="true">
@@ -138,6 +177,7 @@
   <!-- @Page Loader -->
   <!-- =================================================== -->
   <div id="loader" class="fadeOut">
+    <span hidden id='personal_room'>{{request.user.id}}</span>
     <div class="spinner"></div>
   </div>
 

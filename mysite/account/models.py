@@ -5,6 +5,7 @@ from django.core.cache import cache
 import datetime
 from django.utils import timezone
 from django.conf import settings
+from django.db.models import Q
 # Create your models here.
 
 
@@ -144,24 +145,12 @@ class Employe(models.Model):
     avatar = models.ImageField(upload_to='avatar/', null=True, blank=True)
     email_add = models.ManyToManyField(Email)
     country = models.CharField(max_length=120, choices=COUNTRY, blank=True, null=True)
-    last_login = models.DateTimeField(default=timezone.now)
+    is_online = models.BooleanField(default = False)
 
-    def last_seen(self):
-        return cache.get('seen_%s' % self.user.username)
 
-    def online(self):
-        if self.last_seen():
-            now = datetime.datetime.now()
-            if now > self.last_seen() + datetime.timedelta(
-                         seconds=settings.USER_ONLINE_TIMEOUT):
-                return False
-            else:
-                return True
-        else:
-            return False
 
-    
-
+    def get_country(el):
+        return Employe.objects.filter(country=el).count()
 
 
     def save(self, *args, **kwargs):
@@ -180,3 +169,29 @@ class Employe(models.Model):
 
 class AdduserCount(models.Model):
     users = models.PositiveIntegerField()
+
+
+class ChatSession(models.Model):
+    user1 = models.ForeignKey(User,on_delete=models.CASCADE,related_name='user1_name')
+    user2 = models.ForeignKey(User,on_delete=models.CASCADE,related_name='user2_name')
+    updated_on = models.DateTimeField(auto_now = True)
+    
+    class Meta:
+        unique_together = (("user1", "user2"))
+        verbose_name = 'Chat Message'
+        
+    def __str__(self):
+        return '%s_%s' %(self.user1.username,self.user2.username)
+        
+    @property
+    def room_group_name(self):
+        return f'chat_{self.id}'
+
+    @staticmethod
+    def chat_session_exists(user1,user2):
+        return ChatSession.objects.filter(Q(user1=user1, user2=user2) | Q(user1=user2, user2=user1)).first()
+    
+    @staticmethod
+    def create_if_not_exists(user1,user2):
+        res = ChatSession.chat_session_exists(user1,user2)
+        return False if res else ChatSession.objects.create(user1=user1,user2=user2)

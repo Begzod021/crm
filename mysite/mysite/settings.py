@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,10 +50,6 @@ INSTALLED_APPS = [
     'contact',
 ]
 
-AUTHENTICATION_BACKENDS = (
-    'account.backends.MyBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
 
 
 
@@ -68,18 +65,7 @@ MIDDLEWARE = [
 ]
 
 
-MIDDLEWARE_CLASSES = (
-    'middleware.activeuser_middleware.ActiveUserMiddleware',
-)
 
-
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'default-cache'
-    }
-}
 
 
 USER_ONLINE_TIMEOUT = 300
@@ -105,7 +91,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
-
+ASGI_APPLICATION = "mysite.asgi.application"
  
 
 # Database
@@ -164,6 +150,18 @@ STATICFILES_DIRS = [
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = '/rango/login'
+

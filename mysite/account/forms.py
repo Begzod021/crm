@@ -58,6 +58,15 @@ class AdminChange(forms.ModelForm):
             'adress':forms.TextInput(attrs={
                 'class':'form-control'
             }),
+            'gender':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'position':forms.Select(attrs={
+                'class':'form-control'
+            }),
+            'section':forms.Select(attrs={
+                'class':'form-control'
+            })
         }
 class AddUser(forms.ModelForm):
     class Meta:

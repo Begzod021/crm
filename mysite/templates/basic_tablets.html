@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block static %}
+
+
+
+{% endblock static %}
 {% block content %}
                 <!-- ### $App Screen Content ### -->
         <main class="main-content bgc-grey-100">
@@ -30,7 +35,10 @@
                           <td>{{ el.user }}</td>
                           <td>{{ el.section }}</td>
                           <td>{{ el.position }}</td>
-                          <td>{{ el.online }}</td>
+                          {% if el.is_online %}<td><small id = "status" style="color: rgb(11, 219, 73);">Online</small></td>
+                          {% else %}
+                          <td><small id = "status" style="color: red;">Offline</small></td>
+                          {% endif %}
                           <td><a href="{% url 'user_profile' el.user %}" class="fa-solid fa-user-pen"></a></td>
                           <td><a href="{% url 'delete-employe' el.user %}" class="fa-solid fa-trash td-n c-red-500"></a></td>
                         </tr>
