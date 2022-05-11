@@ -34,7 +34,7 @@
                                 {% if request.user.username != employe.user %}
                                 {% if section.id == employe.section.id or request.user.is_superuser %}
                                 {% if position1.position == "director" %}
-                                <div class="col-md-5"><label class="labels">Position:</label><br>
+                                <div class="col-md-4"><label class="labels">Position:</label><br>
                                     {{ user_change.position }}
                                 </div>
                                 {% elif position1.position != "director" %}
@@ -54,8 +54,8 @@
                                 <div class="col-md-5"><label class="labels">Section:</label><br>{{ user_change.section }}
                                 </div>
                                 {% else %}
-                                <div class="col-md-12"><label class="labels">Section:</label><br>
-                                    <select name="section" required="" id="id_section">
+                                <div class="col-md-5"><label class="labels">Section:</label><br>
+                                    <select name="section" required="" id="id_section" class="form-control">
                                         <option name="employe.section.id" value="{{ employe.section.id }}">{{ employe.section }}</option>
                                     </select>
                                 </div>
@@ -71,6 +71,8 @@
                                 <div class="col-md-12"><label class="labels">User Limit</label><br>{{ adduser.users }}
                                 </div>
                                 {% endif %}
+                                <div class="col-md-12"><a href="{% url 'change_password' request.user.username %}"><label class="labels">Change Password</label><br></a>
+                                </div>
                                 <div class="mt-5 text-center" style="margin-bottom: 20px;"><button type="submit" class="btn btn-dark btn-lg">Save
                                         Changes</button></div>
                     </form>

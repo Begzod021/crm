@@ -1,3 +1,4 @@
+from requests import request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -12,8 +13,9 @@ from .decorators import unauthenticated_user
 from task.models import *
 from .models import User, Employe, ChatSession
 from django.db.models import Q
-
-
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from .forms import MyPasswordChangeForm
 
 
 # Create your views here.
@@ -82,6 +84,26 @@ def user_login(request):
             'form':form
         }
     return render(request, 'SignIn.html', context)
+
+
+def change_password(request, username):
+    if request.method == 'POST':
+        form = MyPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfuly updated')
+            return redirect('user_profile', request.user.username)
+        else:
+            messages.error(request, 'Please correct the error below.')
+        
+    else:
+        form = MyPasswordChangeForm(request.user)
+
+    return render(request, 'account/change_password.html', {'form':form})
+
+
+
 
 
 @login_required(login_url='user_login')

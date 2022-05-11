@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'remember_me',
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
     'task',
     'chat',
     'contact',
+    'dashboard'
 ]
 
 
@@ -165,3 +167,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = '/rango/login'
 
+OWM_API_KEY = '66ff3434ba88fffc04bf3e1812207117'

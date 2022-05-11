@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import authenticate
@@ -6,6 +7,10 @@ from account.models import Postion, AdduserCount
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from task.models import Task
+from django.conf import settings
+import requests
+from .models import City
+from .forms import CityForm
 # Create your views here.
 
 
@@ -43,31 +48,60 @@ def dashboard(request, username):
 
 
 
-def get_user_country(request):
-    #     ('Tashkent','Tashkent'),
-    #     ('Samarkand','Samarkand'),
-    #     ('Andijan','Andijan'),
-    #     ('Karakalpakstan','Karakalpakstan'),
-    #     ('Ferghana', 'Ferghana'),
-    #     ('Bukhoro','Bukhoro'),
-    #     ('Namangan', 'Namangan'),
-    #     ('Khorezm', 'Khorezm'),
-    #     ('Kashkadarya','Kashkadarya'),
-    #     ('Jizzakh','Jizzakh'),
-    #     ('Surkhandaryo','Surkhandaryo'),
-    #     ('Navoi','Navoi')
-    employe_tash = list(Employe.objects.filter(country="Tashkent").values())
-    print(employe_tash)
-    employe_Samarkand = list(Employe.objects.filter(country="Samarkand").values())
-    employe_Andijan = Employe.objects.filter(country="Andijan")
-    employe_Karakalpakstan = Employe.objects.filter(country="Karakalpakstan")
-    employe_Ferghana = Employe.objects.filter(country="Ferghana")
-    employe_Bukhoro = Employe.objects.filter(country="Bukhoro")
-    employe_Namangan = Employe.objects.filter(country="Namangan")
-    employe_Khorezm = Employe.objects.filter(country="Khorezm")
-    employe_Kashkadarya = Employe.objects.filter(country="Kashkadarya")
-    employe_Jizzakh = Employe.objects.filter(country="Jizzakh")
-    employe_Surkhandaryo = Employe.objects.filter(country="Surkhandaryo")
-    employe_Navoi = Employe.objects.filter(country="Navoi")
 
-    return JsonResponse({'employe_tash':len(employe_tash)})
+
+
+
+def get_weather_data(city_name):
+    url = f'https://api.openweathermap.org/data/2.5/weather'
+    params = {
+        'q': city_name,
+        'appid': settings.OWM_API_KEY,
+        'units': 'metric'
+    }
+    response = requests.get(url, params=params)
+    if response.status_code != 200:
+        return None
+    json_response = response.json()
+
+    weather_data = {
+        'temp': json_response['main']['temp'],
+        'temp_min': json_response['main']['temp_min'],
+        'temp_max': json_response['main']['temp_max'],
+        'city_name': json_response['name'],
+        'country': json_response['sys']['country'],
+        'lat': json_response['coord']['lat'],
+        'lon': json_response['coord']['lon'],
+        'weather': json_response['weather'][0]['main'],
+        'weather_desc': json_response['weather'][0]['description'],
+        'pressure': json_response['main']['pressure'],
+        'humidity': json_response['main']['humidity'],
+        'wind_speed': json_response['wind']['speed'],
+    }
+    return weather_data
+
+
+def home(request, username):
+    form = CityForm()
+    user = User.objects.get(username=username)
+    employe = Employe.objects.get(user=user)
+    position1 = Postion.objects.get(id=employe.position.id)
+    if request.method == 'POST':
+        form = CityForm(request.POST)
+        if form.is_valid():
+            form.save()
+            city_name = form.cleaned_data.get('city_name')
+            weather_data = get_weather_data(city_name)
+            
+
+    elif request.method == 'GET':
+        try:
+            city_name = City.objects.latest('date_added').city_name
+            weather_data = get_weather_data(city_name)
+        except Exception as e:
+            weather_data = None
+            
+    template_name = 'weather.html'
+    context = {'form': form, 'weather_data': weather_data,
+    'user':user, 'position1':position1, 'employe':employe}
+    return render(request, template_name, context=context)

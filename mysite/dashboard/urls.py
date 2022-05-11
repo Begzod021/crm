@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 
-from .views import dashboard, get_user_country
+from .views import dashboard, home
 
 
 
@@ -23,5 +23,5 @@ from .views import dashboard, get_user_country
 
 urlpatterns = [
     path('dashboard/<str:username>/',dashboard, name='dashboard'),
-    path('country', get_user_country, name='get_user_country'),
+    path('weather/<str:username>/', home, name='weather')
 ]
