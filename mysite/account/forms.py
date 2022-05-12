@@ -1,12 +1,14 @@
+from email.policy import default
 from tkinter import Widget
 from django import forms
 from .models import *
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 class AddAdmin(forms.ModelForm):
+    
     class Meta:
         model = User
-        fields = ['username','password']
+        fields = ['username','password', 'remember_me']
 
         widgets = {
             'username':forms.TextInput(attrs={
@@ -21,7 +23,6 @@ class AddAdmin(forms.ModelForm):
                 'id':'password',
             }),
         }
-
 
 class PositionForm(forms.ModelForm):
     class Meta:

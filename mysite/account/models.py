@@ -13,8 +13,7 @@ class User(AbstractUser):
     slug = models.SlugField(blank=True)
     has_profile = models.BooleanField(default=False)
 
-
-
+    remember_me = models.BooleanField(default=False)
 
 
 
@@ -109,9 +108,6 @@ class Employe(models.Model):
         ('Male','Male'),
         ('Female','Female'),
     )
-
-
-
     COUNTRY = (
         ('Tashkent','Tashkent'),
         ('Samarkand','Samarkand'),
@@ -164,7 +160,7 @@ class Employe(models.Model):
     def __str__(self) -> str:
         return str(self.user)
 
-    
+
 
 
 class AdduserCount(models.Model):

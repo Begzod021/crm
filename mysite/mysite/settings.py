@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'remember_me',
+
     'channels',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -54,7 +54,6 @@ INSTALLED_APPS = [
 
 
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -70,8 +69,6 @@ MIDDLEWARE = [
 
 
 
-USER_ONLINE_TIMEOUT = 300
-USER_LASTSEEN_TIMEOUT = 60 * 60 * 24 * 7
 
 
 ROOT_URLCONF = 'mysite.urls'

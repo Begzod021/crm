@@ -65,11 +65,13 @@ def user_login(request):
     if request.method=="POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
+        remember_me = request.POST.get('remember_me')
+        form = AddAdmin(request.POST)
         user = authenticate(username=username, password=password)
-       
- 
         if user:
             login(request, user)
+            if remember_me:
+                user1 = User.objects.filter(username=username).update(remember_me=True)
             return redirect('dashboard', user.username)
         else:
             form = AddAdmin(request.POST, request.FILES)
@@ -79,7 +81,7 @@ def user_login(request):
                 messages.error(request, 'Password error')
             except:
                 messages.error(request, 'Login error')
-    
+        
     context = {
             'form':form
         }
@@ -108,6 +110,7 @@ def change_password(request, username):
 
 @login_required(login_url='user_login')
 def logout_user(request):
+    user = User.objects.filter(username=request.user.username).update(remember_me=False, username=request.user.username)
     logout(request)
     return redirect('user_login')
 

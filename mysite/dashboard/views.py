@@ -1,3 +1,4 @@
+from itertools import count
 from multiprocessing import context
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
@@ -21,6 +22,7 @@ def dashboard(request, username):
     else:
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
+        
         position1 = Postion.objects.get(id=employe.position.id)
         user_count = User.objects.all().count()
         employes = Employe.objects.all()
@@ -30,7 +32,7 @@ def dashboard(request, username):
         for el in Employe.COUNTRY:
             employe_country[el[0]] = Employe.get_country(el[0])
         for i in AdduserCount.objects.all():
-            procent = (user_count*100)/i.users
+            procent = (user_count*100)/i.users            
     context = {
         'user':user,
         'employe':employe,
@@ -41,7 +43,6 @@ def dashboard(request, username):
         'users':users,
         'task_count':task_count,
         'employe_country':list(employe_country.values()),
- 
     }
     return render(request, 'dashboard.html', context)
 
@@ -105,3 +106,8 @@ def home(request, username):
     context = {'form': form, 'weather_data': weather_data,
     'user':user, 'position1':position1, 'employe':employe}
     return render(request, template_name, context=context)
+
+
+def get_visit_count(request):
+    user = list(User.objects.all().values().order_by('-id')[0:8])
+    return JsonResponse({'user':len(user)})

@@ -31,3 +31,4 @@ class AdminCountUser(admin.ModelAdmin):
 @admin.register(ChatSession)
 class AdminCountUser(admin.ModelAdmin):
     list_display = ['user1', 'user2']
+
