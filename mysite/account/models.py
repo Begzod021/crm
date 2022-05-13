@@ -12,7 +12,6 @@ from django.db.models import Q
 class User(AbstractUser):
     slug = models.SlugField(blank=True)
     has_profile = models.BooleanField(default=False)
-
     remember_me = models.BooleanField(default=False)
 
 
@@ -142,7 +141,7 @@ class Employe(models.Model):
     email_add = models.ManyToManyField(Email)
     country = models.CharField(max_length=120, choices=COUNTRY, blank=True, null=True)
     is_online = models.BooleanField(default = False)
-
+    email = models.EmailField(max_length=150, null=True, blank=True)
 
 
     def get_country(el):

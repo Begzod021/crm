@@ -13,7 +13,6 @@ from .decorators import unauthenticated_user
 from task.models import *
 from .models import User, Employe, ChatSession
 from django.db.models import Q
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from .forms import MyPasswordChangeForm
 
@@ -70,6 +69,7 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
+            
             if remember_me:
                 user1 = User.objects.filter(username=username).update(remember_me=True)
             return redirect('dashboard', user.username)
@@ -193,7 +193,7 @@ def employe(request, username):
                     user_data = User.objects.get(id=user_id)
                     user_data.has_profile_true()
                     user_data.save()
-
+                    employe_email = Employe.objects.filter(user=user_data).update(email=user_data.username + '@crm.com')
                     return redirect('user_registor', username)
         else:
             return redirect('error', username)

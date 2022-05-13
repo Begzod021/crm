@@ -38,8 +38,8 @@
                                     {{ user_change.position }}
                                 </div>
                                 {% elif position1.position != "director" %}
-                                <div class="col-md-12"><label class="form-control">Position:</label><br>
-                                    <select name="position" required="" id="id_position">
+                                <div class="col-md-5"><label >Position:</label><br>
+                                    <select name="position" required="" id="id_position" class="form-control">
                                         <option name="employe.position.id" value="{{ employe.position.id }}">{{ employe.position }}</option>
                                     </select>
                                 </div>
