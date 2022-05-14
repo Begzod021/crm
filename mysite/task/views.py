@@ -7,7 +7,9 @@ from .forms import TaskEditForm, TaskForm
 from django.contrib.auth.decorators import login_required
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework import generics
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework import status
 # Create your views here.
 
 
@@ -40,6 +42,20 @@ def calendar(request, username):
 
 
 
+@api_view(['GET'])
+def allTask(request):
+    tasks = Task.objects.all()
+    serializer = TaskSerializers(tasks, data=request.data)
+
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def detailTask(request, pk):
+    task = Task.objects.get(id=pk)
+    serializer = TaskSerializers(task, many=False)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class TaskUpdate(generics.RetrieveUpdateAPIView):
@@ -50,6 +66,7 @@ class TaskUpdate(generics.RetrieveUpdateAPIView):
         serializer.save()
 
         return Response(serializer.data)
+    
 
 
 

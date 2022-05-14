@@ -12,4 +12,5 @@ urlpatterns = [
     path('task/<str:username>/', task, name='task'),
     path('delete-task/<slug:slug>/', delete, name='delete-task'),
     path('task-update/<int:pk>/', TaskUpdate.as_view(), name='taskUpdate'),
+    path('detail-task/<int:pk>', detailTask, name='detail_task')
 ]

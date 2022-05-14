@@ -3,6 +3,8 @@
 {% block static %}
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+<link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 <style type="text/css">
   #container {
     height: 500px;
@@ -91,86 +93,77 @@
             <div class="masonry-sizer col-md-6"></div>
             <div class="masonry-item  w-100" style="position: absolute; left: 0%; top: 0px;">
               <div class="row gap-20">
-                <!-- #Toatl Visits ==================== -->
-                <div class="col-md-3">
-                  <div class="layers bd bgc-white p-20">
-                    <div class="layer w-100 mB-10">
-                      <h6 class="lh-1">Total Visits</h6>
-                    </div>
-                    <div class="layer w-100">
-                      <div class="peers ai-sb fxw-nw">
-                        <div class="peer peer-greed">
-                          <span id="sparklinedash"><canvas width="45" height="20"
-                              style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
-                        </div>
-                        <div class="peer">
-                          <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-green-50 c-green-500">+10%</span>
-                        </div>
+                <div class="col-lg-3 col-md-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="stat-widget-five">
+                              <div class="stat-icon dib flat-color-1">
+                                  <i class="pe-7s-cash"></i>
+                              </div>
+                              <div class="stat-content">
+                                  <div class="text-left dib">
+                                      <div class="stat-text">$<span class="count">23569</span></div>
+                                      <div class="stat-heading">Revenue</div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
                   </div>
-                </div>
+              </div>
 
-                <!-- #Total Page Views ==================== -->
-                <div class="col-md-3">
-                  <div class="layers bd bgc-white p-20">
-                    <div class="layer w-100 mB-10">
-                      <h6 class="lh-1">Total Page Views</h6>
-                    </div>
-                    <div class="layer w-100">
-                      <div class="peers ai-sb fxw-nw">
-                        <div class="peer peer-greed">
-                          <span id="sparklinedash2"><canvas width="45" height="20"
-                              style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
-                        </div>
-                        <div class="peer">
-                          <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-red-50 c-red-500">-7%</span>
-                        </div>
+              <div class="col-lg-3 col-md-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="stat-widget-five">
+                              <div class="stat-icon dib flat-color-2">
+                                  <i class="pe-7s-cart"></i>
+                              </div>
+                              <div class="stat-content">
+                                  <div class="text-left dib">
+                                      <div class="stat-text"><span class="count">3435</span></div>
+                                      <div class="stat-heading">Sales</div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
                   </div>
-                </div>
+              </div>
 
-                <!-- #Unique Visitors ==================== -->
-                <div class="col-md-3">
-                  <div class="layers bd bgc-white p-20">
-                    <div class="layer w-100 mB-10">
-                      <h6 class="lh-1">Unique Visitor</h6>
-                    </div>
-                    <div class="layer w-100">
-                      <div class="peers ai-sb fxw-nw">
-                        <div class="peer peer-greed">
-                          <span id="sparklinedash3"><canvas width="45" height="20"
-                              style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
-                        </div>
-                        <div class="peer">
-                          <span
-                            class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">~12%</span>
-                        </div>
+              <div class="col-lg-3 col-md-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="stat-widget-five">
+                              <div class="stat-icon dib flat-color-3">
+                                  <i class="pe-7s-browser"></i>
+                              </div>
+                              <div class="stat-content">
+                                  <div class="text-left dib">
+                                      <div class="stat-text"><span class="count">{{tasks.count}}</span></div>
+                                      <div class="stat-heading">Tasks</div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
                   </div>
-                </div>
+              </div>
 
-                <!-- #Bounce Rate ==================== -->
-                <div class="col-md-3">
-                  <div class="layers bd bgc-white p-20">
-                    <div class="layer w-100 mB-10">
-                      <h6 class="lh-1">Bounce Rate</h6>
-                    </div>
-                    <div class="layer w-100">
-                      <div class="peers ai-sb fxw-nw">
-                        <div class="peer peer-greed">
-                          <span id="sparklinedash4"><canvas width="45" height="20"
-                              style="display: inline-block; width: 45px; height: 20px; vertical-align: top;"></canvas></span>
-                        </div>
-                        <div class="peer">
-                          <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-blue-50 c-blue-500">33%</span>
-                        </div>
+              <div class="col-lg-3 col-md-6">
+                  <div class="card">
+                      <div class="card-body">
+                          <div class="stat-widget-five">
+                              <div class="stat-icon dib flat-color-4">
+                                  <i class="pe-7s-users"></i>
+                              </div>
+                              <div class="stat-content">
+                                  <div class="text-left dib">
+                                      <div class="stat-text"><span class="count">{{ user_count }}</span></div>
+                                      <div class="stat-heading">Users</div>
+                                  </div>
+                              </div>
+                          </div>
                       </div>
-                    </div>
                   </div>
-                </div>
+              </div>
               </div>
             </div>
             <div class="masonry-item col-12" style="position: absolute; left: 0%; top: 126px;">
@@ -190,21 +183,16 @@
                       <div class="layer w-100">
                         <!-- Progress Bars -->
                         <div class="layers">
-                          {% for i in employe_country %}
-                          {% if i > 0 %}
                           <div class="layer w-100">
-                            <h5 class="mB-5">{{ i }}</h5>
-                            <small class="fw-600 c-grey-700">Visitors </small>
-                            <span class="pull-right c-grey-600 fsz-sm">%</span>
-                            
+                            <h5 class="mB-5"></h5>
+                            <small class="fw-600 c-grey-700">My Tasks</small>
+                            <span class="pull-right c-grey-600 fsz-sm">{{count_todos}}%</span>      
                             <div class="progress mT-10">
                               <div class="progress-bar bgc-deep-purple-500" role="progressbar" aria-valuenow="50"
-                                aria-valuemin="0" aria-valuemax="100" style="width:%;"> <span class="sr-only">50%
+                                aria-valuemin="0" aria-valuemax="100" style="width:{{count_todos}}%;"> <span class="sr-only">50%
                                   Complete</span></div>
                             </div>
                           </div>
-                          {% endif %}
-                          {% endfor %}
                           <div class="layer w-100 mT-15">
                             <h5 class="mB-5">1M</h5>
                             <small class="fw-600 c-grey-700">Visitors From Europe</small>
@@ -234,31 +222,6 @@
                                 aria-valuemin="0" aria-valuemax="100" style="width:90%;"> <span class="sr-only">90%
                                   Complete</span></div>
                             </div>
-                          </div>
-                        </div>
-
-                        <!-- Pie Charts -->
-                        <div class="peers pT-20 mT-20 bdT fxw-nw@lg+ jc-sb ta-c gap-10">
-                          <div class="peer">
-                            <div class="easy-pie-chart" data-size="80" data-percent="{{ procent }}" data-bar-color="#f44336">
-                              <span>{{ user_count }}</span>
-                              <canvas height="80" width="80"></canvas>
-                            </div>
-                            <h6 class="fsz-sm">Users</h6>
-                          </div>
-                          <div class="peer">
-                            <div class="easy-pie-chart" data-size="80" data-percent="50" data-bar-color="#2196f3">
-                              <span>50 %</span>
-                              <canvas height="80" width="80"></canvas>
-                            </div>
-                            <h6 class="fsz-sm">New Purchases</h6>
-                          </div>
-                          <div class="peer">
-                            <div class="easy-pie-chart" data-size="80" data-percent="90" data-bar-color="#ff9800">
-                              <span>90 %</span>
-                              <canvas height="80" width="80"></canvas>
-                            </div>
-                            <h6 class="fsz-sm">Bounce Rate</h6>
                           </div>
                         </div>
                       </div>
@@ -502,17 +465,17 @@
                           <div class="layer w-100">
                             <div class="peers fxw-nw ai-c">
                               <div class="peer mR-20">
-                                <h3>32<sup>°F</sup></h3>
+                                <h3>{{ weather.temp }}<sup>o</sup></h3>
                               </div>
                               <div class="peer">
-                                <canvas class="sleet" width="44" height="44"></canvas>
+                                <img src="http://openweathermap.org/img/w/{{ weather.icon }}.png">
                               </div>
                             </div>
                           </div>
 
                           <!-- Condition -->
                           <div class="layer w-100">
-                            <span class="fw-600 c-grey-600">Partly Clouds</span>
+                            <span class="fw-600 c-grey-600">{{ weather.description.title }}</span>
                           </div>
                         </div>
                       </div>
@@ -561,47 +524,6 @@
                             <span class="fw-600 c-grey-800">1B</span>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Week Forecast -->
-                  <div class="layer w-100">
-                    <div class="peers peers-greed ai-fs ta-c">
-                      <div class="peer">
-                        <h6 class="mB-10">MON</h6>
-                        <canvas class="sleet" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">32<sup>°F</sup></span>
-                      </div>
-                      <div class="peer">
-                        <h6 class="mB-10">TUE</h6>
-                        <canvas class="clear-day" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">30<sup>°F</sup></span>
-                      </div>
-                      <div class="peer">
-                        <h6 class="mB-10">WED</h6>
-                        <canvas class="partly-cloudy-day" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">28<sup>°F</sup></span>
-                      </div>
-                      <div class="peer">
-                        <h6 class="mB-10">THR</h6>
-                        <canvas class="cloudy" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">32<sup>°F</sup></span>
-                      </div>
-                      <div class="peer">
-                        <h6 class="mB-10">FRI</h6>
-                        <canvas class="snow" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">24<sup>°F</sup></span>
-                      </div>
-                      <div class="peer">
-                        <h6 class="mB-10">SAT</h6>
-                        <canvas class="wind" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">28<sup>°F</sup></span>
-                      </div>
-                      <div class="peer">
-                        <h6 class="mB-10">SUN</h6>
-                        <canvas class="sleet" width="30" height="30"></canvas>
-                        <span class="d-b fw-600">32<sup>°F</sup></span>
                       </div>
                     </div>
                   </div>

@@ -24,8 +24,8 @@
                             <div class="col-md-3 "><label class="labels ">Gender:</label><br>{{ user_change.gender }}
                             </div>
                             {% else %}
-                            <div class="col-md-12"><label class="form-control">Gender:</label><br>
-                                <select name="gender" id="id_gender">
+                            <div class="col-md-4"><label class="labels">Gender:</label><br>
+                                <select name="gender" id="id_gender" class="form-control">
                                     <option name="employe.gender.id" value="{{ employe.gender.id }}">{{ employe.gender }}</option>
                                 </select>
                             {% endif %}
@@ -38,14 +38,14 @@
                                     {{ user_change.position }}
                                 </div>
                                 {% elif position1.position != "director" %}
-                                <div class="col-md-5"><label >Position:</label><br>
+                                <div class="col-md-5"><label class="labels">Position:</label><br>
                                     <select name="position" required="" id="id_position" class="form-control">
                                         <option name="employe.position.id" value="{{ employe.position.id }}">{{ employe.position }}</option>
                                     </select>
                                 </div>
                                 {% endif %}
                                 {% else %}
-                                <div class="col-md-12"><label class="">Position:</label><br>{{ employe.position }}</div>
+                                <div class="col-md-12"><label class="labels">Position:</label><br>{{ employe.position }}</div>
                                 {% endif %}
                                 {% endif %}
                                 

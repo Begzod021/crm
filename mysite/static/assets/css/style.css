@@ -1,0 +1,305 @@
+/* This css file is to over write bootstarp css
+--------------------------------------------------------- /
+* Theme Name: Ela Admin Template
+* Theme URI: http://demos.jeweltheme.com/
+* Author: jewel_theme
+* Author URI: http://themeforest.net/user/jewel_theme/portfolio
+* Description:
+* Version: 1.0.0
+* License: GNU General Public License v2 or later
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Tags: html, themplate, Ela Admin
+--------------------------------------------------------- */
+/* 
+
+
+Googel Fonts  */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+/* Googel Fonts End  
+
+*/
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+.bg-flat-color-1 {
+  background: #00c292; }
+
+.bg-flat-color-2 {
+  background: #ab8ce4; }
+
+.bg-flat-color-3 {
+  background: #03a9f3; }
+
+.bg-flat-color-4 {
+  background: #fb9678; }
+
+.bg-flat-color-5 {
+  background: #66bb6a; }
+
+.bg-flat-color-6 {
+  background: #5c6bc0; }
+
+.bg-transparent {
+  background-color: transparent; }
+
+.white-color {
+  color: #fff; }
+
+.flat-color-1 {
+  color: #00c292; }
+
+.flat-color-2 {
+  color: #ab8ce4; }
+
+.flat-color-3 {
+  color: #03a9f3; }
+
+.flat-color-4 {
+  color: #fb9678; }
+
+.flat-color-5 {
+  color: #66bb6a; }
+
+.flat-color-6 {
+  color: #5c6bc0; }
+
+.bg-twitter {
+  background: #1da1f2; }
+
+.bg-facebook {
+  background: #3b5998; }
+
+.bg-instagram {
+  background: #833ab4; }
+
+.bg- {
+  background: #ef5350; }
+
+.bg- {
+  background: #4dbd74; }
+
+.bg- {
+  background: #66bb6a; }
+
+.bg-white {
+  background-color: #fff; }
+
+.fade-5 {
+  opacity: 0.5; }
+
+.icon-lg {
+  font-size: 4.68em; }
+
+.fw-r {
+  font-weight: normal; }
+
+.color-gray {
+  color: #868e96; }
+
+.text-up {
+  text-transform: uppercase; }
+
+.br-0 {
+  border: none !important; }
+
+.black-rgba {
+  background-color: rgba(0, 0, 0, 0.15) !important; }
+
+.color-white {
+  color: #fff !important; }
+
+.color-red {
+  color: #dc3545; }
+
+.font-3xl {
+  font-size: 2.8125em; }
+
+.font-4xl {
+  font-size: 3.75em; }
+
+.width-90 {
+  width: 90px; }
+
+.height-15 {
+  height: 15px; }
+
+.height-93 {
+  height: 93px; }
+
+.height-100 {
+  height: 100px; }
+
+.inline-block {
+  display: inline-block; }
+
+.mb-15 {
+  margin-bottom: 15px; }
+
+/*    Widget One
+---------------------------*/
+.dib {
+  display: inline-block; }
+
+.stat-widget-one .stat-icon {
+  vertical-align: top; }
+
+.stat-widget-one .stat-icon i {
+  font-size: 30px;
+  border-width: 3px;
+  border-style: solid;
+  border-radius: 100px;
+  padding: 15px;
+  font-weight: 900;
+  display: inline-block; }
+
+.stat-widget-one .stat-content {
+  margin-left: 30px;
+  margin-top: 7px; }
+
+.stat-widget-one .stat-text {
+  font-size: 14px;
+  color: #868e96; }
+
+.stat-widget-one .stat-digit {
+  font-size: 24px;
+  color: #373757; }
+
+/*    Widget Two
+---------------------------*/
+.stat-widget-two {
+  text-align: center; }
+
+.stat-widget-two .stat-digit {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: #373757; }
+
+.stat-widget-two .stat-digit i {
+  font-size: 18px;
+  margin-right: 5px; }
+
+.stat-widget-two .stat-text {
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #868e96; }
+
+.stat-widget-two .progress {
+  height: 8px;
+  margin-bottom: 0;
+  margin-top: 20px;
+  -webkit-box-shadow: none;
+          box-shadow: none; }
+
+.stat-widget-two .progress-bar {
+  -webkit-box-shadow: none;
+          box-shadow: none; }
+
+/*    Widget Three
+---------------------------*/
+.stat-widget-three .stat-icon {
+  display: inline-block;
+  padding: 33px;
+  position: absolute;
+  line-height: 21px; }
+
+.stat-widget-three .stat-icon i {
+  font-size: 30px;
+  color: #ffffff; }
+
+.stat-widget-three .stat-content {
+  text-align: center;
+  padding: 15px;
+  margin-left: 90px; }
+
+.stat-widget-three .stat-digit {
+  font-size: 30px; }
+
+.stat-widget-three .stat-text {
+  padding-top: 4px; }
+
+.home-widget-three .stat-icon {
+  line-height: 19px;
+  padding: 27px; }
+
+.home-widget-three .stat-digit {
+  font-size: 24px;
+  font-weight: 300;
+  color: #373757; }
+
+.home-widget-three .stat-content {
+  text-align: center;
+  margin-left: 60px;
+  padding: 13px; }
+
+/*    Widget Four
+---------------------------*/
+.stat-widget-four {
+  position: relative; }
+  .stat-widget-four .stat-icon {
+    display: inline-block;
+    position: absolute;
+    top: 5px; }
+  .stat-widget-four i {
+    display: block;
+    font-size: 36px; }
+  .stat-widget-four .stat-content {
+    margin-left: 40px;
+    text-align: center; }
+  .stat-widget-four .stat-heading {
+    font-size: 20px; }
+
+/*    Widget Five
+---------------------------*/
+.stat-widget-five {
+  min-height: 60px; }
+  .stat-widget-five .stat-icon {
+    font-size: 50px;
+    line-height: 50px;
+    position: absolute;
+    left: 30px;
+    top: 20px; }
+  .stat-widget-five .stat-content {
+    margin-left: 100px; }
+  .stat-widget-five .stat-text {
+    color: #455a64;
+    font-size: 20px; }
+  .stat-widget-five .stat-heading {
+    color: #99abb4;
+    font-size: 14px; }
+
+.horizontal:before {
+  background: #ffffff;
+  bottom: 0;
+  content: "";
+  height: 38px;
+  left: 0;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  width: 1px; }
+
+/* Mixed Styles */
+.badges h1, .badges h2, .badges h3, .badges h4, .badges h5, .badges h6 {
+  margin: 5px 0; }
+
+.vue-lists ul, .vue-lists ol {
+  padding-left: 30px; }
+
+.card .dropdown.float-right .dropdown-menu {
+  left: inherit !important;
+  right: 0 !important;
+  top: 93% !important; }
+
+.dataTables_paginate .pagination {
+  border-radius: 0; }
+  .dataTables_paginate .pagination li {
+    border-radius: 0 !important; }
+    .dataTables_paginate .pagination li a {
+      border-radius: 0 !important;
+      color: #292b35; }
+    .dataTables_paginate .pagination li.active a {
+      background: #292b35;
+      border-color: #292b35;
+      color: #fff; }
+    .dataTables_paginate .pagination li:hover a {
+      background: #292b35;
+      border-color: #292b35;
+      color: #fff; }
