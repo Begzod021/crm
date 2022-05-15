@@ -111,15 +111,15 @@ class Employe(models.Model):
         ('Tashkent','Tashkent'),
         ('Samarkand','Samarkand'),
         ('Andijan','Andijan'),
-        ('Karakalpakstan','Karakalpakstan'),
+        ('Nukus','Nukus'),
         ('Ferghana', 'Ferghana'),
-        ('Bukhoro','Bukhoro'),
+        ('Bukhoro','Bukhara'),
         ('Namangan', 'Namangan'),
-        ('Khorezm', 'Khorezm'),
-        ('Kashkadarya','Kashkadarya'),
+        ('Urganch', 'Urganch'),
+        ('Qarshi','Qarshi'),
         ('Jizzakh','Jizzakh'),
-        ('Surkhandaryo','Surkhandaryo'),
-        ('Navoi','Navoi'),
+        ('Termiz','Termiz'),
+        ('Navoiy','Navoiy'),
         ('Sirdaryo','Sirdaryo'),
 
     )
@@ -142,7 +142,7 @@ class Employe(models.Model):
     country = models.CharField(max_length=120, choices=COUNTRY, blank=True, null=True)
     is_online = models.BooleanField(default = False)
     email = models.EmailField(max_length=150, null=True, blank=True)
-
+    date = models.DateField(auto_now_add=True, null=True)
 
     def get_country(el):
         return Employe.objects.filter(country=el).count()

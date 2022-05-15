@@ -19,6 +19,19 @@ Googel Fonts  */
 
 */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700");
+.text-success {
+  color: #00d25b !important; }
+
+a.text-success:hover, a.text-success:focus {
+  color: #00863a !important; }
+
+
+.text-danger {
+  color: #fc424a !important; }
+
+a.text-danger:hover, a.text-danger:focus {
+  color: #ee040e !important; }
+
 .bg-flat-color-1 {
   background: #00c292; }
 

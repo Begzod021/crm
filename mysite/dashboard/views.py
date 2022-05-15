@@ -11,6 +11,7 @@ from task.models import Task
 from django.conf import settings
 import requests
 from .weather import get_weather
+from .course import get_course
 # Create your views here.
 
 
@@ -35,7 +36,8 @@ def dashboard(request, username):
             employe_country[el[0]] = Employe.get_country(el[0])
         for i in AdduserCount.objects.all():
             procent = (user_count*100)/i.users 
-        weather = get_weather()
+        weather = get_weather(employe)
+        coursers = get_course()
     context = {
         'user':user,
         'employe':employe,
@@ -49,6 +51,7 @@ def dashboard(request, username):
         'count_todos':count_todos,
         'completed_todo':completed_todo,
         'tasks':tasks,
-        'weather':weather
+        'weather':weather,
+        'coursers':coursers
     }
     return render(request, 'dashboard.html', context)

@@ -1,0 +1,25 @@
+.icon-strelka {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .icon-strelka.icon-box-success {
+      width: 30px;
+      height: 30px;
+      background: rgba(0, 210, 91, 0.11);
+      border-radius: 7px;
+      color: #00d25b; }
+    .icon-strelka .icon-item {
+      font-size: 20px; }
+  
+  .icon-strelka {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .icon-strelka.icon-box-danger {
+      width: 30px;
+      height: 30px;
+      background: rgba(252, 66, 74, 0.11);
+      border-radius: 7px;
+      color: #fc424a; }
+    .icon-strelka .icon-item {
+      font-size: 20px; }
