@@ -113,7 +113,7 @@ class Employe(models.Model):
         ('Andijan','Andijan'),
         ('Nukus','Nukus'),
         ('Ferghana', 'Ferghana'),
-        ('Bukhoro','Bukhara'),
+        ('Bukhara','Bukhara'),
         ('Namangan', 'Namangan'),
         ('Urganch', 'Urganch'),
         ('Qarshi','Qarshi'),
