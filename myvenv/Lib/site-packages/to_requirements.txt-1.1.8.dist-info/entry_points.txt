@@ -1,0 +1,3 @@
+[console_scripts]
+requirements-txt = requirements_txt.command:cli
+
