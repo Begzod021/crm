@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 from task.models import Task
 from django.conf import settings
 import requests
-from .weather import get_weather
+from .weather import weather_get
 from .course import get_course
 # Create your views here.
 
@@ -34,8 +34,8 @@ def dashboard(request, username):
             employe_country[el[0]] = Employe.get_country(el[0])
         for i in AdduserCount.objects.all():
             procent = (user_count*100)/i.users 
-        weather = get_weather(employe)
         coursers = get_course()
+        weather_get_task = weather_get(employe)
     context = {
         'user':user,
         'employe':employe,
@@ -49,7 +49,21 @@ def dashboard(request, username):
         'count_todos':count_todos,
         'completed_todo':completed_todo,
         'tasks':tasks,
-        'weather':weather,
-        'coursers':coursers
+        'coursers':coursers,
+        'weather_get_task':weather_get_task
     }
     return render(request, 'dashboard.html', context)
+
+
+def get_weather_json(request):
+
+    user = User.objects.get(username=request.user.username)
+    employe = Employe.objects.get(user=user)
+    weather = weather_get(employe)
+
+    print(weather["temp"])
+
+
+
+    return JsonResponse({'temp':weather["temp"], 'city':weather["city_name"], 'id':weather["id"], 'description':weather["description"],
+    "speed":weather["speed"]})

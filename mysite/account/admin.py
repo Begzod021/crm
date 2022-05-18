@@ -26,9 +26,3 @@ class AdminEmail(admin.ModelAdmin):
 @admin.register(AdduserCount)
 class AdminCountUser(admin.ModelAdmin):
     list_display = ['id', 'users']
-
-
-@admin.register(ChatSession)
-class AdminCountUser(admin.ModelAdmin):
-    list_display = ['user1', 'user2']
-

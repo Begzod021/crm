@@ -29,8 +29,5 @@ urlpatterns = [
     path('505-erorrs/<str:username>/', error_500, name='erorr_505'),
     path('user-tablets/<str:username>/', user_tablets, name='user_tablets'),
     path('delete-employe/<str:username>/', delete_employe, name='delete-employe'),
-    path('api-register/',UserRegister.as_view(), name='api-register'),
-    path('api-get/<str:username>/', GetEmploye.as_view(), name='get-api'),
-    path('api-employe/<str:username>/', RegisterEmploye.as_view(), name='api-employe'),
     path('change-password/<str:username>/', change_password, name='change_password'),
 ]

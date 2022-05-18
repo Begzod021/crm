@@ -6,6 +6,8 @@ import datetime
 from django.utils import timezone
 from django.conf import settings
 from django.db.models import Q
+from .enums import UserRole
+from .manager import *
 # Create your models here.
 
 
@@ -13,8 +15,8 @@ class User(AbstractUser):
     slug = models.SlugField(blank=True)
     has_profile = models.BooleanField(default=False)
     remember_me = models.BooleanField(default=False)
-
-
+    role = models.CharField(max_length=35, choices=UserRole.choices(), null=True)
+    approve = models.BooleanField(default=False)
 
 
 
@@ -190,3 +192,36 @@ class ChatSession(models.Model):
     def create_if_not_exists(user1,user2):
         res = ChatSession.chat_session_exists(user1,user2)
         return False if res else ChatSession.objects.create(user1=user1,user2=user2)
+
+class Admin(User):
+    objects =  AdminManager()
+
+    class Meta:
+        proxy = True
+
+
+
+class Director(User):
+    objects = DirectorManager()
+
+
+    class Meta:
+        proxy = True
+
+class Deputy(User):
+    objects = DeputyManager
+
+
+    class Meta:
+        proxy = True
+
+class Worker(User):
+    objects = WorkerManager() 
+
+
+    class Meta:
+        proxy = True
+
+
+
+

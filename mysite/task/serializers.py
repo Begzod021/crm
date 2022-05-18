@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Task
-from account.serializers import EmployeSerializer
+from account.api.serializers import EmployeSerializer
 
 class TaskSerializers(serializers.ModelSerializer):
     employe = serializers.SerializerMethodField(read_only=True)

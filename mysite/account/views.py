@@ -1,17 +1,11 @@
-from requests import request
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
 from django.contrib import messages
-from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz
 from django.contrib.auth.decorators import login_required
 from .decorators import unauthenticated_user
 from task.models import *
-from .models import User, Employe, ChatSession
+from .models import User, Employe
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 from .forms import MyPasswordChangeForm
@@ -64,13 +58,15 @@ def user_login(request):
     if request.method=="POST":
         username = request.POST.get('username')
         password = request.POST.get('password')
-        remember_me = request.POST.get('remember_me')
-        form = AddAdmin(request.POST)
+        remember_me = request.POST.get('remember_me', None)
         user = authenticate(username=username, password=password)
         if user:
             login(request, user)
-            
-            if remember_me:
+            if not remember_me:
+                request.session.set_expiry(0)
+                request.session.modified = True
+                user1 = User.objects.filter(username=username).update(remember_me=False)
+            else:
                 user1 = User.objects.filter(username=username).update(remember_me=True)
             return redirect('dashboard', user.username)
         else:
@@ -218,26 +214,11 @@ def user_tablets(request, username):
             section = Section.objects.get(id=employe.section.id)
             employes = Employe.objects.all()
             task_count = Task.objects.filter(employe=employe)
-            user_inst = request.user
-            user_all_friends = ChatSession.objects.filter(Q(user1 = user_inst) | Q(user2 = user_inst)).select_related('user1','user2').order_by('-updated_on')
-            all_friends = []
-            for ch_session in user_all_friends:
-                user,user_inst = [ch_session.user2,ch_session.user1] if request.user.username == ch_session.user1.username else [ch_session.user1,ch_session.user2]
-                data = {
-                    "user_name" : user.username,
-                    "room_name" : ch_session.room_group_name,
-                    "status" : user.profile.is_online,
-                    "user_id" : user.id
-                }
-                all_friends.append(data)
-            print(all_friends)
-
     context = {
         'position1':position1,
         'employes':employes,
         'section':section,
         'task_count':task_count,
-        'user_list':all_friends,
         'user':user,
     }
     return render(request, 'basic_tablets.html', context)
@@ -250,30 +231,7 @@ def delete_employe(request, username):
     return redirect('user_tablets', request.user.username)
 
 
-class UserRegister(APIView):
-    def post(self, request):
-        user = UserRegisterSerialerz(data=request.data)
-        user.is_valid(raise_exception=True)
-        user.save()
-        return Response({'user':user.data})
 
-
-class RegisterEmploye(APIView):
-    def post(self, request, username):
-        user = User.objects.get(username=username)
-        author = Employe.objects.get(author=user)
-        employe = EmployeRegisterSerializer(author, data=request.data)
-        employe.is_valid(raise_exception=True)
-        employe.save()
-        return Response({'employe':employe.data}, status=status.HTTP_200_OK)
-
- 
-class GetEmploye(APIView):
-    def get(self, request, username):
-        user = User.objects.get(username=username)
-        employe = Employe.objects.get(user=user)
-        serializer = EmployeSerializer(employe)
-        return Response(serializer.data)
 
 
 from django.contrib.auth.signals import user_logged_out, user_logged_in
@@ -281,6 +239,7 @@ from django.dispatch import receiver
 
 @receiver(user_logged_in)
 def got_online(sender, user, request, **kwargs):
+
     user.profile.is_online = True
     user.profile.save()
 

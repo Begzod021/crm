@@ -35,7 +35,7 @@
                           <td>{{ el.user }}</td>
                           <td>{{ el.section }}</td>
                           <td>{{ el.position }}</td>
-                          {% if el.is_online %}<td><small id = "status" style="color: rgb(11, 219, 73);">Online</small></td>
+                          {% if el.is_online and request.user.is_authenticated %}<td><small id = "status" style="color: rgb(11, 219, 73);">Online</small></td>
                           {% else %}
                           <td><small id = "status" style="color: red;">Offline</small></td>
                           {% endif %}
