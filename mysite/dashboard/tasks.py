@@ -8,6 +8,8 @@ from celery.utils.log import get_task_logger
 from celery import shared_task
 import requests
 from datetime import datetime
+
+from account.views import employe
 from .weather import weather_get
 logger = get_task_logger(__name__)
 

@@ -64,7 +64,6 @@ class TaskUpdate(generics.RetrieveUpdateAPIView):
         serializer = TaskSerializers(task, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-
         return Response(serializer.data)
     
 
@@ -150,8 +149,11 @@ def update_task(request, pk, username):
         form = TaskEditForm(request.POST or None, request.FILES or None, instance=Task.objects.get(id=pk))
         if request.method == 'POST':
             form = TaskEditForm(request.POST, instance=Task.objects.get(id=pk))
+            
             if form.is_valid():
                 form.save()
+                if Task.objects.filter(status=True, id=pk):
+                    upload_task = Task.objects.filter(status=True).update(upload=timezone.now())
                 return redirect('calendar', request.user.username)
     context = {
             'form':form,

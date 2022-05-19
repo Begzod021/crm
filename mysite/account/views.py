@@ -9,8 +9,7 @@ from .models import User, Employe
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
 from .forms import MyPasswordChangeForm
-
-
+from rest_framework.authtoken.models import Token
 # Create your views here.
 @login_required(login_url='user_login')
 def error_500(request, username):
@@ -39,6 +38,8 @@ def user_registor(request, username):
                     user = form.save(commit=False)
                     user.set_password(user.password)
                     user.save()
+                    token = Token.objects.create(user=user)
+                    token.save()
                     return redirect('employe', username)
                 else:
                     return redirect('user_registor', username)

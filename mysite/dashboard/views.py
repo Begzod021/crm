@@ -12,6 +12,7 @@ from .course import get_course
 from django.db.models.functions import ExtractMonth
 import calendar
 from django.db.models import Count
+from time import timezone
 # Create your views here.
 
 
@@ -61,7 +62,7 @@ def get_weather_json(request):
 
     user = User.objects.get(username=request.user.username)
     employe = Employe.objects.get(user=user)
-    weather = weather_get(employe)
+    weather = weather_get()
 
     print(weather["temp"])
 
@@ -74,4 +75,53 @@ def get_weather_json(request):
 
 
 def get_data(request, username):
-    NoCompleted = Task.objects.filter(status=False).annotate(month=ExtractMonth('start')).values('month').annotate()
+    print('check_________')
+    NoComplate = Task.objects.filter(status=False).annotate(month=ExtractMonth('start')).values('month').annotate(
+        count=Count('id')).values('month', 'count')
+
+    Complate = Task.objects.filter(status=True).annotate(month=ExtractMonth('upload')).values('month').annotate(
+        count=Count('id')).values('month', 'count')
+
+    ComplateMonth = []
+    ComplateTask = []
+    for d in Complate:
+        ComplateMonth.append(calendar.month_name[d['month']])
+        ComplateTask.append(d['count'])
+
+    NoComplateMonth = []
+    NoComplateTask = []
+    for d in NoComplate:
+        NoComplateMonth.append(calendar.month_name[d['month']])
+        NoComplateTask.append(d['count'])
+
+    new = []
+    check = False
+    for j in range(len(NoComplateMonth)):
+
+        for i in range(len(ComplateMonth)):
+
+            if ComplateMonth[i] == NoComplateMonth[j]:
+                check = True
+                break
+            else:
+                check = False
+
+        if check == True:
+            new.append(ComplateTask[i])
+
+        else:
+            new.append(0)
+    label = NoComplateMonth.copy()
+    for i in range(len(ComplateMonth)):
+        if ComplateMonth[i] not in NoComplateMonth:
+            label.append(ComplateMonth[i])
+
+
+    text = {
+        'NoComMon': NoComplateMonth,
+        'NoComTask': NoComplateTask,
+        'ComMon': ComplateMonth,
+        'ComTask': new,
+    }
+
+    return JsonResponse(text)

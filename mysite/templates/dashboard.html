@@ -7,6 +7,10 @@
 <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
 <link rel="stylesheet" href="{% static 'assets/css/strelka.css' %}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 <style type="text/css">
   #container {
     height: 500px;
@@ -84,6 +88,7 @@
 
 <script type="text/javascript">
   function fn60sec() {
+    console.log('1')
     const weather1 = document.getElementById('weather');
       weather1.innerHTML = "";
       console.log('1')
@@ -120,7 +125,6 @@
                       </div>
                     </div>
                   </div>
-
                   <!-- Condition -->
                   <div class="layer w-100">
                     <span class="fw-600 c-grey-600">${ data.description }</span>
@@ -185,77 +189,78 @@
 
 <script>
   console.log('success');
-  $.ajax({
-      method: "GET",
-      url: 'get_data/',
-      success: function(text){
-          console.log('success');
-  
-          const label1 = text['NoComMon'];
-          const label2 = text['ComMon'];
-  
-            const data = {
-              labels: label1,
-              datasets: [{
-                label: 'NoComplated',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 1,
-                data: text['NoComTask'],
-              }, {
-                label: 'Complated',
-                backgroundColor: 'blue',
-                borderColor: 'blue',
-                borderWidth: 1,
-                data: text['ComTask'],
-              },
-  
-              ]};
-            let m = 1
-              if(text['NoComTask'].length > 10){
-                  m = 2
-              }else if(text['NoComTask'].length > 20){
-                  m = 4
-              }else if(text['NoComTask'].length > 30){
-                  m = 5
-              }
-            const config = {
-              type: 'bar',
-              data: data,
-              options: {
-                     responsive: true,
-                      legend: {
-                        position: 'bottom'
-                      },
-                      scales: {
-  
-                         yAxes: [{
-                              ticks: {
-                                  stepSize: m,
-                                  beginAtZero: true,
-                                  precision: 0
+$.ajax({
+    method: "GET",
+    url: 'get_data/',
+    success: function(text){
+        console.log('success');
+
+        const label1 = text['NoComMon'];
+        const label2 = text['ComMon'];
+
+          const data = {
+            labels: label1,
+            datasets: [{
+              label: 'NoComplated',
+              backgroundColor: 'rgb(255, 99, 132)',
+              borderColor: 'rgb(255, 99, 132)',
+              borderWidth: 1,
+              data: text['NoComTask'],
+            }, {
+              label: 'Complated',
+              backgroundColor: 'blue',
+              borderColor: 'blue',
+              borderWidth: 1,
+              data: text['ComTask'],
+            },
+
+            ]};
+          let m = 1
+            if(text['NoComTask'].length > 10){
+                m = 2
+            }else if(text['NoComTask'].length > 20){
+                m = 4
+            }else if(text['NoComTask'].length > 30){
+                m = 5
+            }
+          const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                   responsive: true,
+                    legend: {
+                      position: 'bottom'
+                    },
+                    scales: {
+
+                       yAxes: [{
+                            ticks: {
+                                stepSize: m,
+                                beginAtZero: true,
+                                precision: 0
+                            }
+
+                        }],
+                          y: {
+                                beginAtZero: true
                               }
-  
-                          }],
-                            y: {
-                                  beginAtZero: true
-                                }
-                              }
-              }
-            };
-  
-             const myChart = new Chart(
-                  document.getElementById('myChart'),
-                  config
-            );
-      },
-      error: function(error_data){
-          console.log("Error")
-          console.log(error_data)
-      }
-  })
-  
+                            }
+            }
+          };
+
+           const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+          );
+    },
+    error: function(error_data){
+        console.log("Error")
+        console.log(error_data)
+    }
+})
+
 </script>
+
 
 
 {% endblock static %}
@@ -418,9 +423,9 @@
             </div>
             <div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 658px;">
               <div class="bgc-white p-20 bd">
-                <h6 class="c-grey-900">Bar Chart</h6>
+                <h6 class="c-grey-900">Status Task</h6>
                 <div class="mT-30"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-                  <canvas id="myChart" height="542" width="740" style="display: block; width: 740px; height: 542px;" class="chartjs-render-monitor"></canvas>
+                  <canvas id="myChart" style="display: block; width: 740px; height: 542px;" class="chartjs-render-monitor"></canvas>
                 </div>
               </div>
             </div>
