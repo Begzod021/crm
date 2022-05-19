@@ -7,9 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import cache_page
 from task.models import Task
 from django.conf import settings
-import requests
 from .weather import weather_get
 from .course import get_course
+from django.db.models.functions import ExtractMonth
+import calendar
+from django.db.models import Count
 # Create your views here.
 
 
@@ -67,3 +69,9 @@ def get_weather_json(request):
 
     return JsonResponse({'temp':weather["temp"], 'city':weather["city_name"], 'id':weather["id"], 'description':weather["description"],
     "speed":weather["speed"]})
+
+
+
+
+def get_data(request, username):
+    NoCompleted = Task.objects.filter(status=False).annotate(month=ExtractMonth('start')).values('month').annotate()

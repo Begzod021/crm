@@ -226,9 +226,14 @@ def user_tablets(request, username):
 def delete_employe(request, username):
     user = User.objects.get(username=username)
     employe = Employe.objects.get(user=user)
-    employe.delete()
-    user.delete()
-    return redirect('user_tablets', request.user.username)
+    if request.user.username == user.username:
+        employe.delete()
+        user.delete()
+        return redirect('user_login')
+    else:
+        employe.delete()
+        user.delete()
+        return redirect('user_tablets', request.user.username)
 
 
 
