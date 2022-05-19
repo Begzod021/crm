@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('', include('task.urls')),
     path('chat/', include('chat.urls')),
+    path('', include('account.api.api-urls'))
 
 ]
 urlpatterns+= static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,9 +1,11 @@
-from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz
+from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz, ChangePasswordSerializer
 from account.models import User, Employe
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import generics
 class UserRegister(APIView):
     def post(self, request):
         user = UserRegisterSerialerz(data=request.data)
@@ -28,3 +30,9 @@ class GetEmploye(APIView):
         employe = Employe.objects.get(user=user)
         serializer = EmployeSerializer(employe)
         return Response(serializer.data)
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ChangePasswordSerializer

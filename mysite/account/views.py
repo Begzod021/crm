@@ -29,6 +29,7 @@ def user_registor(request, username):
         employe = Employe.objects.get(user=user)
         postion = Postion.objects.get(id=employe.position.id)
         users = User.objects.all().count()
+        users_token = User.objects.all()
         user_count = AdduserCount.objects.first()
         if postion.position in ('director',) and users < user_count.users:
             form = AddAdmin()
@@ -38,8 +39,8 @@ def user_registor(request, username):
                     user = form.save(commit=False)
                     user.set_password(user.password)
                     user.save()
-                    token = Token.objects.create(user=user)
-                    token.save()
+                    for user in users_token:
+                        Token.objects.get_or_create(user=user)
                     return redirect('employe', username)
                 else:
                     return redirect('user_registor', username)

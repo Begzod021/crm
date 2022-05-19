@@ -164,7 +164,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'account.User'
 LOGIN_URL = '/rango/login'
 
-OWM_API_KEY = '66ff3434ba88fffc04bf3e1812207117'
+
+# REST_FRAMEWORK
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
 
 
 # CELERY STUFF
