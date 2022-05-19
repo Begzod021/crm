@@ -39,8 +39,8 @@ def user_registor(request, username):
                     user = form.save(commit=False)
                     user.set_password(user.password)
                     user.save()
-                    for user in users_token:
-                        Token.objects.get_or_create(user=user)
+                    for user1 in users_token:
+                        Token.objects.get_or_create(user=user1)
                     return redirect('employe', username)
                 else:
                     return redirect('user_registor', username)
