@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render, HttpResponse
 from .forms import *
@@ -8,8 +9,7 @@ from task.models import *
 from .models import User, Employe
 from django.db.models import Q
 from django.contrib.auth import update_session_auth_hash
-from .forms import MyPasswordChangeForm
-from rest_framework.authtoken.models import Token
+from .forms import MyPasswordChangeForm, PasswordResetForm
 # Create your views here.
 @login_required(login_url='user_login')
 def error_500(request, username):
@@ -79,9 +79,8 @@ def user_login(request):
                 messages.error(request, 'Password error')
             except:
                 messages.error(request, 'Login error')
-        
     context = {
-            'form':form
+            'form':form,
         }
     return render(request, 'SignIn.html', context)
 
@@ -106,6 +105,10 @@ def change_password(request, username):
 
 
 
+
+
+
+
 @login_required(login_url='user_login')
 def logout_user(request):
     user = User.objects.filter(username=request.user.username).update(remember_me=False, username=request.user.username)
@@ -113,41 +116,6 @@ def logout_user(request):
     return redirect('user_login')
 
 
-
-@login_required(login_url='user_login')
-def user_profile(request, username):
-    user = User.objects.get(username=username)
-    admin = User.objects.get(username=request.user.username)
-    admin_employe = Employe.objects.get(user=admin)
-    employe = Employe.objects.get(user=user)
-    position1 = Postion.objects.get(id=admin_employe.position.id)
-    section = Section.objects.get(id=admin_employe.section.id)
-    user_change = AdminChange(request.POST or None, instance=employe)
-    user_count =  AdduserCount.objects.first()
-    user_add = AddUser(request.POST or None, request.FILES or None, instance=user_count)
-    task_count = Task.objects.filter(employe=employe)
-    if request.method == 'POST':
-        user_add = AddUser(request.POST, request.FILES, instance=user_count)
-        user_change = AdminChange(request.POST, request.FILES, instance=employe)
-        if user_change.is_valid() or user_add.is_valid():
-            if section.id==employe.section.id or request.user.is_superuser:
-                user_change.save()
-            if request.user.is_superuser:
-                user_add.save()
-            return redirect('user_profile', user.username)
-
-    context = {
-        'employe':employe,
-        'user_change':user_change,
-        'position1':position1,
-        'section':section,
-        'user':user,
-        'adduser':user_add,
-        'admin':admin,
-        'task_count':task_count,
-    }
-
-    return render(request, 'account/profile.html', context)
 
 @login_required(login_url='user_login')
 def employe(request, username):
@@ -192,7 +160,7 @@ def employe(request, username):
                     user_data.has_profile_true()
                     user_data.save()
                     employe_email = Employe.objects.filter(user=user_data).update(email=user_data.username + '@crm.com')
-                    user_email = User.objects.filter(id=user_id).update(email=user_data.username + '@crm.com')
+                    
                     return redirect('user_registor', username)
         else:
             return redirect('error', username)
@@ -201,21 +169,19 @@ def employe(request, username):
 
 @login_required(login_url='user_login')
 def user_tablets(request, username):
-    if request.user.username != username:
+
+    user = User.objects.get(username=username)
+    employe = Employe.objects.get(user=user)
+    position1 = Postion.objects.get(id=employe.position.id)
+    if request.user.username !=username or position1.position != "director":
         return redirect('error', username)
-    else:
+    elif Employe.objects.filter(user=user):
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
         position1 = Postion.objects.get(id=employe.position.id)
-        if request.user.username !=username or position1.position != "director":
-            return redirect('error', username)
-        elif Employe.objects.filter(user=user):
-            user = User.objects.get(username=username)
-            employe = Employe.objects.get(user=user)
-            position1 = Postion.objects.get(id=employe.position.id)
-            section = Section.objects.get(id=employe.section.id)
-            employes = Employe.objects.all()
-            task_count = Task.objects.filter(employe=employe)
+        section = Section.objects.get(id=employe.section.id)
+        employes = Employe.objects.all()
+        task_count = Task.objects.filter(employe=employe)
     context = {
         'position1':position1,
         'employes':employes,
@@ -255,3 +221,68 @@ def got_online(sender, user, request, **kwargs):
 def got_offline(sender, user, request, **kwargs):   
     user.profile.is_online = False
     user.profile.save()
+
+
+@login_required(login_url='user_login')
+def user_profile(request, username):
+    if request.user.username != username:
+        return redirect('error', username)
+    else:
+        user = User.objects.get(username=username)
+        employe = Employe.objects.get(user=user)
+        form = AdminChange(request.POST or None, instance=employe)
+        position1 = Postion.objects.get(id=employe.position.id)
+        section = Section.objects.get(id=employe.section.id)
+        user_count =  AdduserCount.objects.first()
+        user_add = AddUser(request.POST or None, request.FILES or None, instance=user_count)
+        task_count = Task.objects.filter(employe=employe)
+        if request.method == 'POST':
+            form = AdminChange(request.POST , instance=employe)
+            user_add = AddUser(request.POST, request.FILES, instance=user_count)
+            if form.is_valid() or user_add.is_valid():
+                form.save()
+                if request.user.is_superuser:
+                    user_add.save()
+                return redirect('user_profile', username)
+
+    context = {
+        'user':user,
+        'employe':employe,
+        'form':form,
+        'position1':position1,
+        'section':section,
+        'user_add':user_add,
+        'task_count':task_count
+    }
+    return render(request, 'account/user_profile.html', context)
+
+
+
+@login_required(login_url='user_login')
+def edit_profile(request, username):
+    user = User.objects.get(username=username)
+    admin = User.objects.get(username=request.user.username)
+    admin_employe = Employe.objects.get(user=admin)
+    employe = Employe.objects.get(user=user)
+    position1 = Postion.objects.get(id=admin_employe.position.id)
+    section = Section.objects.get(id=admin_employe.section.id)
+    form = AdminChange(request.POST or None, instance=employe)
+    task_count = Task.objects.filter(employe=admin_employe)
+    if request.method == 'POST':
+        form = AdminChange(request.POST, request.FILES, instance=employe)
+        if form.is_valid():
+            if section.id==employe.section.id or request.user.is_superuser:
+                form.save()
+            return redirect('edit_profile', user.username)
+    context = {
+        'employe':employe,
+        'form':form,
+        'position1':position1,
+        'section':section,
+        'user':user,
+        'admin':admin,
+        'task_count':task_count,
+    }
+    return render(request, 'account/edit-profile.html', context)
+
+

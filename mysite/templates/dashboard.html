@@ -11,6 +11,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <style type="text/css">
   #container {
     height: 500px;
@@ -86,114 +88,13 @@
 })();
 </script>
 
-<script type="text/javascript">
-  function fn60sec() {
-    console.log('1')
-    const weather1 = document.getElementById('weather');
-      weather1.innerHTML = "";
-      console.log('1')
-      $.ajax({
-        url: '{% url "get_weather_json" %}',
-        type: 'GET',
-        success: function(data) {
-          console.log('1')
-          weather1.innerHTML = `<div class="layer w-100 mB-20">
-            <h6 class="lh-1">Weather</h6>
-          </div>
-          <!-- Today Weather -->
-          <div class="layer w-100">
-            <div class="peers ai-c jc-sb fxw-nw">
-              <div class="peer peer-greed">
-                <div class="layers">
-                  <!-- Temprature -->
-                  <div class="layer w-100">
-                    <div class="peers fxw-nw ai-c">
-                      <div class="peer mR-20">
-                        <h3>${ data.temp }<sup>o</sup>C</h3>
-                      </div>
-                      <div class="peer">
-                        ${ if((data.id >= 500 && id <= 531) || (data.id >= 300 && data.id <= 321)){
-                        <canvas class="sleet" width="44" height="44"></canvas>}
-                        }${else if(data.id == 800){
-                        <canvas class="clear-day" width="44" height="44"></canvas>}
-                        }${ elif (data.id >= 801) and (data.id <= 804)}
-                        <canvas class="partly-cloudy-day" width="44" height="44"></canvas>
-                        ${ else if(data.id >= 801 && data.id <= 804){  
-                        <canvas class="cloudy" width="44" height="44"></canvas>}
-                        }${ else if(id >= 600 && id <= 622){ 
-                        <canvas class="snow" width="44" height="44"></canvas>}}
-                      </div>
-                    </div>
-                  </div>
-                  <!-- Condition -->
-                  <div class="layer w-100">
-                    <span class="fw-600 c-grey-600">${ data.description }</span>
-                  </div>
-                </div>
-              </div>
-              <div class="peer">
-                <div class="layers ai-fe">
-                  <div class="layer">
-                    <h5 class="mB-5">${ data.city_name }</h5>
-                  </div>
-                  <div class="layer">
-                    <span class="fw-600 c-grey-600">${ data.date }</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Today Weather Extended -->
-          <div class="layer w-100 mY-30">
-            <div class="layers bdB">
-              <div class="layer w-100 bdT pY-5">
-                <div class="peers ai-c jc-sb fxw-nw">
-                  <div class="peer">
-                    <span>Wind</span>
-                  </div>
-                  <div class="peer ta-r">
-                    <span class="fw-600 c-grey-800">${ data.speed }m/s</span>
-                  </div>
-                </div>
-              </div>
-              <div class="layer w-100 bdT pY-5">
-                <div class="peers ai-c jc-sb fxw-nw">
-                  <div class="peer">
-                    <span>Sunrise</span>
-                  </div>
-                  <div class="peer ta-r">
-                    <span class="fw-600 c-grey-800">05:00 AM</span>
-                  </div>
-                </div>
-              </div>
-              <div class="layer w-100 bdT pY-5">
-                <div class="peers ai-c jc-sb fxw-nw">
-                  <div class="peer">
-                    <span>Pressure</span>
-                  </div>
-                  <div class="peer ta-r">
-                    <span class="fw-600 c-grey-800">${ data.pressure_b }B</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>`;
-        },
-      });
-  };
-  fn60sec();
-  setInterval(fn60sec, 60*1000);
-</script>
 
 
 <script>
-  console.log('success');
 $.ajax({
     method: "GET",
     url: 'get_data/',
     success: function(text){
-        console.log('success');
 
         const label1 = text['NoComMon'];
         const label2 = text['ComMon'];
@@ -254,7 +155,6 @@ $.ajax({
           );
     },
     error: function(error_data){
-        console.log("Error")
         console.log(error_data)
     }
 })
@@ -274,31 +174,91 @@ $.ajax({
               <div class="row gap-20">
                 <div class="col-lg-3 col-md-6">
                   <div class="card">
-                      <div class="card-body">
-                          <div class="stat-widget-five">
-                              <div class="col-9">
-                                <div class="d-flex align-items-center align-self-start">
-                                  <h5 class="mb-0">{{ coursers.course_dollar }}</h5>
-                                  {% if coursers.diff_dollar < "0" %}
-                                  <p class="text-danger ml-2 mb-0 font-weight-medium">{{coursers.diff_dollar}}</p>
-                                  <div class="col-3">
-                                    <div class="icon-strelka icon-box-danger">
-                                      <span class="mdi mdi-arrow-bottom-left icon-item"></span>
-                                    </div>
-                                  </div>
-                                  {% else %}
-                                  <p class="text-success ml-2 mb-0 font-weight-medium">{{ coursers.diff_dollar }}</p>
-                                  <div class="col-3">
-                                    <div class="icon-strelka icon-box-success">
-                                      <span class="mdi mdi-arrow-top-right icon-item"></span>
-                                    </div>
-                                  </div>
-                                  {% endif %}
+                    <div id="demo" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <div class="card-body">
+                      <div class="stat-widget-five">
+                          <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                              <h5 class="mb-0">{{ coursers.course_dollar }}</h5>
+                              {% if coursers.diff_dollar < "0" %}
+                              <p class="text-danger ml-2 mb-0 font-weight-medium">{{coursers.diff_dollar}}</p>
+                              <div class="col-3">
+                                <div class="icon-strelka icon-box-danger">
+                                  <span class="mdi mdi-arrow-bottom-left icon-item"></span>
                                 </div>
-                                <div class="stat-heading">1 USD to UZS</div>
                               </div>
+                              {% else %}
+                              <p class="text-success ml-2 mb-0 font-weight-medium">{{ coursers.diff_dollar }}</p>
+                              <div class="col-3">
+                                <div class="icon-strelka icon-box-success">
+                                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                </div>
+                              </div>
+                              {% endif %}
+                            </div>
+                            <div class="stat-heading">1 USD to UZS</div>
                           </div>
                       </div>
+                  </div>
+                        </div>
+                        <div class="carousel-item">
+                          <div class="card-body">
+                      <div class="stat-widget-five">
+                          <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                              <h5 class="mb-0">{{ coursers.course_euro }}</h5>
+                              {% if coursers.diff_euro < "0" %}
+                              <p class="text-danger ml-2 mb-0 font-weight-medium">{{coursers.diff_euro}}</p>
+                              <div class="col-3">
+                                <div class="icon-strelka icon-box-danger">
+                                  <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                                </div>
+                              </div>
+                              {% else %}
+                              <p class="text-success ml-2 mb-0 font-weight-medium">{{ coursers.diff_euro }}</p>
+                              <div class="col-3">
+                                <div class="icon-strelka icon-box-success">
+                                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                </div>
+                              </div>
+                              {% endif %}
+                            </div>
+                            <div class="stat-heading">1 EUR  to UZS</div>
+                          </div>
+                      </div>
+                  </div>
+                        </div>
+                        <div class="carousel-item">
+                          <div class="card-body">
+                      <div class="stat-widget-five">
+                          <div class="col-9">
+                            <div class="d-flex align-items-center align-self-start">
+                              <h5 class="mb-0">{{ coursers.course_rubl }}</h5>
+                              {% if coursers.diff_rubl < "0" %}
+                              <p class="text-danger ml-2 mb-0 font-weight-medium">{{coursers.diff_rubl}}</p>
+                              <div class="col-3">
+                                <div class="icon-strelka icon-box-danger">
+                                  <span class="mdi mdi-arrow-bottom-left icon-item"></span>
+                                </div>
+                              </div>
+                              {% else %}
+                              <p class="text-success ml-2 mb-0 font-weight-medium">{{ coursers.diff_rubl }}</p>
+                              <div class="col-3">
+                                <div class="icon-strelka icon-box-success">
+                                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                                </div>
+                              </div>
+                              {% endif %}
+                            </div>
+                            <div class="stat-heading">1 RUB to UZS</div>
+                          </div>
+                      </div>
+                  </div>
+                        </div>
+                      </div>
+                   </div>
                   </div>
               </div>
 

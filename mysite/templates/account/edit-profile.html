@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+  {% block content %}
+  <div class="content-wrapper" style="padding-top: 80px;">
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-3">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle"
+                       src="{% static 'dist/img/user1-128x128.jpg' %}"
+                       alt="User profile picture">
+                </div>
+
+                <h3 class="profile-username text-center">{{ employe.user }}</h3>
+
+                <p class="text-muted text-center">{{ employe.section }}</p>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            <!-- About Me Box -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">About Me</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                <p class="text-muted">
+                  B.S. in Computer Science from the University of Tennessee at Knoxville
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                <p class="text-muted">Malibu, California</p>
+
+                <hr>
+
+                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                <p class="text-muted">
+                  <span class="tag tag-danger">UI Design</span>
+                  <span class="tag tag-success">Coding</span>
+                  <span class="tag tag-info">Javascript</span>
+                  <span class="tag tag-warning">PHP</span>
+                  <span class="tag tag-primary">Node.js</span>
+                </p>
+
+                <hr>
+
+                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#settings" data-toggle="tab">Settings</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="settings" >
+                    <form method="POST" enctype="multipart/form-data">{% csrf_token %}
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                        <div class="col-sm-10">
+                            {{ form.first_name }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputName" class="col-sm-2 col-form-label">Surname</label>
+                        <div class="col-sm-10">
+                            {{ form.last_name }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputEmail" class="col-sm-2 col-form-label">Gender</label>
+                        <div class="col-sm-3">
+                        {% if request.user.username == user.username %}
+                            {{ form.gender }}
+                        {% else %}
+                        <select name="gender_user" class="form-control" id="gender">                          
+                            <option value="Male" selected="{{ employe.gender }}">{{ employe.gender }}</option>
+                        </select>
+                        {% endif %}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputName2" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                          {{ form.email }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputExperience" class="col-sm-2 col-form-label">Biography</label>
+                        <div class="col-sm-10">
+                          {{ form.bio }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Country</label>
+                        <div class="col-sm-4">
+                          {{ form.country }}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Position</label>
+                        <div class="col-sm-3">
+                          {% if request.user.username != employe.user %}
+                          {% if section.id == employe.section.id or request.user.is_superuser %}
+                          {% if position1.position == "director" %}
+                            {{ form.position }}
+                          {% elif position1.position != "director" %}
+                            <select name="position" class="form-control" required="" id="id_position">
+                              <option value="{{ employe.position.id }}">{{ employe.position }}</option>                   
+                            </select>
+                          {% endif %}
+                          {% else %}
+                          <select name="position" class="form-control" required="" id="id_position">
+                            <option value="{{ employe.position.id }}">{{ employe.position }}</option>                   
+                          </select>
+                          {% endif %}
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="inputSkills" class="col-sm-2 col-form-label">Section</label>
+                        <div class="col-sm-3">
+                          {% if request.user.is_superuser %}
+                            {{ form.section }}
+                          {% else %}
+                          <select name="section" class="form-control" required="" id="id_section">
+                            <option value="{{ employe.section.id }}">{{ employe.section }}</option>                   
+                          </select>
+                          {% endif %}
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <div class="mt-5 text-center" style="margin-bottom: 20px;"><button type="submit" class="btn btn-dark btn-lg">Save
+                            Changes</button></div>
+                      </div>
+                    </form>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+  <!-- /.content-wrapper -->
+</div>
+
+
+{% endblock content %}

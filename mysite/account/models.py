@@ -113,7 +113,7 @@ class Email(models.Model):
 
 class Employe(models.Model):
     choice = (
-        ('',''),
+        ('Not specified','Not specified'),
         ('Male','Male'),
         ('Female','Female'),
     )
@@ -139,11 +139,11 @@ class Employe(models.Model):
     position = models.ForeignKey(Postion, on_delete=models.PROTECT)
     section = models.ForeignKey(Section, on_delete=models.PROTECT, related_name='task_section')
     slug = models.SlugField()
-    author = models.ForeignKey('self', on_delete=models.CASCADE,null=True, blank=True)
+    author = models.ForeignKey('self', on_delete=models.SET_NULL,null=True, blank=True)
     first_name = models.CharField(max_length=150, null=True, blank=True)
     last_name = models.CharField(max_length=150, null=True, blank=True)
     email = models.EmailField(max_length=150, null=True, blank=True)
-    gender = models.CharField(max_length=150, choices=choice, blank=True, null=True)
+    gender = models.CharField(max_length=150, choices=choice, blank=True, null=True, default=choice[0][0])
     bio = models.TextField(null=True, blank=True)
     adress = models.TextField(null=True, blank=True)
     status = models.BooleanField(default=False)
