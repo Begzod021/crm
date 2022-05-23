@@ -180,7 +180,7 @@ def user_tablets(request, username):
         employe = Employe.objects.get(user=user)
         position1 = Postion.objects.get(id=employe.position.id)
         section = Section.objects.get(id=employe.section.id)
-        employes = Employe.objects.all()
+        employes = Employe.objects.all().order_by('id')
         task_count = Task.objects.filter(employe=employe)
     context = {
         'position1':position1,
@@ -260,29 +260,32 @@ def user_profile(request, username):
 
 @login_required(login_url='user_login')
 def edit_profile(request, username):
-    user = User.objects.get(username=username)
-    admin = User.objects.get(username=request.user.username)
-    admin_employe = Employe.objects.get(user=admin)
-    employe = Employe.objects.get(user=user)
-    position1 = Postion.objects.get(id=admin_employe.position.id)
-    section = Section.objects.get(id=admin_employe.section.id)
-    form = AdminChange(request.POST or None, instance=employe)
-    task_count = Task.objects.filter(employe=admin_employe)
-    if request.method == 'POST':
-        form = AdminChange(request.POST, request.FILES, instance=employe)
-        if form.is_valid():
-            if section.id==employe.section.id or request.user.is_superuser:
-                form.save()
-            return redirect('edit_profile', user.username)
-    context = {
-        'employe':employe,
-        'form':form,
-        'position1':position1,
-        'section':section,
-        'user':user,
-        'admin':admin,
-        'task_count':task_count,
-    }
-    return render(request, 'account/edit-profile.html', context)
+    if Postion.objects.get(id=request.user.profile.position.id).position != "director":
+        return redirect('error', username)
+    else:
+        user = User.objects.get(username=username)
+        admin = User.objects.get(username=request.user.username)
+        admin_employe = Employe.objects.get(user=admin)
+        employe = Employe.objects.get(user=user)
+        position1 = Postion.objects.get(id=admin_employe.position.id)
+        section = Section.objects.get(id=admin_employe.section.id)
+        form = AdminChange(request.POST or None, instance=employe)
+        task_count = Task.objects.filter(employe=admin_employe)
+        if request.method == 'POST':
+            form = AdminChange(request.POST, request.FILES, instance=employe)
+            if form.is_valid():
+                if section.id==employe.section.id or request.user.is_superuser:
+                    form.save()
+                return redirect('edit_profile', user.username)
+        context = {
+            'employe':employe,
+            'form':form,
+            'position1':position1,
+            'section':section,
+            'user':user,
+            'admin':admin,
+            'task_count':task_count,
+        }
+        return render(request, 'account/edit-profile.html', context)
 
 

@@ -136,7 +136,7 @@ class Employe(models.Model):
 
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
-    position = models.ForeignKey(Postion, on_delete=models.PROTECT)
+    position = models.ForeignKey(Postion, on_delete=models.PROTECT, related_name="model_position")
     section = models.ForeignKey(Section, on_delete=models.PROTECT, related_name='task_section')
     slug = models.SlugField()
     author = models.ForeignKey('self', on_delete=models.SET_NULL,null=True, blank=True)

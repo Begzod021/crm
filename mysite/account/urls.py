@@ -30,7 +30,7 @@ urlpatterns = [
     path('user-tablets/<str:username>/', user_tablets, name='user_tablets'),
     path('delete-employe/<str:username>/', delete_employe, name='delete-employe'),
     path('change-password/<str:username>/', change_password, name='change_password'),
-    path('edit-profile/<str:username>/', edit_profile, name='edit_profile'),
+    path('edit-employe/<str:username>/', edit_profile, name='edit_profile'),
 
 
     path('reset_password/', auth_views.PasswordResetView.as_view(template_name="account/password_reset.html"), name='reset_password'),

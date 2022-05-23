@@ -45,7 +45,7 @@
 
                 <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
 
-                <p class="text-muted">Malibu, California</p>
+                <p class="text-muted">Uzbekistan, {{ employe.country }}</p>
 
                 <hr>
 
@@ -148,27 +148,17 @@
                       <div class="form-group row">
                         <label for="inputSkills" class="col-sm-2 col-form-label">Position</label>
                         <div class="col-sm-3">
-                        {% if section.id == employe.section.id or request.user.is_superuser %}
-                        {% if position1.position == "director" %}
-                            {{ form.position }}
-                        {% else %}
                         <select name="position" class="form-control" required="" id="id_position">
                             <option value="{{ employe.position.id }}">{{ employe.position }}</option>                   
                         </select>
-                        {% endif %}
-                        {% endif %}
                         </div>
                       </div>
                       <div class="form-group row">
                         <label for="inputSkills" class="col-sm-2 col-form-label">Section</label>
                         <div class="col-sm-3">
-                        {% if request.user.is_superuser %}
-                            {{ form.section }}
-                        {% else %}
-                        <select name="section" class="form-control" required="" id="id_section">
-                            <option value="{{ employe.section.id }}">{{ employe.section }}</option>                   
-                        </select>
-                        {% endif %}
+                          <select name="section" class="form-control" required="" id="id_section">
+                              <option value="{{ employe.section.id }}">{{ employe.section }}</option>                   
+                          </select>
                         </div>
                       </div>
                       {% if request.user.is_superuser %}

@@ -10,6 +10,8 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime
+from django.utils import timezone
 # Create your views here.
 
 
@@ -217,3 +219,75 @@ def delete(request, slug):
     task.delete()
     return redirect('calendar', request.user.username)
     
+
+
+def get_days(el):
+    now = datetime.now(timezone.utc)
+    print(now)
+    nowtimee = datetime.strptime(str(now), '%Y-%m-%d %H:%M:%S.%f%z')
+    start_date = datetime.strptime(str(el.start), '%Y-%m-%d %H:%M:%S%z')
+    end_date = datetime.strptime(str(el.end), '%Y-%m-%d %H:%M:%S%z')
+    if nowtimee < start_date:
+        time = "Not started"
+        prosses = "info"
+    elif el.status:
+        time = "Finished"
+        prosses = "success"
+    elif el.status==False and end_date<nowtimee:
+        time = "Time is up"
+        prosses = "danger"
+    else:
+        diff = abs((end_date-nowtimee).days)
+        if diff > 5:
+            time = "In prosses"
+            prosses = 'success'
+        elif diff < 2:
+            time = abs((end_date-nowtimee).seconds) + abs((end_date-nowtimee).days)*3600*24
+            print(time)
+            if time < 3600*1:
+                time = str((abs((end_date-nowtimee).seconds))//60)+" minuts"
+                prosses = "danger"
+            else:
+                time = str((abs((end_date-nowtimee).seconds) + abs((end_date-nowtimee).days)*3600*24)//3600)+" hours"
+                prosses = "danger"
+        else:
+            time = str(abs((end_date-nowtimee).days))+" days"
+            prosses = "warning"
+    return {'time':time, 'prosses':prosses}
+
+
+def tasks(request, username):
+    if request.user.username != username:
+        return redirect('error', username)
+    else:
+        user = User.objects.get(username=username)
+        employe = Employe.objects.get(user=user)
+        position1 = Postion.objects.get(id=employe.position.id)
+        section = Section.objects.get(id=employe.section.id)
+        if section.name == "CEO":
+            tasks_list = Task.objects.all()
+            for el in tasks_list:
+                i = get_days(el)
+                el.time = i['time']
+                print(el.time)
+                el.prosses = i['prosses']
+            context = {'task_list':tasks_list,
+                    'section':section,
+                    'employe':employe,
+                    'user':user,
+                    'position1':position1,}
+        else:
+            tasks = Task.objects.filter(creator=employe)
+            for el in tasks:
+                i = get_days(el)
+                el.time = i['time']
+                el.prosses = i['prosses']
+            context = {
+                'tasks':tasks,
+                'position1':position1,
+                'section':section,
+                'employe':employe,
+                'user':user
+            }
+
+    return render(request, 'tasks.html', context)
