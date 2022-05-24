@@ -22,7 +22,6 @@ class User(AbstractUser):
     approve = models.BooleanField(default=False)
 
 
-
     def has_profile_true(self):
         self.has_profile = True
 
@@ -95,20 +94,6 @@ class Postion(models.Model):
 
 
 
-class Email(models.Model):
-    email = models.EmailField(max_length=250, blank=True, null=True)
-    author = models.ForeignKey(User, models.CASCADE, related_name='authors', blank=True, null=True)
-    slug = models.SlugField()
-
-
-    def __str__(self) -> str:
-        return self.email
-
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.email)
-
-        return super().save(*args, **kwargs)
 
 
 class Employe(models.Model):
@@ -148,11 +133,13 @@ class Employe(models.Model):
     adress = models.TextField(null=True, blank=True)
     status = models.BooleanField(default=False)
     avatar = models.ImageField(upload_to='avatar/', null=True, blank=True)
-    email_add = models.ManyToManyField(Email)
     country = models.CharField(max_length=120, choices=COUNTRY, blank=True, null=True)
     is_online = models.BooleanField(default = False)
     email = models.EmailField(max_length=150, null=True, blank=True)
     date = models.DateField(auto_now_add=True, null=True)
+    password_email = models.CharField(max_length=35, null=True)
+    email = models.EmailField()
+
 
     def get_country(el):
         return Employe.objects.filter(country=el).count()

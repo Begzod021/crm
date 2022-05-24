@@ -5,7 +5,6 @@ import time
 
 
 
-
 def weather_get(employe):
     api_id = 'ebed5a0aec8b2636c1ca0b5cd9174e68'
     url = 'https://api.openweathermap.org/data/2.5/weather?q={}&appid=' + api_id

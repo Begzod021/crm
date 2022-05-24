@@ -241,7 +241,7 @@ def get_days(el):
         if diff > 5:
             time = "In prosses"
             prosses = 'success'
-        elif diff < 2:
+        elif diff < 1:
             time = abs((end_date-nowtimee).seconds) + abs((end_date-nowtimee).days)*3600*24
             print(time)
             if time < 3600*1:

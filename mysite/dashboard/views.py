@@ -23,7 +23,7 @@ def dashboard(request, username):
     else:
         user = User.objects.get(username=username)
         employe = Employe.objects.get(user=user)
-        
+        print(Employe.objects.get(user=request.user.id).email)
         position1 = Postion.objects.get(id=employe.position.id)
         user_count = User.objects.all().count()
         employes = Employe.objects.all()

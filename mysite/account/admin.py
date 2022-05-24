@@ -19,9 +19,7 @@ class AdminSection(admin.ModelAdmin):
 class AdminProfile(admin.ModelAdmin):
     list_display = ['id', 'user']
 
-@admin.register(Email)
-class AdminEmail(admin.ModelAdmin):
-    list_display = ['id', 'email']
+
 
 @admin.register(AdduserCount)
 class AdminCountUser(admin.ModelAdmin):
