@@ -161,7 +161,105 @@ $.ajax({
 
 </script>
 
+<script>
+  let weather = setInterval(function(){
+    const weather_update = document.getElementById('weather_id');
+    weather_update.innerHTML = "";
+    $.ajax({
+      url:'{% url "get_weather_json" %}',
+      type: 'GET',
+      success: function(data){
+        weather_update.innerHTML = `
+        <div class="layer w-100 mB-20">
+          <h6 class="lh-1">Weather</h6>
+        </div>
 
+        <!-- Today Weather -->
+        <div class="layer w-100">
+          <div class="peers ai-c jc-sb fxw-nw">
+            <div class="peer peer-greed">
+              <div class="layers">
+                <!-- Temprature -->
+                <div class="layer w-100">
+                  <div class="peers fxw-nw ai-c">
+                    <div class="peer mR-20">
+                      <h3>${ data.temp }<sup>o</sup>C</h3>
+                    </div>
+                    <div class="peer">
+                      {% if weather_get_task.id >= 500 and weather_get_task.id <= 531 or weather_get_task.id >= 300 and weather_get_task.id <= 321  %}
+                      <canvas class="sleet" width="44" height="44"></canvas>
+                      {% elif weather_get_task.id == 800 %}
+                      <canvas class="clear-day" width="44" height="44"></canvas>
+                      {% elif weather_get_task.id >= 801 and weather_get_task.id <= 804 %}
+                      <canvas class="partly-cloudy-day" width="44" height="44"></canvas>
+                      {% elif weather_get_task.id >= 701 and weather_get_task.id <= 781  %}
+                      <canvas class="cloudy" width="44" height="44"></canvas>
+                      {% elif weather_get_task.id >= 600 and weather_get_task.id <= 622 %}
+                      <canvas class="snow" width="44" height="44"></canvas>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Condition -->
+                <div class="layer w-100">
+                  <span class="fw-600 c-grey-600">${ data.description }</span>
+                </div>
+              </div>
+            </div>
+            <div class="peer">
+              <div class="layers ai-fe">
+                <div class="layer">
+                  <h5 class="mB-5">${ data.city }</h5>
+                </div>
+                <div class="layer">
+                  <span class="fw-600 c-grey-600">${ data.date }</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Today Weather Extended -->
+        <div class="layer w-100 mY-30">
+          <div class="layers bdB">
+            <div class="layer w-100 bdT pY-5">
+              <div class="peers ai-c jc-sb fxw-nw">
+                <div class="peer">
+                  <span>Wind</span>
+                </div>
+                <div class="peer ta-r">
+                  <span class="fw-600 c-grey-800">${ data.speed }m/s</span>
+                </div>
+              </div>
+            </div>
+            <div class="layer w-100 bdT pY-5">
+              <div class="peers ai-c jc-sb fxw-nw">
+                <div class="peer">
+                  <span>Sunrise</span>
+                </div>
+                <div class="peer ta-r">
+                  <span class="fw-600 c-grey-800">05:00 AM</span>
+                </div>
+              </div>
+            </div>
+            <div class="layer w-100 bdT pY-5">
+              <div class="peers ai-c jc-sb fxw-nw">
+                <div class="peer">
+                  <span>Pressure</span>
+                </div>
+                <div class="peer ta-r">
+                  <span class="fw-600 c-grey-800">${ data.pressure_b }B</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+      }
+    });
+  }, 60*1000)
+</script>
 
 {% endblock static %}
 {% block content %}
@@ -560,7 +658,7 @@ $.ajax({
             <div class="masonry-item col-md-6" style="position: absolute; left: 0%; top: 1080.88px;">
               <!-- #Weather ==================== -->
               <div class="bd bgc-white p-20">
-                <div class="layers" id="weather">
+                <div class="layers" id="weather_id">
                   <!-- Widget Title -->
                   <div class="layer w-100 mB-20">
                     <h6 class="lh-1">Weather</h6>

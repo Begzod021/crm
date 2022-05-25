@@ -9,7 +9,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script>
       $(document).ready(function () {
-          
           var calendar = $('#calendar').fullCalendar({
               header: {
                   left: 'prev,next today',
@@ -35,13 +34,10 @@
                         dataType: "json",
                         success: function (data) {
                             calendar.fullCalendar('refetchEvents');
-
-
                             const tasks = document.getElementById('emp_tasks');
                             const tasks_cnt = document.getElementById('tasks_cnt');
                             tasks.innerHTML = "";
                             tasks_cnt.innerHTML = "";
-
                             $.ajax({
                               url: '{% url "get-tasks" %}',
                               type: 'GET',
@@ -82,15 +78,11 @@
                                 console.log(tasks_cnt);
                               }
                             });
-
-                      
                         },
                         error: function (data) {
                             alert('There is a problem!!!');
                         }
                       });
-
-                     
                   }
               },
               {% if position1.position == "director" %}
@@ -174,7 +166,6 @@
                           const tasks_cnt = document.getElementById('tasks_cnt');
                           tasks.innerHTML = "";
                           tasks_cnt.innerHTML = "";
-
                           $.ajax({
                             url: '{% url "get-tasks" %}',
                             type: 'GET',
@@ -223,8 +214,53 @@
               },
               {% endif %}
           });
-          
-      })
+      });
+      let timerId =  setInterval(function() { 
+        const tasks = document.getElementById('emp_tasks');
+        const tasks_cnt = document.getElementById('tasks_cnt');
+        tasks.innerHTML = "";
+        tasks_cnt.innerHTML = "";
+        $.ajax({
+          url: '{% url "get-tasks" %}',
+          type: 'GET',
+          success: function(data) {
+            (data.tasks).forEach(task => {
+              const taskHTML = `
+                  <li class="bdB peers ai-c jc-sb fxw-nw" id="task_card">
+                    <a onclick="taskDetail(${task.id})" class="td-n p-20 peers fxw-nw mR-20 peer-greed c-grey-900" data-toggle="modal" data-target="#calendar-edit">
+                      <div class="peer mR-15">
+                        <i class="fa fa-fw fa-clock-o c-red-500"></i>
+                      </div>
+                      <div class="peer" id='id_task'>
+                        <span class="fw-600">${ task.title }</span>
+                        <div class="c-grey-600">
+                          <span class="c-grey-700">${ task.start }</span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="peers mR-15">
+                      <div class="peer">
+                        <a href="/update-task/{{ request.user.username }}/${ task.id }/" class="td-n c-deep-purple-500 cH-blue-500 fsz-md p-5">
+                          <i class="fa-solid fa-marker"></i>
+                        </a>
+                      </div>
+                      <div class="peer">
+                        <a href="/delete-task/${ task.slug }/" class="td-n c-red-500 cH-blue-500 fsz-md p-5">
+                          <i class="fa-solid fa-trash"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </li>`
+
+              tasks.innerHTML += taskHTML;
+            });
+            tasks_cnt.innerHTML = `<h3 class="c-white">Tasks ${data.tasks_cnt}</h3>
+            <h3 class="c-white">Completed ${data.task_completed}</h3>
+            <h3 class="c-white">In Progress ${data.uncompleted}</h3>`;
+            console.log(tasks_cnt);
+          }
+        });
+      }, 60*1000)
     </script>
 {% endblock static %}
 {% block content %}

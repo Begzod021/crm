@@ -62,14 +62,13 @@ def get_weather_json(request):
 
     user = User.objects.get(username=request.user.username)
     employe = Employe.objects.get(user=user)
-    weather = weather_get()
+    weather = weather_get(employe)
 
-    print(weather["temp"])
 
 
 
     return JsonResponse({'temp':weather["temp"], 'city':weather["city_name"], 'id':weather["id"], 'description':weather["description"],
-    "speed":weather["speed"]})
+    "speed":weather["speed"], "date":weather["date"], "pressure_b":weather["pressure_b"]})
 
 
 

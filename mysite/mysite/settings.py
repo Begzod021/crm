@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "rest_framework.authtoken",
     'account',
-
     'task',
     'chat',
     'contact',
@@ -61,7 +60,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
 
 
@@ -200,3 +198,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'rasulev.021@gmail.com'
 EMAIL_HOST_PASSWORD = 'gkuoqinlemdxwltl'
+
+
