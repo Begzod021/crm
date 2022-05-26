@@ -66,9 +66,8 @@ def get_weather_json(request):
 
 
 
-
     return JsonResponse({'temp':weather["temp"], 'city':weather["city_name"], 'id':weather["id"], 'description':weather["description"],
-    "speed":weather["speed"], "date":weather["date"], "pressure_b":weather["pressure_b"]})
+    "speed":weather["speed"], "date":weather["date"], "pressure_b":weather["pressure_b"], "icon":weather["icon"]})
 
 
 

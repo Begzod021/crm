@@ -223,7 +223,6 @@ def delete(request, slug):
 
 def get_days(el):
     now = datetime.now(timezone.utc)
-    print(now)
     nowtimee = datetime.strptime(str(now), '%Y-%m-%d %H:%M:%S.%f%z')
     start_date = datetime.strptime(str(el.start), '%Y-%m-%d %H:%M:%S%z')
     end_date = datetime.strptime(str(el.end), '%Y-%m-%d %H:%M:%S%z')
@@ -243,7 +242,6 @@ def get_days(el):
             prosses = 'success'
         elif diff < 1:
             time = abs((end_date-nowtimee).seconds) + abs((end_date-nowtimee).days)*3600*24
-            print(time)
             if time < 3600*1:
                 time = str((abs((end_date-nowtimee).seconds))//60)+" minuts"
                 prosses = "danger"
@@ -277,7 +275,7 @@ def tasks(request, username):
                     'user':user,
                     'position1':position1,}
         else:
-            tasks = Task.objects.filter(creator=employe)
+            tasks = Task.objects.filter(employe=employe)
             for el in tasks:
                 i = get_days(el)
                 el.time = i['time']
