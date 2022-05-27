@@ -297,12 +297,12 @@
           </ul>
           <ul class="nav-right">
             <li class="notifications dropdown">
-              <span class="counter bgc-red" id="task_cnt">{{ task_count.count }}</span>
+              <span class="counter bgc-red" id="notification-badge">0</span>
               <a href="http://symfonator.herokuapp.com/admin/dashboard" class="dropdown-toggle no-after"
-                data-toggle="dropdown">
+                data-toggle="dropdown" id="navbarDropdown">
                 <i class="fa-solid fa-bell"></i>
               </a>
-              <ul class="dropdown-menu">
+              <ul class="dropdown-menu" id="notifications-dropdown">
                 <li class="pX-20 pY-15 bdB">
                   <i class="fa-solid fa-bell pR-10"></i>
                   <span class="fsz-sm fw-600 c-grey-900">New tasks</span>
@@ -318,7 +318,7 @@
                         </div>
                         <div class="peer peer-greed">
                           <span>
-                            <span class="fw-500">{{ el.creator }}</span><br>
+                            <span class="fw-500">{{ el.title }}</span><br>
                             <span class="c-grey-600">{{ el.title }}
                             </span>
                           </span>
@@ -518,6 +518,34 @@
 
   </div>
 
+  {{ room_name|json_script:"room-name" }}
+  <script>
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+    const notificationSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/notification/'
+        + roomName
+        + '/'
+    );
+
+    notificationSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        //document.querySelector('#chat-log').value += (data.message + '\n');
+        console.log(data);
+        document.getElementById("notifications-dropdown").innerHTML = "<span class='fw-500'>" + data + "</span>'>" + document.getElementById("notifications-dropdown").innerHTML;
+        document.getElementById("notification-badge").innerHTML = parseInt(document.getElementById("notification-badge").innerHTML) + 1;
+    };
+
+    notificationSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+
+
+  </script>
+  
   <script>
     (function () {
       if ('serviceWorker' in navigator) {

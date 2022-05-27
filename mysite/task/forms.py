@@ -13,10 +13,10 @@ class TaskForm(forms.ModelForm):
             'description':forms.Textarea(attrs={
                 'class':'form-control bdc-grey-200'
             }),
-            'start':forms.TextInput(attrs={
+            'start':forms.DateTimeInput(attrs={
                 'class':'form-control bdc-grey-200 start-date'
             }),
-            'end':forms.TextInput(attrs={
+            'end':forms.DateTimeInput(attrs={
                 'class':'form-control bdc-grey-200 end-date'
             })
         }
@@ -34,10 +34,10 @@ class TaskEditForm(forms.ModelForm):
             'description':forms.Textarea(attrs={
                 'class':'form-control bdc-grey-200'
             }),
-            'start':forms.TextInput(attrs={
+            'start':forms.DateTimeInput(attrs={
                 'class':'form-control bdc-grey-200 start-date'
             }),
-            'end':forms.TextInput(attrs={
+            'end':forms.DateTimeInput(attrs={
                 'class':'form-control bdc-grey-200 end-date'
             })
         }

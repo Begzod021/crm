@@ -182,6 +182,8 @@ CELERY_TIMEZONE = 'Asia/Tashkent'
 CELERY_IMPORTS = [
     'dashboard.tasks',
 ]
+
+
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 SESSION_COOKIE_AGE = 1209600  #
 

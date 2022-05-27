@@ -14,7 +14,7 @@ app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 app.conf.beat_schedule = {
     'every-15-seconds':{
-        'task':'get_weather',
+        'task':'broadcast_notification',
         'schedule':15,
     }
 }

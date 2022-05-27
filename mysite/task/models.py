@@ -3,6 +3,10 @@ from django.db import models
 from django.utils.text import slugify
 # Create your models here.
 from account.models import *
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django_celery_beat.models import MINUTES, PeriodicTask, CrontabSchedule, PeriodicTasks
+import json
 class Task(models.Model):
 
     choice = (
@@ -39,3 +43,11 @@ class Task(models.Model):
     
     def __str__(self) -> str:
         return str(self.creator)
+
+
+@receiver(post_save, sender=Task)
+def notification_handler(sender, instance, created, **kwargs):
+    # call group_send function directly to send notificatoions or you can create a dynamic task in celery beat
+    if created:
+        schedule, created = CrontabSchedule.objects.get_or_create(month_of_year = instance.start)
+        task = PeriodicTask.objects.create(crontab=schedule, name="broadcast-notification-"+str(instance.id), task="dashboard.tasks.broadcast_notification", args=json.dumps((instance.id,)))

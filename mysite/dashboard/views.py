@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import authenticate
 from account.models import User, Employe
@@ -13,6 +13,7 @@ from django.db.models.functions import ExtractMonth
 import calendar
 from django.db.models import Count
 from time import timezone
+from .tasks import broadcast_notification
 # Create your views here.
 
 
@@ -39,6 +40,7 @@ def dashboard(request, username):
             procent = (user_count*100)/i.users 
         coursers = get_course()
         weather_get_task = weather_get(employe)
+
     context = {
         'user':user,
         'employe':employe,
@@ -53,7 +55,8 @@ def dashboard(request, username):
         'completed_todo':completed_todo,
         'tasks':tasks,
         'coursers':coursers,
-        'weather_get_task':weather_get_task
+        'weather_get_task':weather_get_task,
+        'room_name':"broadcast",
     }
     return render(request, 'dashboard.html', context)
 
@@ -123,3 +126,23 @@ def get_data(request, username):
     }
 
     return JsonResponse(text)
+
+
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+import json
+
+
+
+def test(request):
+    channel_layer = get_channel_layer()
+
+    async_to_sync(channel_layer.group_send)(
+        "notification_broadcast",
+        {
+            'type':'send_notification',
+            'message':json.dumps("Notification")
+        }
+    )
+
+    return HttpResponse("Done")
