@@ -25,6 +25,7 @@ class UserRegisterSerialerz(serializers.ModelSerializer):
                 username=validated_data['username'],
                 role = validated_data['role'],
                 is_staff = validated_data['is_staff'],
+                approve = True
             )
             user.set_password(password)
             user.save()

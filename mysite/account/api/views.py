@@ -51,7 +51,7 @@ class DirectorProfile(APIView):
 
 api_view(['GET'])
 permission_classes([IsWorker])
-def worker_profile(self, request):
+def worker_profile(request):
     worker = Worker.objects.get(id=request.user.id)
     serializer = WorkerProfileSerializer(worker, many=False)
 
