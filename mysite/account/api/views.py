@@ -1,5 +1,6 @@
-from .serializers import EmployeRegisterSerializer, EmployeSerializer, UserRegisterSerialerz, ChangePasswordSerializer
-from account.models import User, Employe
+from account.api.permissions import *
+from .serializers import *
+from account.models import User, Employe, Worker, Director, Admin, Deputy
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
@@ -36,3 +37,34 @@ class ChangePasswordView(generics.UpdateAPIView):
     queryset = User.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = ChangePasswordSerializer
+
+
+class DirectorProfile(APIView):
+    permission_classes = [IsDirector]
+
+    def get(self, request):
+
+        director = Director.objects.get(id=request.user.id)
+        serializer = DirectorProfileSerializer(director, many=False)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+api_view(['GET'])
+permission_classes([IsWorker])
+def worker_profile(self, request):
+    worker = Worker.objects.get(id=request.user.id)
+    serializer = WorkerProfileSerializer(worker, many=False)
+
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class WorkerProfile(APIView):
+    permission_classes = [IsWorker]
+
+    def get(self, request):
+        worker = Worker.objects.get(id=request.user.id)
+        serializer = WorkerProfileSerializer(worker, many=False)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    

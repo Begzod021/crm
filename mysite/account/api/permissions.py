@@ -1,4 +1,3 @@
-from platformdirs import user_cache_dir
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 

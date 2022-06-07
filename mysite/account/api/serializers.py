@@ -1,30 +1,55 @@
-from account.models import Postion, Section, User, Employe
+from account.models import *
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
+
+from account.models import Director
 
 class UserRegisterSerialerz(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
     class Meta:
         model = User
-        fields = ('username','password', 'password2')
+        fields = ('username','password', 'password2', 'role', 'approve')
 
 
     def create(self, validated_data):
         password = validated_data['password']
         password2 = validated_data['password2']
         print(password)
+        if validated_data['role'] == 'admin':
+            validated_data['is_staff'] = True
+        else:
+            validated_data['is_staff'] = False
         if password == password2:
             print(password)
             user = User.objects.create(
                 username=validated_data['username'],
-                password = password,
+                role = validated_data['role'],
+                is_staff = validated_data['is_staff'],
             )
+            user.set_password(password)
             user.save()
 
 
             return user
         return None
 
+class DirectorProfileSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model=Director
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'last_login']
+
+
+class WorkerProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Worker
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'last_login']
+
+class DeputyProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Deputy
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'last_login']
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
     old_password = serializers.CharField(write_only=True, required=True)

@@ -1,3 +1,4 @@
+from atexit import register
 import imp
 from django.contrib import admin
 from .models import *
@@ -24,3 +25,8 @@ class AdminProfile(admin.ModelAdmin):
 @admin.register(AdduserCount)
 class AdminCountUser(admin.ModelAdmin):
     list_display = ['id', 'users']
+
+admin.site.register(Admin)
+admin.site.register(Director)
+admin.site.register(Deputy)
+admin.site.register(Worker)

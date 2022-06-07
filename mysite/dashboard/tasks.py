@@ -42,7 +42,7 @@ def broadcast_notification():
                 "notification_broadcast",
                 {
                     'type':'send notification',
-                    'message':json.dumps(notification.message),
+                    'message':json.dumps(notification.title),
                 }
             ))
 

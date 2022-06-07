@@ -204,7 +204,7 @@ class Director(User):
         proxy = True
 
 class Deputy(User):
-    objects = DeputyManager
+    objects = DeputyManager()
 
 
     class Meta:
