@@ -59,7 +59,7 @@ def worker_profile(request):
 
 
 class WorkerProfile(APIView):
-    permission_classes = [IsWorker]
+    permission_classes = [IsWorker, IsDirector]
 
     def get(self, request):
         worker = Worker.objects.get(id=request.user.id)

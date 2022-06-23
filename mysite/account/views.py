@@ -43,7 +43,7 @@ def user_registor(request, username):
                 else:
                     return redirect('user_registor', username)
         else:
-            return HttpResponse("You do not have permission to add a new user !!!")
+            return HttpResponse(f"User Limit\'s { user_count.users }")
     context = {
         'form':form,
     }
